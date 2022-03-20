@@ -23,7 +23,16 @@ struct Problem : Codable{
     // var created_at : Date
     // var updated_at : Date
 }
-
+extension Problem {
+    func toJSON() -> Dictionary<String,Any> {
+        return [
+            "name" : self.name as Any,
+            "description" : self.description.toJSON() as Any,
+            "limit" : self.limit.toJSON() as Any,
+            "score" : self.score as Any
+        ]
+    }
+}
 struct ResponseProblem : Codable {
     var id : Int
     var name : String
@@ -39,12 +48,29 @@ struct Description : Codable {
     var input_description : String
     var output_description : String
 }
+extension Description {
+    func toJSON() -> Dictionary<String,Any> {
+        return [
+            "description" : self.description as Any,
+            "input_description" : self.input_description as Any,
+            "output_description" : self.output_description as Any
+        ]
+    }
+}
 
 struct Limit : Codable{
     var memory : String
     var time : String
 }
 
+extension Limit {
+    func toJSON() -> Dictionary<String,Any> {
+        return [
+            "memory" : self.memory as Any,
+            "time" : self.time as Any
+        ]
+    }
+}
 
 struct ProblemCatalogs :Codable,Identifiable{
     var id : String

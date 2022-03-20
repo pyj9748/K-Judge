@@ -25,7 +25,7 @@ enum Language {
         case .JAVA:
             return "JAVA"
         case .CPP:
-            return "C++"
+            return "CPP"
         case .C:
             return "C"
         }

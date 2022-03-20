@@ -14,14 +14,17 @@ struct ContestItemView: View {
     @State var tabIndex = 0
     
     var body: some View {
-        NavigationView{
+       // NavigationView{
             VStack{
                 ContestItemCustomTopTabBar(tabIndex: $tabIndex)
                 if tabIndex == 0 {
                     ProblemsView(contest: $contest)
                 }
                 else if tabIndex == 1 {
-                    MySubmissionView()
+                    MySubmissionView(contest: $contest)
+                }
+                else if tabIndex == 2 {
+                    Text("ContestInfoView")
                 }
                 else {
                    ContestInfoUpdateView()
@@ -30,10 +33,10 @@ struct ContestItemView: View {
             }
             .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
             .padding(.horizontal, 12)
-            .navigationBarTitle("Contest Item",displayMode:.inline)
+            .navigationBarTitle("\(contest.name)",displayMode:.inline)
 
         }
-    }
+    //}
 }
 
 // status view
@@ -55,10 +58,12 @@ struct ContestItemCustomTopTabBar: View {
         HStack(spacing: 20) {
             TabBarButton(text: "PROBLEMS", isSelected: .constant(tabIndex == 0))
                 .onTapGesture { onButtonTapped(index: 0) }
-            TabBarButton(text: "MY SUBMISSION", isSelected: .constant(tabIndex == 1))
+            TabBarButton(text: "SUBMISSION", isSelected: .constant(tabIndex == 1))
                 .onTapGesture { onButtonTapped(index: 1) }
-            TabBarButton(text: "Info Update", isSelected: .constant(tabIndex == 2))
+            TabBarButton(text: "Info", isSelected: .constant(tabIndex == 2))
                 .onTapGesture { onButtonTapped(index: 2) }
+            TabBarButton(text: "Update", isSelected: .constant(tabIndex == 3))
+                .onTapGesture { onButtonTapped(index: 3) }
 //            TabBarButton(text: "STATUS", isSelected: .constant(tabIndex == 2))
 //                .onTapGesture { onButtonTapped(index: 2) }
             Spacer()

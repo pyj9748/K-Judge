@@ -15,6 +15,10 @@
 		282E3FC427DE1E3F00360E33 /* ProblemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC327DE1E3F00360E33 /* ProblemListViewModel.swift */; };
 		282E3FC627DE1E5200360E33 /* ProblemListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC527DE1E5200360E33 /* ProblemListItemView.swift */; };
 		282E3FCA27DE242000360E33 /* ProblemItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC927DE242000360E33 /* ProblemItemView.swift */; };
+		28588C5A27E75C4400152B88 /* ProblemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5927E75C4400152B88 /* ProblemDetailView.swift */; };
+		28588C5C27E75D9E00152B88 /* ProblemListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5B27E75D9E00152B88 /* ProblemListItem.swift */; };
+		28588C5E27E768D900152B88 /* ProblemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5D27E768D900152B88 /* ProblemEditView.swift */; };
+		28588C6027E7695E00152B88 /* ProblemEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5F27E7695E00152B88 /* ProblemEditViewModel.swift */; };
 		2885658127DC9EFF009E5B57 /* CodeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658027DC9EFF009E5B57 /* CodeEditorView.swift */; };
 		2885658327DC9F18009E5B57 /* ProblemDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658227DC9F18009E5B57 /* ProblemDescriptionView.swift */; };
 		2885658627DCADC1009E5B57 /* ProblemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658527DCADC1009E5B57 /* ProblemsView.swift */; };
@@ -74,6 +78,10 @@
 		282E3FC327DE1E3F00360E33 /* ProblemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListViewModel.swift; sourceTree = "<group>"; };
 		282E3FC527DE1E5200360E33 /* ProblemListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListItemView.swift; sourceTree = "<group>"; };
 		282E3FC927DE242000360E33 /* ProblemItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemItemView.swift; sourceTree = "<group>"; };
+		28588C5927E75C4400152B88 /* ProblemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemDetailView.swift; sourceTree = "<group>"; };
+		28588C5B27E75D9E00152B88 /* ProblemListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListItem.swift; sourceTree = "<group>"; };
+		28588C5D27E768D900152B88 /* ProblemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemEditView.swift; sourceTree = "<group>"; };
+		28588C5F27E7695E00152B88 /* ProblemEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemEditViewModel.swift; sourceTree = "<group>"; };
 		2885658027DC9EFF009E5B57 /* CodeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEditorView.swift; sourceTree = "<group>"; };
 		2885658227DC9F18009E5B57 /* ProblemDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemDescriptionView.swift; sourceTree = "<group>"; };
 		2885658527DCADC1009E5B57 /* ProblemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsView.swift; sourceTree = "<group>"; };
@@ -262,6 +270,8 @@
 				2885659F27DCF08F009E5B57 /* ContestItemViewModel.swift */,
 				2885658527DCADC1009E5B57 /* ProblemsView.swift */,
 				288565A127DCF0AA009E5B57 /* ProblemsViewModel.swift */,
+				28588C5B27E75D9E00152B88 /* ProblemListItem.swift */,
+				28588C5927E75C4400152B88 /* ProblemDetailView.swift */,
 				2885658727DCADDB009E5B57 /* MySubmissionView.swift */,
 				288565A327DCF0C3009E5B57 /* MySubmissionViewModel.swift */,
 				2885659527DCED03009E5B57 /* ContestInfoUpdateView.swift */,
@@ -287,6 +297,8 @@
 				282E3FC327DE1E3F00360E33 /* ProblemListViewModel.swift */,
 				282E3FC527DE1E5200360E33 /* ProblemListItemView.swift */,
 				282E3FC927DE242000360E33 /* ProblemItemView.swift */,
+				28588C5D27E768D900152B88 /* ProblemEditView.swift */,
+				28588C5F27E7695E00152B88 /* ProblemEditViewModel.swift */,
 			);
 			path = Problem;
 			sourceTree = "<group>";
@@ -384,10 +396,12 @@
 				2885659A27DCF031009E5B57 /* ContestListViewModel.swift in Sources */,
 				28A1CEBA27DB04D600ED38A5 /* CodeStorageDelegate.swift in Sources */,
 				28A1CED827DB067300ED38A5 /* ContestItemView.swift in Sources */,
+				28588C5E27E768D900152B88 /* ProblemEditView.swift in Sources */,
 				28A1CEBD27DB04D600ED38A5 /* Message.swift in Sources */,
 				28A1CEC727DB04D600ED38A5 /* MessageViews.swift in Sources */,
 				28A1CEE227DB06D300ED38A5 /* Problem.swift in Sources */,
 				2885658627DCADC1009E5B57 /* ProblemsView.swift in Sources */,
+				28588C5A27E75C4400152B88 /* ProblemDetailView.swift in Sources */,
 				28A1CEDA27DB068700ED38A5 /* SubmitViewModel.swift in Sources */,
 				288565A227DCF0AA009E5B57 /* ProblemsViewModel.swift in Sources */,
 				28A1CEE027DB06B500ED38A5 /* Contest.swift in Sources */,
@@ -409,9 +423,11 @@
 				28A1CED427DB065900ED38A5 /* ContestViewModel.swift in Sources */,
 				2885659627DCED03009E5B57 /* ContestInfoUpdateView.swift in Sources */,
 				282E3FBE27DE1E0700360E33 /* ProblemView.swift in Sources */,
+				28588C6027E7695E00152B88 /* ProblemEditViewModel.swift in Sources */,
 				28A1CEC327DB04D600ED38A5 /* MutableAttributedString.swift in Sources */,
 				28A1CEB927DB04D600ED38A5 /* MinimapView.swift in Sources */,
 				288565A427DCF0C3009E5B57 /* MySubmissionViewModel.swift in Sources */,
+				28588C5C27E75D9E00152B88 /* ProblemListItem.swift in Sources */,
 				282E3FC027DE1E1600360E33 /* ProblemViewModel.swift in Sources */,
 				28A1CEBF27DB04D600ED38A5 /* ViewModifiers.swift in Sources */,
 				288565A627DCF6B7009E5B57 /* ContestListItemView.swift in Sources */,

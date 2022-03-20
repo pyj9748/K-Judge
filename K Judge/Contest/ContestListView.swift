@@ -29,7 +29,7 @@ struct ContestListView: View {
                     })
                    
                 }
-            }//.padding()
+            }.padding()
             Spacer()
 
         }

@@ -30,9 +30,32 @@ struct ProblemItemView: View {
             }
         }
        .padding()
+       .navigationBarTitle("Create Problem",displayMode:.inline)
+       .toolbar(content: {
+           editBtn
+       })
     }
 }
-
+// 문제 수정 뷰 이동 버튼
+extension ProblemItemView {
+  
+    var editBtn : some View {
+        NavigationLink(destination: ProblemEditView(problemId: $problemId), label: {
+            HStack {
+                   // Image(systemName: "plus.circle")
+                    //.font(.body)
+                    Text("  Edit  ")
+                        .fontWeight(.semibold)
+                        .font(.body
+                        )
+                }
+                .padding(10)
+                .foregroundColor(.white)
+                .background(Color("KWColor1"))
+                .cornerRadius(40)
+        })
+    }
+}
 extension ProblemItemView {
     
     // Name

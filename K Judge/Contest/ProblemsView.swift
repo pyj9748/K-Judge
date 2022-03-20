@@ -9,35 +9,38 @@ import SwiftUI
 
 struct ProblemsView: View {
     @Binding var contest : Contest
+    @StateObject var problemsViewModel = ProblemsViewModel()
     
     var body: some View {
         
-        ScrollView{
-            VStack{
-                nameText
-                
-            }
+        VStack{
+            HStack{
+                Text("id")
+                Spacer()
+                Text("name")
+                Spacer()
+                Text("score")
+               
+            }.padding()
+            ScrollView{
+                VStack{
+                    Text("").onAppear(){
+                        print("ContestItemView \(contest.id)")
+                        // get problem list
+                        problemsViewModel.problemList = problemsViewModel.getProblemList(problems: contest.questions)
+                    }
+                }
+                ForEach($problemsViewModel.problemList, id: \.id){ item in
+                    NavigationLink(destination:ProblemDetailView(problem: item), label: {
+                        ProblemListItem(problemListItem: item)
+                    })
+                   
+                }
+            }.padding()
+            Spacer()
         }
-        
-        
     }
 }
-
-extension ProblemsView {
-    
-    // Name
-    var nameText: some View{
-        GroupBox("Name"){
-            
-        }
-    }
-   
-    
-    
-}
-
-
-
 
 struct ProblemsView_Previews: PreviewProvider {
     static var previews: some View {

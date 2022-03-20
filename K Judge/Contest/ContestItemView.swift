@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContestItemView: View {
+    @Binding var contest : Contest
     @StateObject var contestItemViewModel = ContestItemViewModel()
 
     @State var tabIndex = 0
@@ -17,7 +18,7 @@ struct ContestItemView: View {
             VStack{
                 ContestItemCustomTopTabBar(tabIndex: $tabIndex)
                 if tabIndex == 0 {
-                    ProblemsView()
+                    ProblemsView(contest: $contest)
                 }
                 else if tabIndex == 1 {
                     MySubmissionView()
@@ -130,6 +131,6 @@ extension View {
 }
 struct ContestItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ContestItemView()
+        ContestItemView(contest: .constant(Contest(id: "1", authors: [Author( user_id: "1", name: "a1", accumulate_score: "1")], name: "contest1", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2,3,4])))
     }
 }

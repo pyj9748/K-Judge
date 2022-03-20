@@ -37,18 +37,33 @@ extension ProblemListViewModel {
         list = [problem1,problem2,problem3,problem4,problem5,problem6,problem7]
         
         // api call - 문제 목록조회
-        let url = "\(baseURL)/api/problem_catalogs"
-               AF.request(url,
-                          method: .get,
-                          parameters: nil,
-                          encoding: URLEncoding.default,
-                          headers: ["Content-Type":"application/json", "Accept":"application/json"])
-                   .validate(statusCode: 200..<300)
-                   .responseJSON { (json) in
-                       //여기서 가져온 데이터를 자유롭게 활용하세요.
-                       print(json)
-                       // list =
-               }
+        let url = URL(string: "\(baseURL)/api/problem_catalogs")!
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        
+        AF.request(url,
+                   method: .get,
+                   parameters: nil,
+                   encoding: URLEncoding.default,
+                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+          
+             .responseJSON(completionHandler: { response in
+                 //여기서 가져온 데이터를 자유롭게 활용하세요.
+                 switch response.result{
+                 case.success(let value):
+                     let json = JSON(value)
+                     let dataList = json["data"].array
+                     for i in (dataList?.indices)! {
+                         let data = json["data"].arrayValue[i]
+                         let problem = ProblemCatalogs(id: String(data["id"].intValue), name: data["name"].stringValue, score: data["score"].stringValue)
+                         list.append(problem)
+                     }
+                 case.failure(let error) :
+                     print(error.localizedDescription)
+                 }
+               
+             })
+        
         return list
         
     }

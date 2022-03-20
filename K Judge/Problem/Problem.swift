@@ -12,7 +12,7 @@ let baseURL : String = "http://54.95.66.103:8080"
 //Model
 
 struct Problem : Codable{
-    //var id : UUID
+    var id : String
     var name : String
     var description :Description
     var limit : Limit
@@ -22,6 +22,16 @@ struct Problem : Codable{
     //var num_of_success : Int
     // var created_at : Date
     // var updated_at : Date
+}
+
+struct ResponseProblem : Codable {
+    var id : Int
+    var name : String
+    var description : String
+    var input_description : String
+    var output_description : String
+    var score : String
+    
 }
 
 struct Description : Codable {

@@ -10,36 +10,128 @@ import Alamofire
 import SwiftyJSON
 
 struct ProblemItemView: View {
-    
+   
     @Binding var problemId : String
-    
+    @StateObject var problemItemViewModel = ProblemItemViewModel()
     
     var body: some View {
-        Text(problemId).onAppear(){
-            
+        ScrollView{
+            VStack{
+                Text("").onAppear(){
+                    print("ProblemItemView \(problemId)")
+                    problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId)
+                }
+                nameText
+                descriptionText
+                input_descriptionText
+                output_descriptionText
+                scoreText
+                
+            }
         }
+       .padding()
     }
 }
 
-// api call - 문제 상세 조회
 extension ProblemItemView {
     
-    func getProblemDetail() {
-        let url = "\(baseURL)/api/problem_catalogs/\(self.problemId)"
+    // Name
+    var nameText: some View{
+        GroupBox("Name"){
+            Text(problemItemViewModel.problem.name )
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+    
+    // Description
+    var descriptionText : some View{
+        GroupBox("Description"){
+            Text(problemItemViewModel.problem.description.description)
+        }
+    }
+   
+    // input_description
+    var input_descriptionText : some View{
+        GroupBox("InPut Description"){
+            Text(problemItemViewModel.problem.description.input_description)
+        }
+    }
+   
+    // output_description
+    var output_descriptionText: some View{
+        GroupBox("OutPut Description"){
+            Text(problemItemViewModel.problem.description.output_description)
+        }
+    }
+
+    // score
+    var scoreText : some View{
+        GroupBox("Score"){
+            Text(problemItemViewModel.problem.score)
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// View Model
+
+class ProblemItemViewModel :ObservableObject {
+    
+    @Published var problem = Problem(id: "id", name: "name", description: Description(description: "description", input_description: "input_description", output_description: "output_description"), limit: Limit(memory: "", time: ""), score: "score")
+   
+}
+
+// api call - 문제 상세 조회
+extension ProblemItemViewModel {
+    
+    func getProblem(problemId: String)-> Problem {
+        let url = "\(baseURL)/api/problem_catalogs/\(problemId)"
+        var problemDetail = Problem(id: "", name: "", description: Description(description: "", input_description: "", output_description: ""), limit: Limit(memory: "", time: ""), score: "")
         AF.request(url,
                    method: .get,
                    parameters: nil,
                    encoding: URLEncoding.default,
                    headers: ["Content-Type":"application/json", "Accept":"application/json"])
             .validate(statusCode: 200..<300)
-            .responseJSON { (json) in
+            .responseJSON(completionHandler: { response in
                 //여기서 가져온 데이터를 자유롭게 활용하세요.
-                print(json)
-                
-        }
+                switch response.result{
+                case.success(let value):
+                    let json = JSON(value)
+                    let data = json["data"].arrayValue[0]
+                    problemDetail = Problem(id : String(data["id"].intValue), name:data["name"].stringValue , description: Description(description: data["description"].stringValue, input_description: data["input_description"].stringValue, output_description: data["output_description"].stringValue), limit: Limit(memory: "", time: ""), score: data["score"].stringValue)
+                    print(json)
+                case.failure(let error) :
+                    print(error.localizedDescription)
+                }
+               
+            })
+        return problemDetail
     }
   
 }
+
+
 
 
 struct ProblemItemView_Previews: PreviewProvider {

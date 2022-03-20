@@ -6,19 +6,48 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 // View Model
 class ContestCreateViewModel :ObservableObject {
     
-    @Published var contest = Contest(id : UUID(), authors: [], name: "name", challenge_date_time: Challenge_date_time(start_time: "", end_time: "" ), questions: [])
+    @Published var contest = Contest(id : "0", authors: [], name: "name", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date() ), questions: [])
     
 }
 
-// contest 생성 api call
+// api call - contest 생성
 extension ContestCreateViewModel {
-    func createContest(){
+    
+    func createContest( parameters :  [String: Any]){
         
-       // api call
+        // api call
+        print(parameters)
+        // URL
+        guard let url = URL(string:"\(baseURL)/api/challenges")
+        else {
+            return
+        }
+        // Header
+        let headers : HTTPHeaders = [
+                    "Content-Type" : "application/json" ]
+        // Parameter
+       
+        // Request
+        
+        
+        AF.request(url, method: .post , parameters: parameters , headers: headers)
+        //    .responseDecodable(completionHandler: {
+        //                response in
+        //                print(response)
+        //                if let err = response.error{
+        //                               print(err)
+        //                               return
+        //                           }
+        //                print("success")
+        //            })
+
+            
         
     }
 }

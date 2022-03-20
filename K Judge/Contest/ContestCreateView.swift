@@ -6,31 +6,30 @@
 //
 
 import SwiftUI
+import SwiftyJSON
 
 struct ContestCreateView: View {
     
     @State var showingAlert = false
     @State var questions : String = ""
-    @State var start_time = Date()
-    @State var end_time = Date()
     @State var numOfAuthors : Int = 1
     
     let numOfAuthorArray = [1,2,3,4]
     @State var selectedNumOfAuthor = 0
-   // @State var authorArray : [Author] = []
     
-    @State var author1_user_id : String = "author1 user_id"
-    @State var author1_name : String = "author1 name"
-    @State var author1_accumulate_score : String = "author1 accumulate_score"
-    @State var author2_user_id : String = "author2 user_id"
-    @State var author2_name : String = "author2 name"
-    @State var author2_accumulate_score : String = "author2 accumulate_score"
-    @State var author3_user_id : String = "author3 user_id"
-    @State var author3_name : String = "author3 name"
-    @State var author3_accumulate_score : String = "author3 accumulate_score"
-    @State var author4_user_id : String = "author4 user_id"
-    @State var author4_name : String = "author4 name"
-    @State var author4_accumulate_score : String = "author4 accumulate_score"
+    
+    @State var author1_user_id : String = ""
+    @State var author1_name : String = ""
+    @State var author1_accumulate_score : String = ""
+    @State var author2_user_id : String = ""
+    @State var author2_name : String = ""
+    @State var author2_accumulate_score : String = ""
+    @State var author3_user_id : String = ""
+    @State var author3_name : String = ""
+    @State var author3_accumulate_score : String = ""
+    @State var author4_user_id : String = ""
+    @State var author4_name : String = ""
+    @State var author4_accumulate_score : String = ""
      
     
     @StateObject var contestCreateViewModel = ContestCreateViewModel()
@@ -77,8 +76,6 @@ extension ContestCreateView {
         Button(action: {
             print("createBtn")
             // 문제의 값이 잘 들어갔는지
-            
-            
             guard self.questions.split(separator: ",").map({
                 Int($0)!
             }) != []
@@ -86,11 +83,47 @@ extension ContestCreateView {
                 self.showingAlert = true
                 return
             }
-
-            print(self.questions.split(separator: ",").map({
+            
+            
+            
+            
+            // api call = create Contest
+          
+            // authors
+            let authorArray : [Author] = [
+                Author( user_id: author1_user_id, name: author1_name, accumulate_score: author1_accumulate_score),
+                Author(  user_id: author2_user_id, name: author2_name, accumulate_score: author2_accumulate_score),
+                Author( user_id: author3_user_id, name: author3_name, accumulate_score: author3_accumulate_score),
+                Author( user_id: author4_user_id, name: author4_name, accumulate_score: author4_accumulate_score),
+            ]
+            
+            contestCreateViewModel.contest.authors = []
+            for i in 0..<numOfAuthors {
+                contestCreateViewModel.contest.authors.append( authorArray[i])
+            }
+            // author의 user id , accumulate 값이 유효한지
+            for i in 0..<numOfAuthors {
+                
+                guard let _ = Int(contestCreateViewModel.contest.authors[i].user_id)
+                else {
+                    self.showingAlert = true
+                    return
+                }
+                guard let _ = Int(contestCreateViewModel.contest.authors[i].accumulate_score)
+                else {
+                    self.showingAlert = true
+                    return
+                }
+            }
+            contestCreateViewModel.contest.questions = self.questions.split(separator: ",").map({
                 Int($0)!
-            }))
-            // api 콜
+            })
+            
+          
+            
+            let parameters: [String: Any] = contestCreateViewModel.contest.toJSON()
+            
+            contestCreateViewModel.createContest(parameters: parameters)
             
         }, label: {
             HStack {
@@ -103,7 +136,7 @@ extension ContestCreateView {
                 }
                 .padding(6)
                 .foregroundColor(.white)
-                .background(Color.indigo)
+                .background(Color("KWColor1"))
                 .cornerRadius(40)
         })
             .alert("문제값 오류", isPresented: $showingAlert) {
@@ -156,11 +189,11 @@ extension ContestCreateView {
     var author1 : some View {
         GroupBox("Author1"){
             VStack{
-                TextField("author1 user id ",text: $author1_user_id)
+                TextField("user id ex) 1",text: $author1_user_id)
                     .textFieldStyle(.roundedBorder)
-                TextField("author1 name",text: $author1_name)
+                TextField("name",text: $author1_name)
                     .textFieldStyle(.roundedBorder)
-                TextField("author1 score",text: $author1_accumulate_score)
+                TextField("score ex) 1000",text: $author1_accumulate_score)
                     .textFieldStyle(.roundedBorder)
             }
         }
@@ -169,9 +202,9 @@ extension ContestCreateView {
     var author2 : some View {
         GroupBox("Author2"){
             VStack{
-                TextField("author2 user id ",text: $author2_user_id) .textFieldStyle(.roundedBorder)
-                TextField("author2 name",text: $author2_name) .textFieldStyle(.roundedBorder)
-                TextField("author2 score",text: $author2_accumulate_score) .textFieldStyle(.roundedBorder)
+                TextField("user id ex) 2",text: $author2_user_id) .textFieldStyle(.roundedBorder)
+                TextField("name",text: $author2_name) .textFieldStyle(.roundedBorder)
+                TextField("score ex) 1000",text: $author2_accumulate_score) .textFieldStyle(.roundedBorder)
             }
         }
     }
@@ -179,9 +212,9 @@ extension ContestCreateView {
     var author3 : some View {
         GroupBox("Author3"){
             VStack{
-                TextField("author3 user id ",text: $author3_user_id) .textFieldStyle(.roundedBorder)
-                TextField("author3 name",text: $author3_name) .textFieldStyle(.roundedBorder)
-                TextField("author3 score",text: $author3_accumulate_score) .textFieldStyle(.roundedBorder)
+                TextField("user id ex) 3",text: $author3_user_id) .textFieldStyle(.roundedBorder)
+                TextField("name",text: $author3_name) .textFieldStyle(.roundedBorder)
+                TextField("score ex) 1000",text: $author3_accumulate_score) .textFieldStyle(.roundedBorder)
             }
         }
     }
@@ -189,9 +222,9 @@ extension ContestCreateView {
     var author4 : some View {
         GroupBox("Author4"){
             VStack{
-                TextField("author4 user id ",text: $author4_user_id) .textFieldStyle(.roundedBorder)
-                TextField("author4 name",text: $author4_name) .textFieldStyle(.roundedBorder)
-                TextField("author4 score",text: $author4_accumulate_score) .textFieldStyle(.roundedBorder)
+                TextField("user id ex) 4",text: $author4_user_id) .textFieldStyle(.roundedBorder)
+                TextField("name",text: $author4_name) .textFieldStyle(.roundedBorder)
+                TextField("score ex) 1000",text: $author4_accumulate_score) .textFieldStyle(.roundedBorder)
             }
         }
     }
@@ -199,14 +232,14 @@ extension ContestCreateView {
     // Challenge_date_time
     var start_datePicker : some View {
         GroupBox("Start Date"){
-            DatePicker("start_date", selection: $start_time, in: Date()...)
+            DatePicker("start_date", selection: $contestCreateViewModel.contest.challenge_date_time.start_time, in: Date()...)
                        .datePickerStyle(WheelDatePickerStyle())
                        .labelsHidden()
         }
     }
     var end_datePicker : some View {
         GroupBox("End Date"){
-            DatePicker("end_date", selection: $end_time, in: Date()...)
+            DatePicker("end_date", selection: $contestCreateViewModel.contest.challenge_date_time.end_time, in: Date()...)
                 .datePickerStyle(WheelDatePickerStyle())
                 .labelsHidden()
         }
@@ -214,6 +247,7 @@ extension ContestCreateView {
   
 
 }
+
 
 struct ContestCreateView_Previews: PreviewProvider {
     static var previews: some View {

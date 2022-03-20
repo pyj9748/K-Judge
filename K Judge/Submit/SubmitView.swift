@@ -74,7 +74,7 @@ extension SubmitView {
                 }
                 .padding(6)
                 .foregroundColor(.white)
-                .background(Color.indigo)
+                .background(Color("KWColor1"))
                 .cornerRadius(40)
         })
     }

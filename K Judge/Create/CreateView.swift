@@ -10,22 +10,6 @@ import SwiftUI
 struct CreateView: View {
     @State var showingAlert = false
     
-//    @State var input_file1 : String = """
-//    Enter Input File Content
-//    """
-//
-//    @State var output_file1 : String = """
-//    Enter Output File Content
-//    """
-//
-//    @State var input_file2 : String = """
-//    Enter Input File Content
-//    """
-//
-//    @State var output_file2 : String = """
-//    Enter Output File Content
-//    """
-    
     @StateObject var createViewModel = CreateViewModel()
     
     var body: some View {
@@ -53,6 +37,8 @@ struct CreateView: View {
                     
                 
             }// VStack
+           
+          
             .navigationBarTitle("Create Problem",displayMode:.inline)
             .toolbar(content: {
                 createBtn
@@ -101,7 +87,7 @@ extension CreateView {
                 }
                 .padding(6)
                 .foregroundColor(.white)
-                .background(Color.indigo)
+                .background(Color("KWColor1"))
                 .cornerRadius(40)
         })
             .alert("타임과 메모리값 오류", isPresented: $showingAlert) {

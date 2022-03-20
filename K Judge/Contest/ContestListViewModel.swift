@@ -21,14 +21,16 @@ class ContestListViewModel :ObservableObject {
     
 }
 
+
+
 // api call - 대회 목록조회
 extension ContestListViewModel {
     func getContestList() -> [Contest]{
         var list :[Contest] = []
         //
         // dummy
-        let contest1 = Contest(id: UUID(), authors: [Author(id: UUID(), user_id: "1", name: "a1", accumulate_score: "1")], name: "contest1", challenge_date_time: Challenge_date_time(start_time: "1", end_time: "2"), questions: [1,2,3,4])
-        let contest2 = Contest(id: UUID(), authors: [Author(id: UUID(), user_id: "2", name: "a2", accumulate_score: "2")], name: "contest2", challenge_date_time: Challenge_date_time(start_time: "3", end_time: "4"), questions: [1,2])
+        let contest1 = Contest(id: "id1", authors: [Author( user_id: "1", name: "a1", accumulate_score: "1")], name: "contest1", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2,3,4])
+        let contest2 = Contest(id: "id2", authors: [Author( user_id: "2", name: "a2", accumulate_score: "2")], name: "contest2", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2])
         list = [contest1,contest2]
         
        
@@ -45,12 +47,6 @@ extension ContestListViewModel {
                        print(json)
                        // list =
                }
-        return list
-        
-        
-        
-        // list =
-        
         return list
         
     }

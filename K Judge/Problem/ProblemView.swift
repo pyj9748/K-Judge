@@ -22,6 +22,6 @@ struct ProblemView: View {
 
 struct ProblemView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemsView()
+        ProblemView()
     }
 }

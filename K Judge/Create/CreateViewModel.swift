@@ -12,7 +12,7 @@ import SwiftyJSON
 // View Model
 class CreateViewModel :ObservableObject {
     
-    @Published var problem = Problem(name: "name", description: Description(description: "Enter description", input_description: "Enter input description", output_description: "Enter output description"), limit: Limit(memory: "256", time: "2"),score: "1500")
+    @Published var problem = Problem( id : "" , name: "name", description: Description(description: "Enter description", input_description: "Enter input description", output_description: "Enter output description"), limit: Limit(memory: "256", time: "2"),score: "1500")
     
     @Published var input_file1 : String = """
     Enter Input File Content
@@ -41,7 +41,7 @@ extension CreateViewModel{
         let input_file_url1 = self.getDocumentDirectory().appendingPathComponent("1.in")
         do {
             try input_file_content1.write(to:input_file_url1, atomically:true,encoding : .utf8)
-            let input1 = try String(contentsOf: input_file_url1)
+            //let input1 = try String(contentsOf: input_file_url1)
            // print("input_file_content1 : \(input1)")
            // print(input_file_url1.path)
         }
@@ -53,7 +53,7 @@ extension CreateViewModel{
         let output_file_url1 = self.getDocumentDirectory().appendingPathComponent("1.out")
         do {
             try output_file_content1.write(to:output_file_url1, atomically:true,encoding : .utf8)
-            let output1 = try String(contentsOf: output_file_url1)
+            //let output1 = try String(contentsOf: output_file_url1)
             //print("output_file_content : \(output1)")
         }
         catch{
@@ -65,7 +65,7 @@ extension CreateViewModel{
         let input_file_url2 = self.getDocumentDirectory().appendingPathComponent("2.in")
         do {
             try input_file_content2.write(to:input_file_url2, atomically:true,encoding : .utf8)
-            let input2 = try String(contentsOf: input_file_url2)
+            //let input2 = try String(contentsOf: input_file_url2)
            // print("input_file_content2 : \(input2)")
            // print(input_file_url2.path)
         }
@@ -77,7 +77,7 @@ extension CreateViewModel{
         let output_file_url2 = self.getDocumentDirectory().appendingPathComponent("2.out")
         do {
             try output_file_content2.write(to:output_file_url2, atomically:true,encoding : .utf8)
-            let output2 = try String(contentsOf: output_file_url2)
+            //let output2 = try String(contentsOf: output_file_url2)
            // print("output_file_content2 : \(output2)")
         }
         catch{
@@ -158,16 +158,16 @@ extension CreateViewModel {
             }
 
         },to: url,method: .post,headers: headers)
-            .responseJSON(completionHandler: {
-            response in
-            print(response)
-            if let err = response.error{
-                           print(err)
-                           return
-                       }
-            print("success")
-        })
-        
+//            .responseDecodable(completionHandler: {
+//                response in
+//                print(response)
+//                if let err = response.error{
+//                               print(err)
+//                               return
+//                           }
+//                print("success")
+//            })
+//
         
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-let baseURL : String = "http://54.95.66.103:8080"
+let baseURL : String = "http://3.37.145.99"
 
 //Model
 

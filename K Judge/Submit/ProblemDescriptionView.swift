@@ -10,39 +10,23 @@ import SwiftUI
 import SwiftUI
 
 struct ProblemDescriptionView: View {
+    @Binding var problemDetail : ProblemDetail
     var body: some View {
         ScrollView{
             VStack{
                 GroupBox("Name"){
-                    Text("name")
+                    Text(problemDetail.name)
                 }
                 GroupBox("Description"){
-                    Text("name")
+                    Text(problemDetail.description)
                 }
                 GroupBox("InPut Description"){
-                    Text("name")
+                    Text(problemDetail.input_description)
                 }
                 GroupBox("OutPut Description"){
-                    Text("name")
+                    Text(problemDetail.output_description)
                 }
-                GroupBox("InPut File1"){
-                    Text("name")
-                }
-                GroupBox("OutPut File1"){
-                    Text("name")
-                }
-                GroupBox("InPut File2"){
-                    Text("name")
-                }
-                GroupBox("OutPut File2"){
-                    Text("name")
-                }
-                GroupBox("Memory"){
-                    Text("name")
-                }
-                GroupBox("Time"){
-                    Text("name")
-                }
+            
                 
             }.padding()
         }
@@ -52,6 +36,6 @@ struct ProblemDescriptionView: View {
 
 struct ProblemDescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemDescriptionView()
+        ProblemDescriptionView(problemDetail: .constant(ProblemDetail(id: 1, name: "name", description: "des", input_description: "in_des", output_description: "out_des", score: 100)))
     }
 }

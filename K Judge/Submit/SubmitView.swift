@@ -14,7 +14,7 @@ struct SubmitView: View {
     @State var selected_option : Int = 0
     
     @StateObject var submitViewModel = SubmitViewModel()
-    
+    @Binding var problemDetail : ProblemDetail
     var body: some View {
         NavigationView{
             VStack{
@@ -25,7 +25,7 @@ struct SubmitView: View {
                
                 CodeEditorView(source_code: self.$submitViewModel.submit.source_code, selected_option: self.$selected_option)
               
-               // ProblemDescriptionView()
+                ProblemDescriptionView(problemDetail: $problemDetail)
                 
                 
                 Spacer()
@@ -82,7 +82,7 @@ extension SubmitView {
 
 struct SubmitView_Previews: PreviewProvider {
     static var previews: some View {
-        SubmitView()
+        SubmitView(problemDetail: .constant(ProblemDetail(id: 1, name: "name", description: "des", input_description: "in_des", output_description: "out_des", score: 100)))
     }
 }
 

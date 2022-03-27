@@ -16,6 +16,18 @@ struct ProblemView: View {
             VStack{
                 ProblemListView()
             } .navigationBarTitle("Problems",displayMode:.inline)
+                .toolbar(content: {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            print("계정 정보")
+                            
+                        }) {
+                            Image(systemName: "person.crop.circle")
+                            .font(.body)
+                        }
+                    }
+                   
+                })
         }
     }
 }

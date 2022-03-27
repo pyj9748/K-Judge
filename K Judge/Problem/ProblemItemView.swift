@@ -42,8 +42,8 @@ extension ProblemItemView {
     var editBtn : some View {
         NavigationLink(destination: ProblemEditView(problemId: $problemId), label: {
             HStack {
-                   // Image(systemName: "plus.circle")
-                    //.font(.body)
+                    Image(systemName: "pencil.circle")
+                    .font(.body)
                     Text("  Edit  ")
                         .fontWeight(.semibold)
                         .font(.body
@@ -128,7 +128,7 @@ class ProblemItemViewModel :ObservableObject {
 extension ProblemItemViewModel {
     
     func getProblem(problemId: String)-> Problem {
-        let url = "\(baseURL)/api/problem_catalogs/\(problemId)"
+        let url = "\(baseURL):8081/api/problem_catalogs/\(problemId)"
         var problemDetail = Problem(id: "", name: "", description: Description(description: "", input_description: "", output_description: ""), limit: Limit(memory: "", time: ""), score: "")
         AF.request(url,
                    method: .get,
@@ -141,9 +141,10 @@ extension ProblemItemViewModel {
                 switch response.result{
                 case.success(let value):
                     let json = JSON(value)
-                    let data = json["data"].arrayValue[0]
+                    let data = json["data"]
                     problemDetail = Problem(id : String(data["id"].intValue), name:data["name"].stringValue , description: Description(description: data["description"].stringValue, input_description: data["input_description"].stringValue, output_description: data["output_description"].stringValue), limit: Limit(memory: "", time: ""), score: data["score"].stringValue)
-                    print(json)
+                    self.problem = problemDetail
+                    
                 case.failure(let error) :
                     print(error.localizedDescription)
                 }

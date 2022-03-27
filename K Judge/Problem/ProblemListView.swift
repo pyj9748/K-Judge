@@ -13,7 +13,10 @@ struct ProblemListView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("id")
+                Text("id").onAppear(perform: {
+                    problemListViewModel.problemList = problemListViewModel.getProblemList()
+                
+                })
                 Spacer()
                 Text("name")
                 Spacer()

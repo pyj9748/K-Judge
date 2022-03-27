@@ -42,8 +42,20 @@ struct CreateView: View {
             .navigationBarTitle("Create Problem",displayMode:.inline)
             .toolbar(content: {
                 createBtn
+                    
             })
-        
+            .toolbar(content: {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        print("계정 정보")
+                        
+                    }) {
+                        Image(systemName: "person.crop.circle")
+                        .font(.body)
+                    }
+                }
+               
+            })
                 
                 
             

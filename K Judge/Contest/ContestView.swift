@@ -19,18 +19,29 @@ struct ContestView: View {
                 if tabIndex == 0 {
                    ContestListView()
                 }
-                else if tabIndex == 1 {
+                else  {
                     ContestCreateView()
                 }
-                else {
-                   ContestInfoUpdateView()
-                }
+//                else {
+//                   ContestInfoUpdateView()
+//                }
                 Spacer()
             }
             .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
             .padding(.horizontal, 12)
             .navigationBarTitle("Contest",displayMode:.inline)
-
+            .toolbar(content: {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        print("계정 정보")
+                        
+                    }) {
+                        Image(systemName: "person.crop.circle")
+                        .font(.body)
+                    }
+                }
+               
+            })
         }
     }
     

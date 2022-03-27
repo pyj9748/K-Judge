@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 // Model
-struct Contest : Codable, Identifiable{
+struct Contest : Encodable, Identifiable{
     var id : String
     var authors : [Author]
     var name : String
@@ -18,11 +19,11 @@ struct Contest : Codable, Identifiable{
 }
 
 // contest 작성자
-struct Author : Codable, Hashable{
+struct Author : Encodable, Hashable{
     //var id : UUID
-    var user_id : String
+    var user_id : Int
     var name : String
-    var accumulate_score : String
+    var accumulate_score : Int
     
 }
 
@@ -41,16 +42,26 @@ extension Contest {
 }
 
 extension Author {
+//    func toJSON() -> Dictionary<String,AnyObject> {
+//        return [
+//            "user_id" : Int(self.user_id)! as AnyObject,
+//            "name" : self.name as AnyObject,
+//            "accumulate_score" : Int(self.accumulate_score)! as AnyObject
+//        ]
+//    }
     func toJSON() -> Dictionary<String,AnyObject> {
-        return [
-            "user_id" : Int(self.user_id)! as AnyObject,
+        let json :  Dictionary<String,AnyObject> =
+            [
+            "user_id": self.user_id as AnyObject ,
             "name" : self.name as AnyObject,
-            "accumulate_score" : Int(self.accumulate_score)! as AnyObject
-        ]
+            "accumulate_score" :self.accumulate_score as AnyObject
+            ]
+        return json
+       
     }
 }
 // contest 대회 기간
-struct Challenge_date_time : Codable {
+struct Challenge_date_time : Encodable {
     var start_time : Date
     var end_time: Date
 }
@@ -64,5 +75,20 @@ extension Challenge_date_time {
             "end_time" : dateFormatter.string(from: end_time) as AnyObject
         ]
     }
+    
 }
+
+// Model
+
+struct Challenge{
+    
+    var id : Int
+    var name : String
+    var start_time : String
+    var end_time : String
+    var num_of_participation : Int
+    var num_of_question : Int
+    
+}
+
 

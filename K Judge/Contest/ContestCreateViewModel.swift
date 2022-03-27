@@ -19,35 +19,21 @@ class ContestCreateViewModel :ObservableObject {
 // api call - contest 생성
 extension ContestCreateViewModel {
     
-    func createContest( parameters :  [String: Any]){
-        
-        // api call
-        print(parameters)
-        // URL
-        guard let url = URL(string:"\(baseURL)/api/challenges")
-        else {
-            return
-        }
-        // Header
-        let headers : HTTPHeaders = [
-                    "Content-Type" : "application/json" ]
-        // Parameter
-       
-        // Request
-        
-        
-        AF.request(url, method: .post , parameters: parameters , headers: headers)
-        //    .responseDecodable(completionHandler: {
-        //                response in
-        //                print(response)
-        //                if let err = response.error{
-        //                               print(err)
-        //                               return
-        //                           }
-        //                print("success")
-        //            })
-
-            
+    
+    
+    func getStartDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd\'T\'HH:mm:ss"
+        return dateFormatter.string(from: self.contest.challenge_date_time.start_time)
         
     }
+    func getEndDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd\'T\'HH:mm:ss"
+        return dateFormatter.string(from: self.contest.challenge_date_time.end_time)
+    
+    }
+    
+    
 }
+

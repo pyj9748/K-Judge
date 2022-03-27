@@ -19,6 +19,10 @@
 		28588C5C27E75D9E00152B88 /* ProblemListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5B27E75D9E00152B88 /* ProblemListItem.swift */; };
 		28588C5E27E768D900152B88 /* ProblemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5D27E768D900152B88 /* ProblemEditView.swift */; };
 		28588C6027E7695E00152B88 /* ProblemEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5F27E7695E00152B88 /* ProblemEditViewModel.swift */; };
+		2868E76C27EF76010068994A /* ContestInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2868E76B27EF76010068994A /* ContestInfoView.swift */; };
+		2868E76E27EF76BF0068994A /* InfoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2868E76D27EF76BF0068994A /* InfoEditView.swift */; };
+		2868E77027EF76CE0068994A /* AuthorEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2868E76F27EF76CE0068994A /* AuthorEditView.swift */; };
+		2868E77227EF76E40068994A /* QuestionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2868E77127EF76E40068994A /* QuestionEditView.swift */; };
 		2885658127DC9EFF009E5B57 /* CodeEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658027DC9EFF009E5B57 /* CodeEditorView.swift */; };
 		2885658327DC9F18009E5B57 /* ProblemDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658227DC9F18009E5B57 /* ProblemDescriptionView.swift */; };
 		2885658627DCADC1009E5B57 /* ProblemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2885658527DCADC1009E5B57 /* ProblemsView.swift */; };
@@ -82,6 +86,10 @@
 		28588C5B27E75D9E00152B88 /* ProblemListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListItem.swift; sourceTree = "<group>"; };
 		28588C5D27E768D900152B88 /* ProblemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemEditView.swift; sourceTree = "<group>"; };
 		28588C5F27E7695E00152B88 /* ProblemEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemEditViewModel.swift; sourceTree = "<group>"; };
+		2868E76B27EF76010068994A /* ContestInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContestInfoView.swift; sourceTree = "<group>"; };
+		2868E76D27EF76BF0068994A /* InfoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoEditView.swift; sourceTree = "<group>"; };
+		2868E76F27EF76CE0068994A /* AuthorEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorEditView.swift; sourceTree = "<group>"; };
+		2868E77127EF76E40068994A /* QuestionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionEditView.swift; sourceTree = "<group>"; };
 		2885658027DC9EFF009E5B57 /* CodeEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEditorView.swift; sourceTree = "<group>"; };
 		2885658227DC9F18009E5B57 /* ProblemDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemDescriptionView.swift; sourceTree = "<group>"; };
 		2885658527DCADC1009E5B57 /* ProblemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemsView.swift; sourceTree = "<group>"; };
@@ -274,8 +282,12 @@
 				28588C5927E75C4400152B88 /* ProblemDetailView.swift */,
 				2885658727DCADDB009E5B57 /* MySubmissionView.swift */,
 				288565A327DCF0C3009E5B57 /* MySubmissionViewModel.swift */,
+				2868E76B27EF76010068994A /* ContestInfoView.swift */,
 				2885659527DCED03009E5B57 /* ContestInfoUpdateView.swift */,
 				2885659D27DCF05D009E5B57 /* ContestInfoUpdateViewModel.swift */,
+				2868E76D27EF76BF0068994A /* InfoEditView.swift */,
+				2868E76F27EF76CE0068994A /* AuthorEditView.swift */,
+				2868E77127EF76E40068994A /* QuestionEditView.swift */,
 			);
 			path = Contest;
 			sourceTree = "<group>";
@@ -393,6 +405,7 @@
 				2885658E27DCE53B009E5B57 /* LoginViewModel.swift in Sources */,
 				2885659827DCEDAB009E5B57 /* ContestListView.swift in Sources */,
 				2885658C27DCE530009E5B57 /* LoginView.swift in Sources */,
+				2868E77227EF76E40068994A /* QuestionEditView.swift in Sources */,
 				2885659A27DCF031009E5B57 /* ContestListViewModel.swift in Sources */,
 				28A1CEBA27DB04D600ED38A5 /* CodeStorageDelegate.swift in Sources */,
 				28A1CED827DB067300ED38A5 /* ContestItemView.swift in Sources */,
@@ -407,16 +420,19 @@
 				28A1CEE027DB06B500ED38A5 /* Contest.swift in Sources */,
 				2885659227DCE552009E5B57 /* User.swift in Sources */,
 				2885658127DC9EFF009E5B57 /* CodeEditorView.swift in Sources */,
+				2868E76E27EF76BF0068994A /* InfoEditView.swift in Sources */,
 				2885659427DCECDC009E5B57 /* ContestCreateView.swift in Sources */,
 				28A1CEDE27DB06A600ED38A5 /* Submit.swift in Sources */,
 				28A1CEBB27DB04D600ED38A5 /* CodeStorage.swift in Sources */,
 				28A1CEB827DB04D600ED38A5 /* CodeEditor.swift in Sources */,
+				2868E77027EF76CE0068994A /* AuthorEditView.swift in Sources */,
 				28A1CEC127DB04D600ED38A5 /* ScrollView.swift in Sources */,
 				2885659027DCE543009E5B57 /* Login.swift in Sources */,
 				28A1CEC627DB04D600ED38A5 /* Theme.swift in Sources */,
 				28A1CEB727DB04D600ED38A5 /* Location.swift in Sources */,
 				28A1CEC427DB04D600ED38A5 /* TextView.swift in Sources */,
 				28A1CEC027DB04D600ED38A5 /* OSDefinitions.swift in Sources */,
+				2868E76C27EF76010068994A /* ContestInfoView.swift in Sources */,
 				2885659C27DCF047009E5B57 /* ContestCreateViewModel.swift in Sources */,
 				2885658A27DCE4E2009E5B57 /* ContestView.swift in Sources */,
 				282E3FC227DE1E2A00360E33 /* ProblemListView.swift in Sources */,

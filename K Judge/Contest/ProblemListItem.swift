@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct ProblemListItem: View {
-    @Binding var problemListItem : Problem
+    @Binding var problemListItem : ChallengeProblem
     var body: some View {
         GroupBox{
             HStack{
-                Text(String(problemListItem.id))
+                Text(String(problemListItem.problem_id))
                 Spacer()
-                Text(problemListItem.name)
-                Spacer()
-                Text(String(problemListItem.score))
+                Text(problemListItem.title)
+                
             }
         }
     }
@@ -24,6 +23,6 @@ struct ProblemListItem: View {
 
 struct ProblemListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemListItem(problemListItem: .constant(Problem(id: "1", name: "name1", description: Description(description: "description", input_description: "input_description", output_description: "output_description"), limit: Limit(memory: "", time: ""), score: "100")))
+        ProblemListItem(problemListItem: .constant(ChallengeProblem(id: 1, problem_id: 1, title: "asd")))
     }
 }

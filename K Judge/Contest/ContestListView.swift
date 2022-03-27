@@ -14,18 +14,19 @@ struct ContestListView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("Name").frame(width: 70, height: 50 )
-                Spacer()
-                Text("Authors").frame(width: 70, height: 50 )
+                Text("Name").frame(width: 70, height: 50 ).onAppear(){
+                    contestListViewModel.challengeList = contestListViewModel.getContestList()
+                    
+                }
                 Spacer()
                 Text("start").frame(width: 100, height: 50 )
                 Spacer()
                 Text("end").frame(width: 100, height: 50 )
             }.padding()
             ScrollView{
-                ForEach($contestListViewModel.contestList){ item in
-                    NavigationLink(destination: ContestItemView(contest: item), label: {
-                        ContestListItemView(contentListItem:item)
+                ForEach($contestListViewModel.challengeList, id: \.id ){ item in
+                    NavigationLink(destination: ContestItemView(challenge: item), label: {
+                        ContestListItemView(challengeListItem:item)
                     })
                    
                 }

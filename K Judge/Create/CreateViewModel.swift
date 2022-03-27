@@ -120,7 +120,7 @@ extension CreateViewModel {
        
         
         // URL 생성
-        guard let url = URL(string:"\(baseURL)/api/problems")
+        guard let url = URL(string:"\(baseURL):8080/api/problems")
         else {
             return
         }
@@ -158,16 +158,16 @@ extension CreateViewModel {
             }
 
         },to: url,method: .post,headers: headers)
-//            .responseDecodable(completionHandler: {
-//                response in
-//                print(response)
-//                if let err = response.error{
-//                               print(err)
-//                               return
-//                           }
-//                print("success")
-//            })
-//
+            .responseJSON(completionHandler: {
+                response in
+                print(response)
+                if let err = response.error{
+                               print(err)
+                               return
+                           }
+                print("success")
+            })
+
         
     }
     

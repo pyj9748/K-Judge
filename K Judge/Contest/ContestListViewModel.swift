@@ -12,12 +12,8 @@ import SwiftyJSON
 // View Model
 class ContestListViewModel :ObservableObject {
     
-    @Published var contestList : [Contest] = []
+    @Published var challengeList : [Challenge] = []
     
-    init(){
-        self.contestList = getContestList()
-       
-    }
     
 }
 
@@ -25,27 +21,38 @@ class ContestListViewModel :ObservableObject {
 
 // api call - 대회 목록조회
 extension ContestListViewModel {
-    func getContestList() -> [Contest]{
-        var list :[Contest] = []
-        //
-        // dummy
-        let contest1 = Contest(id: "id1", authors: [Author( user_id: "1", name: "a1", accumulate_score: "1")], name: "contest1", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2,3,4])
-        let contest2 = Contest(id: "id2", authors: [Author( user_id: "2", name: "a2", accumulate_score: "2")], name: "contest2", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2])
-        list = [contest1,contest2]
-        
-       
+    func getContestList() -> [Challenge]{
+        var list :[Challenge] = []
+        let parameters : [String: Any] = [
+                       "page": 0,
+                       "size": 300  // 여기는 한번에 가져올 문제 개수 값
+        ]
         // api call - 대회 목록조회
-        let url = "\(baseURL)/api/challenges"
+        let url = "\(baseURL):8082/api/challenges"
                AF.request(url,
                           method: .get,
-                          parameters: nil,
+                          parameters:parameters,
                           encoding: URLEncoding.default,
                           headers: ["Content-Type":"application/json", "Accept":"application/json"])
                    .validate(statusCode: 200..<300)
-                   .responseJSON { (json) in
+                   .responseJSON { response in
                        //여기서 가져온 데이터를 자유롭게 활용하세요.
-                       print(json)
-                       // list =
+                       switch response.result{
+                       case.success(let value):
+                           print(response)
+                           let json = JSON(value)
+                           let dataList = json["data"].array
+                           for i in (dataList?.indices)! {
+                               let data = json["data"].arrayValue[i]
+                            
+                               let challenge = Challenge(id: data["id"].intValue, name: data["name"].stringValue, start_time: data["challenge_date_time"]["start_time"].stringValue,  end_time: data["challenge_date_time"]["end_time"].stringValue, num_of_participation: data["num_of_participation"].intValue, num_of_question: data["num_of_question"].intValue)
+                               
+                               list.append(challenge)
+                           }
+                           self.challengeList = list
+                       case.failure(let error) :
+                           print(error.localizedDescription)
+                       }
                }
         return list
         
@@ -58,4 +65,7 @@ extension ContestListViewModel {
 
         
         
+
+
+
 

@@ -15,7 +15,6 @@ class SubmitViewModel :ObservableObject {
     
     @Published var submit = Submit(source_code: init_codes[0], programming_language: languages[0])
     
-    
 }
 
 // api call - 문제 채점 요청

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftyJSON
+import Alamofire
 
 struct ContestCreateView: View {
     
@@ -90,40 +91,72 @@ extension ContestCreateView {
             // api call = create Contest
           
             // authors
-            let authorArray : [Author] = [
-                Author( user_id: author1_user_id, name: author1_name, accumulate_score: author1_accumulate_score),
-                Author(  user_id: author2_user_id, name: author2_name, accumulate_score: author2_accumulate_score),
-                Author( user_id: author3_user_id, name: author3_name, accumulate_score: author3_accumulate_score),
-                Author( user_id: author4_user_id, name: author4_name, accumulate_score: author4_accumulate_score),
+            var authorArray : [Author] = [
+                Author( user_id: 0, name: author1_name, accumulate_score: 0),
+                Author(  user_id:0, name: author2_name, accumulate_score: 0),
+                Author( user_id: 0, name: author3_name, accumulate_score: 0),
+                Author( user_id: 0, name: author4_name, accumulate_score: 0),
             ]
-            
+            for i in 0..<numOfAuthors {
+                if i == 0{
+                    authorArray[i].user_id = Int(author1_user_id)!
+                    authorArray[i].accumulate_score = Int(author1_accumulate_score)!
+                }
+                else if i == 1 {
+                    authorArray[i].user_id = Int(author2_user_id)!
+                    authorArray[i].accumulate_score = Int(author2_accumulate_score)!
+                }
+                else if i == 2 {
+                    authorArray[i].user_id = Int(author3_user_id)!
+                    authorArray[i].accumulate_score = Int(author3_accumulate_score)!
+                }
+                else {
+                    authorArray[i].user_id = Int(author4_user_id)!
+                    authorArray[i].accumulate_score = Int(author4_accumulate_score)!
+                }
+              
+            }
             contestCreateViewModel.contest.authors = []
             for i in 0..<numOfAuthors {
                 contestCreateViewModel.contest.authors.append( authorArray[i])
             }
             // author의 user id , accumulate 값이 유효한지
-            for i in 0..<numOfAuthors {
-                
-                guard let _ = Int(contestCreateViewModel.contest.authors[i].user_id)
-                else {
-                    self.showingAlert = true
-                    return
-                }
-                guard let _ = Int(contestCreateViewModel.contest.authors[i].accumulate_score)
-                else {
-                    self.showingAlert = true
-                    return
-                }
-            }
+//            for i in 0..<numOfAuthors {
+//
+//                guard let _ = contestCreateViewModel.contest.authors[i].user_id
+//                else {
+//                    self.showingAlert = true
+//                    return
+//                }
+//                guard let _ = contestCreateViewModel.contest.authors[i].accumulate_score
+//                else {
+//                    self.showingAlert = true
+//                    return
+//                }
+//            }
             contestCreateViewModel.contest.questions = self.questions.split(separator: ",").map({
                 Int($0)!
             })
             
-          
+            let start = contestCreateViewModel.getStartDate()
+            let end = contestCreateViewModel.getEndDate()
             
-            let parameters: [String: Any] = contestCreateViewModel.contest.toJSON()
+           
             
-            contestCreateViewModel.createContest(parameters: parameters)
+            //contestCreateViewModel.createContest(parameters: parameters)
+            
+            
+            let postContest = PostContest(authors: contestCreateViewModel.contest.authors, name: contestCreateViewModel.contest.name, challenge_date_time: PostChallengeDate(start_time: start, end_time: end), questions: contestCreateViewModel.contest.questions)
+           
+
+            AF.request("\(baseURL):8082/api/challenges",
+                       method: .post,
+                       parameters: postContest,
+                       encoder: JSONParameterEncoder.default).response { response in
+                debugPrint(response)
+            }
+            
+            
             
         }, label: {
             HStack {
@@ -253,4 +286,17 @@ struct ContestCreateView_Previews: PreviewProvider {
     static var previews: some View {
         ContestCreateView()
     }
+}
+
+struct PostContest : Encodable {
+    let authors : [Author]
+    let name : String
+    let challenge_date_time : PostChallengeDate
+    let questions : [Int]
+    
+}
+struct PostChallengeDate : Encodable {
+    let start_time : String
+    let end_time : String
+    
 }

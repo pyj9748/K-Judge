@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct ProblemsView: View {
-    @Binding var contest : Contest
+    @Binding var challenge : Challenge
     @StateObject var problemsViewModel = ProblemsViewModel()
     
     var body: some View {
         
         VStack{
             HStack{
-                Text("id")
+                Text("Problem Id")
                 Spacer()
-                Text("name")
-                Spacer()
-                Text("score")
+             
+                Text("Title")
                
             }.padding()
             ScrollView{
                 VStack{
                     Text("").onAppear(){
-                        print("ContestItemView \(contest.id)")
+                        //print("ContestItemView \(challenge.id)")
                         // get problem list
-                        problemsViewModel.problemList = problemsViewModel.getProblemList(problems: contest.questions)
+                        problemsViewModel.challengeProblemList = problemsViewModel.getProblemList(challengeId: challenge.id)
                     }
                 }
-                ForEach($problemsViewModel.problemList, id: \.id){ item in
-                    NavigationLink(destination:ProblemDetailView(problem: item), label: {
+                ForEach($problemsViewModel.challengeProblemList, id: \.id){ item in
+                    NavigationLink(destination:ProblemDetailView(challenge: item), label: {
                         ProblemListItem(problemListItem: item)
                     })
                    
@@ -44,6 +43,6 @@ struct ProblemsView: View {
 
 struct ProblemsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemsView(contest: .constant(Contest(id: "1", authors: [Author( user_id: "1", name: "a1", accumulate_score: "1")], name: "contest1", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date()), questions: [1,2,3,4])))
+        ProblemsView(challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)))
     }
 }

@@ -40,15 +40,12 @@ struct ContentView: View {
                     }
                 
                 
-                SubmitView()
-                    .tabItem{
-                        Image(systemName: "lightbulb")
-                            Text("Submit")
-                    }
+                    
                  
             }
             .accentColor(Color.blue)
-           
+            
+            
         }
        
             

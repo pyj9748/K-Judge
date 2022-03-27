@@ -8,11 +8,56 @@
 import SwiftUI
 
 struct ContestInfoUpdateView: View {
+    @Binding var challenge : Challenge
     var body: some View {
        
         VStack{
-            //NavigationLink()
-            Text("a")
+            NavigationLink(destination:InfoEditView(challengeId: $challenge.id , name: challenge.name , start: Date(),end: Date()), label: {
+                HStack {
+                        Image(systemName: "highlighter")
+                            .font(.title)
+                        Text("Edit Info")
+                            .fontWeight(.semibold)
+                            .font(.title)
+                    }
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.red)
+                    .cornerRadius(40)
+                
+            })
+            Spacer()
+            NavigationLink(destination:AuthorEditView(challengeId: $challenge.id), label: {
+                
+                HStack {
+                Image(systemName: "person.2")
+                    .font(.title)
+                Text("Edit Author")
+                    .fontWeight(.semibold)
+                    .font(.title)
+            }
+            .padding()
+            .foregroundColor(.white)
+            .background(Color.red)
+            .cornerRadius(40)
+              
+            })
+            Spacer()
+            NavigationLink(destination:QuestionEditView(challengeId: $challenge.id), label: {
+                
+                HStack {
+                Image(systemName: "square.grid.3x1.folder.badge.plus")
+                    .font(.title)
+                Text("Edit Problem")
+                    .fontWeight(.semibold)
+                    .font(.title)
+            }
+            .padding()
+            .foregroundColor(.white)
+            .background(Color.red)
+            .cornerRadius(40)
+               
+            })
         }
        
         
@@ -40,6 +85,6 @@ extension ContestInfoUpdateView{
 }
 struct ContestInfoUpdateView_Previews: PreviewProvider {
     static var previews: some View {
-        ContestInfoUpdateView()
+        ContestInfoUpdateView(challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)))
     }
 }

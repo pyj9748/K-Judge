@@ -8,8 +8,8 @@
 import Foundation
 
 // View Model
-class LoginbViewModel :ObservableObject {
+class LoginViewModel :ObservableObject {
   
-    
+    @Published var login = Login(user: User(id: "", password: ""))
     
 }

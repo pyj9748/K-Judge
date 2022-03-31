@@ -57,6 +57,7 @@ class CodeStorage: NSTextStorage {
       case .number:     foregroundColour = theme.numberColour
       case .identifier: foregroundColour = theme.identifierColour
       case .keyword:    foregroundColour = theme.keywordColour
+     
       default: ()
       }
     }

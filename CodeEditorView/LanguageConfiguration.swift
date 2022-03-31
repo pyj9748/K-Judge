@@ -269,7 +269,19 @@ private let swiftReservedIds =
    "deinit", "do", "else", "enum", "extension", "fallthrough", "fileprivate", "for", "func", "guard", "if", "import",
    "init", "inout", "internal", "in", "is", "let", "operator", "precedencegroup", "private", "protocol", "public",
    "repeat", "rethrows", "return", "self", "static", "struct", "subscript", "super", "switch", "throws", "throw", "try",
-   "typealias", "var", "where", "while"]
+   "typealias", "var", "where", "while",
+   // Swift
+   "Int", "String", "Double",
+   
+   // C reservedIDs
+    "asm", "auto", "char" , "const" ,  "double" , "extern" , "float", "goto",
+   "int", "long" , "register", "short", "signed","sizeof", "typedef", "union", "unsigned", "void", "volatile",
+   // C++ reservedIDs
+   "delete", "friend", "inline" , "new", "protected", "template", "this", "virtual",
+   // JAVA reservedIDS
+   "abstract", "boolean", "byte",  "extends", "finally", "implements", "instanceof", "interface", "native", "null" ,
+   "package", "super", "synchronized"
+  ]
 
 extension LanguageConfiguration {
 

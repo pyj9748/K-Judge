@@ -10,7 +10,7 @@ import Foundation
 // Model
 struct Login : Codable {
     
-    
+    var user : User
     
     
 }

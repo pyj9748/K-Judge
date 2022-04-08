@@ -6,19 +6,35 @@
 //
 
 import SwiftUI
-
+import Alamofire
+import SwiftyJSON
 struct ContestItemView: View {
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
+    @AppStorage("id") var id: String = (UserDefaults.standard.string(forKey: "id") ?? "")
     @Binding var challenge : Challenge
     @StateObject var contestItemViewModel = ContestItemViewModel()
-
+    @StateObject var contestInfoViewModel = ContestInfoViewModel()
+    @State var didIParticapted = false
     @State var tabIndex = 0
     
     var body: some View {
        // NavigationView{
             VStack{
+                Text("").onAppear(){
+                    contestInfoViewModel.participationList = contestInfoViewModel.getParticipationList(challengeId: challenge.id)
+                    print(contestInfoViewModel.participationList)
+                    if contestInfoViewModel.participationList.contains(where: {
+                        $0.name == id
+                    }){
+                        didIParticapted = true
+                        
+                    }else {
+                        didIParticapted = false
+                    }
+                }
                 ContestItemCustomTopTabBar(tabIndex: $tabIndex)
                 if tabIndex == 0 {
-                    ProblemsView(challenge: $challenge)
+                    ProblemsView(challenge: $challenge, didIParticapted: $didIParticapted)
                 }
                 else if tabIndex == 1 {
                     MySubmissionView(challenge: $challenge)
@@ -33,7 +49,21 @@ struct ContestItemView: View {
             }
             .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
             .padding(.horizontal, 12)
+        
             .navigationBarTitle("\(challenge.name)",displayMode:.inline)
+                .toolbar(content: {
+                
+                    // 아직 참여 x
+                    if didIParticapted == false {
+                        registerBtn
+                    }
+                   
+                    // 이미 참여
+                    else{
+                        unRegisterBtn
+                    }
+                    
+                })
 
         }
     //}
@@ -41,10 +71,108 @@ struct ContestItemView: View {
 
 // status view
 extension ContestItemView {
-    var statusView : some View {
+    var registerBtn : some View {
+       
+        Button(action: {
+            print("registerBtn","username: ",id,"challeng id: ",challenge.id )
+            // register api 콜
         
-        Text("stausView")
+            // Header
+            let headers : HTTPHeaders = [
+                        "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
+            
+
+            AF.request("\(baseURL):8080/api/challenges/\(challenge.id)/participations",
+                       method: .post,
+                       headers: headers).response { response in
+                debugPrint(response)
+            }.responseJSON(completionHandler: {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    if json["data"]["message"].stringValue == "You have been successfully registered." {
+                        didIParticapted = true
+                       
+                        return
+                    }
+                    if json["error"]["status"].intValue == 400 {
+                        didIParticapted = true
+                       
+                        return
+                    }
+                   
+                default:
+                    
+                    return
+                }
+
+            })
+            
+        }, label: {
+            HStack {
+                    Image(systemName: "square.and.arrow.down")
+                    .font(.body)
+                    Text("참여     ")
+                        .fontWeight(.semibold)
+                        .font(.body
+                        )
+                }
+                .padding(6)
+                .foregroundColor(.white)
+                .background(Color("KWColor1"))
+                .cornerRadius(40)
+        })
+    }
+    var unRegisterBtn : some View {
+       
+        Button(action: {
+            print("unRegisterBtn")
+           
+            // unregister api 콜
         
+            // Header
+            let headers : HTTPHeaders = [
+                        "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
+            
+
+            AF.request("\(baseURL):8080/api/challenges/\(challenge.id)/participations/",
+                       method: .delete,
+                       headers: headers).response { response in
+                debugPrint(response)
+            }.responseJSON(completionHandler: {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    if json["data"]["message"].stringValue == "You have been successfully canceled." {
+                        didIParticapted = false
+                       
+                        return
+                    }
+                   
+                default:
+                    
+                    return
+                }
+
+            })
+            
+            
+        }, label: {
+            HStack {
+                    Image(systemName: "square.and.arrow.up")
+                    .font(.body)
+                    Text("참여 취소   ")
+                        .fontWeight(.semibold)
+                        .font(.body
+                        )
+                }
+                .padding(6)
+                .foregroundColor(.white)
+                .background(Color("KWColor1"))
+                .cornerRadius(40)
+        })
     }
     
 }
@@ -56,13 +184,13 @@ struct ContestItemCustomTopTabBar: View {
     @Binding var tabIndex: Int
     var body: some View {
         HStack(spacing: 20) {
-            TabBarButton(text: "PROBLEMS", isSelected: .constant(tabIndex == 0))
+            TabBarButton(text: " 문제 ", isSelected: .constant(tabIndex == 0))
                 .onTapGesture { onButtonTapped(index: 0) }
-            TabBarButton(text: "SUBMISSION", isSelected: .constant(tabIndex == 1))
+            TabBarButton(text: " 제출목록 ", isSelected: .constant(tabIndex == 1))
                 .onTapGesture { onButtonTapped(index: 1) }
-            TabBarButton(text: "Info", isSelected: .constant(tabIndex == 2))
+            TabBarButton(text: " 정보 ", isSelected: .constant(tabIndex == 2))
                 .onTapGesture { onButtonTapped(index: 2) }
-            TabBarButton(text: "Update", isSelected: .constant(tabIndex == 3))
+            TabBarButton(text: " 수정 ", isSelected: .constant(tabIndex == 3))
                 .onTapGesture { onButtonTapped(index: 3) }
 //            TabBarButton(text: "STATUS", isSelected: .constant(tabIndex == 2))
 //                .onTapGesture { onButtonTapped(index: 2) }
@@ -82,6 +210,7 @@ struct TabBarButton: View {
     var body: some View {
         Text(text)
             .fontWeight(isSelected ? .heavy : .regular)
+            .font(.custom("Arial", size: 16))
             .font(.custom("Avenir", size: 16))
             .padding(.bottom,10)
             .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .black)

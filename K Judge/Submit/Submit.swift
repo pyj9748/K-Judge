@@ -8,12 +8,12 @@
 import Foundation
 
 // Model
-struct Submit :Codable {
+struct Submit :Encodable {
     
     var source_code : String
     
     var programming_language : String
-    
+    var problem_id : Int
 }
 
 enum Language {

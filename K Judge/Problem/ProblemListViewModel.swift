@@ -19,12 +19,12 @@ class ProblemListViewModel :ObservableObject {
 
 // 서버에서 problem List 받아오기
 extension ProblemListViewModel {
-    func getProblemList() -> [ProblemCatalogs]{
+    func getProblemList(token:String) -> [ProblemCatalogs]{
         var list :[ProblemCatalogs] = []
         print("getProblemList")
         
         // api call - 문제 목록조회
-        let url = URL(string: "\(baseURL):8081/api/problem_catalogs")!
+        let url = URL(string: "\(baseURL):8080/api/problem_catalogs/authors")!
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         let parameters : [String: Any] = [
@@ -35,7 +35,7 @@ extension ProblemListViewModel {
                    method: .get,
                    parameters: parameters,
                    encoding: URLEncoding.default,
-                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+                   headers: ["Content-Type":"application/json", "Accept":"application/json","Authorization": "Bearer \(token)"])
           
              .responseJSON(completionHandler: { response in
                  //여기서 가져온 데이터를 자유롭게 활용하세요.
@@ -44,6 +44,7 @@ extension ProblemListViewModel {
                      //print(response)
                      let json = JSON(value)
                      let dataList = json["data"].array
+                     
                      for i in (dataList?.indices)! {
                          let data = json["data"].arrayValue[i]
                          let problem = ProblemCatalogs(id: String(data["id"].intValue), name: data["name"].stringValue, score: data["score"].stringValue)

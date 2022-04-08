@@ -20,12 +20,12 @@ class ProblemsViewModel :ObservableObject {
 
 // api call - 문제 목록 조회
 extension ProblemsViewModel {
-    func getProblemList(challengeId : Int) -> [ChallengeProblem]{
+    func getProblemList(challengeId : Int){
         var list :[ChallengeProblem] = []
-        print("getChallengeProblemList")
+        print("getChallengeProblemList", challengeId)
         
         // api call - 문제 목록조회
-        let url = URL(string: "\(baseURL):8082/api/challenges/\(challengeId)/questions")!
+        let url = URL(string: "\(baseURL):8080/api/challenges/\(challengeId)/questions")!
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         let parameters : [String: Any] = [
@@ -42,29 +42,33 @@ extension ProblemsViewModel {
                  //여기서 가져온 데이터를 자유롭게 활용하세요.
                  switch response.result{
                  case.success(let value):
-                     //print(response)
+                     print(response)
                      let json = JSON(value)
                      let dataList = json["data"].array
                      for i in (dataList?.indices)! {
                          let data = json["data"].arrayValue[i]
-                         let problem = ChallengeProblem(id: data["id"].intValue, problem_id: data["problem_id"].intValue, title: data["title"].stringValue)
+                         let problem = ChallengeProblem(id: data["id"].intValue, problem_id: data["problem_id"].intValue, title: data["title"].stringValue,challeng_id: challengeId)
                          list.append(problem)
                          
                      }
                      self.challengeProblemList = list
+                     self.challengeProblemList.sort(by: {
+                             return $0.problem_id < $1.problem_id
+                             
+                         })
+                     print(self.challengeProblemList)
                  case.failure(let error) :
                      print(error.localizedDescription)
                  }
                
              })
-       
-        return list
         
     }
 }
 
-struct ChallengeProblem {
+struct ChallengeProblem:Identifiable {
     let id : Int
-    let problem_id : Int
+    var problem_id : Int
     let title: String
+    var challeng_id : Int
 }

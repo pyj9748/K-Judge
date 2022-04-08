@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 struct ProblemItemView: View {
-   
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var problemId : String
     @StateObject var problemItemViewModel = ProblemItemViewModel()
     
@@ -19,7 +19,7 @@ struct ProblemItemView: View {
             VStack{
                 Text("").onAppear(){
                     print("ProblemItemView \(problemId)")
-                    problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId)
+                    problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId,token: token)
                 }
                 nameText
                 descriptionText
@@ -30,7 +30,7 @@ struct ProblemItemView: View {
             }
         }
        .padding()
-       .navigationBarTitle("Create Problem",displayMode:.inline)
+       .navigationBarTitle("문제 생성",displayMode:.inline)
        .toolbar(content: {
            editBtn
        })
@@ -44,7 +44,7 @@ extension ProblemItemView {
             HStack {
                     Image(systemName: "pencil.circle")
                     .font(.body)
-                    Text("  Edit  ")
+                    Text("  수정  ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -60,7 +60,7 @@ extension ProblemItemView {
     
     // Name
     var nameText: some View{
-        GroupBox("Name"){
+        GroupBox("문제명"){
             Text(problemItemViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
         }
@@ -68,28 +68,28 @@ extension ProblemItemView {
     
     // Description
     var descriptionText : some View{
-        GroupBox("Description"){
+        GroupBox("문제"){
             Text(problemItemViewModel.problem.description.description)
         }
     }
    
     // input_description
     var input_descriptionText : some View{
-        GroupBox("InPut Description"){
+        GroupBox("입력"){
             Text(problemItemViewModel.problem.description.input_description)
         }
     }
    
     // output_description
     var output_descriptionText: some View{
-        GroupBox("OutPut Description"){
+        GroupBox("출력"){
             Text(problemItemViewModel.problem.description.output_description)
         }
     }
 
     // score
     var scoreText : some View{
-        GroupBox("Score"){
+        GroupBox("점수"){
             Text(problemItemViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
         }
@@ -127,14 +127,14 @@ class ProblemItemViewModel :ObservableObject {
 // api call - 문제 상세 조회
 extension ProblemItemViewModel {
     
-    func getProblem(problemId: String)-> Problem {
-        let url = "\(baseURL):8081/api/problem_catalogs/\(problemId)"
+    func getProblem(problemId: String, token:String)-> Problem {
+        let url = "\(baseURL):8080/api/problem_catalogs/\(problemId)"
         var problemDetail = Problem(id: "", name: "", description: Description(description: "", input_description: "", output_description: ""), limit: Limit(memory: "", time: ""), score: "")
         AF.request(url,
                    method: .get,
                    parameters: nil,
                    encoding: URLEncoding.default,
-                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+                   headers: ["Content-Type":"application/json", "Accept":"application/json","Authorization": "Bearer \(token)"])
             .validate(statusCode: 200..<300)
             .responseJSON(completionHandler: { response in
                 //여기서 가져온 데이터를 자유롭게 활용하세요.

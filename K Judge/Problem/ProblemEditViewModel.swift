@@ -20,18 +20,18 @@ class ProblemEditViewModel :ObservableObject {
 
 // api call - 문제 수정
 extension ProblemEditViewModel {
-    func editProblem( parameters :  [String: Any] , problemId : String){
+    func editProblem( parameters :  [String: Any] , problemId : String,token : String){
         
         // api call
         print(parameters)
         // URL
-        guard let url = URL(string:"\(baseURL)/api/problems/\(problemId)")
+        guard let url = URL(string:"\(baseURL):8080/api/problems/\(problemId)")
         else {
             return
         }
         // Header
         let headers : HTTPHeaders = [
-                    "Content-Type" : "application/json" ]
+                    "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
         // Parameter
        
         // Request

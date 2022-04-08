@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContestListItemView: View {
-    
+   
    @Binding var challengeListItem : Challenge
     var dateFormatter = DateFormatter()
     

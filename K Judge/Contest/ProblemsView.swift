@@ -10,27 +10,32 @@ import SwiftUI
 struct ProblemsView: View {
     @Binding var challenge : Challenge
     @StateObject var problemsViewModel = ProblemsViewModel()
-    
+    @Binding var didIParticapted :Bool
+    @State var shouldNavigate = false
     var body: some View {
         
         VStack{
             HStack{
-                Text("Problem Id")
+                Text("문제 번호")
                 Spacer()
              
-                Text("Title")
+                Text("문제 이름")
                
             }.padding()
             ScrollView{
                 VStack{
                     Text("").onAppear(){
-                        //print("ContestItemView \(challenge.id)")
+                        print("ContestItemView \(challenge.id)")
                         // get problem list
-                        problemsViewModel.challengeProblemList = problemsViewModel.getProblemList(challengeId: challenge.id)
+                       
+                        problemsViewModel.getProblemList(challengeId: challenge.id)
+                       
                     }
                 }
-                ForEach($problemsViewModel.challengeProblemList, id: \.id){ item in
-                    NavigationLink(destination:ProblemDetailView(challenge: item), label: {
+                
+                
+                ForEach($problemsViewModel.challengeProblemList){ item in
+                    NavigationLink( destination:ProblemDetailView(challenge: item),label: {
                         ProblemListItem(problemListItem: item)
                     })
                    
@@ -43,6 +48,6 @@ struct ProblemsView: View {
 
 struct ProblemsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemsView(challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)))
+        ProblemsView(challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)), didIParticapted:.constant(false))
     }
 }

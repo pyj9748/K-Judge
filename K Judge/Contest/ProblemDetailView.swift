@@ -10,6 +10,7 @@ import SwiftyJSON
 import Alamofire
 
 struct ProblemDetailView: View {
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var challenge: ChallengeProblem
     @StateObject var problemDetailViewModel =  ProblemDetailViewModel()
     var body: some View {
@@ -18,7 +19,8 @@ struct ProblemDetailView: View {
                 VStack{
                     
                     nameText.onAppear(){
-                        problemDetailViewModel.problem = problemDetailViewModel.getProblem(problemId: challenge.problem_id)
+                        print("problemDetailView",challenge.challeng_id,challenge.problem_id)
+                        problemDetailViewModel.problem = problemDetailViewModel.getProblem(problemId: challenge.problem_id,token: token)
                     }
                     descriptionText
                     input_descriptionText
@@ -26,7 +28,7 @@ struct ProblemDetailView: View {
                     scoreText
                 }.padding()
             } .navigationBarTitle(challenge.title,displayMode:.inline)
-        } .navigationBarTitle("Submit",displayMode:.inline)
+        } .navigationBarTitle(" 제출 ",displayMode:.inline)
             .toolbar(content: {
                 submitBtn
             })
@@ -38,7 +40,7 @@ extension ProblemDetailView {
     
     // Name
     var nameText: some View{
-        GroupBox("Name"){
+        GroupBox("문제 이름"){
             Text( $problemDetailViewModel.problem.name.wrappedValue )
                 .textFieldStyle(.roundedBorder)
         }
@@ -46,28 +48,28 @@ extension ProblemDetailView {
 
     // Description
     var descriptionText : some View{
-        GroupBox("Description"){
+        GroupBox("문제"){
             Text($problemDetailViewModel.problem.description.wrappedValue)
         }
     }
 
     // input_description
     var input_descriptionText : some View{
-        GroupBox("InPut Description"){
+        GroupBox("입력"){
             Text($problemDetailViewModel.problem.input_description.wrappedValue)
         }
     }
 
     // output_description
     var output_descriptionText: some View{
-        GroupBox("OutPut Description"){
+        GroupBox("출력"){
             Text($problemDetailViewModel.problem.output_description.wrappedValue)
         }
     }
 
     // score
     var scoreText : some View{
-        GroupBox("Score"){
+        GroupBox("점수"){
             Text(String($problemDetailViewModel.problem.score.wrappedValue))
                 .textFieldStyle(.roundedBorder)
         }
@@ -79,7 +81,7 @@ extension ProblemDetailView {
 
 struct ProblemDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemDetailView(challenge: .constant(ChallengeProblem(id: 1, problem_id: 1, title: "ads")))
+        ProblemDetailView(challenge: .constant(ChallengeProblem(id: 1, problem_id: 1, title: "ads",challeng_id: 1)))
     }
 }
 
@@ -93,7 +95,7 @@ class ProblemDetailViewModel :ObservableObject {
 }
 
 struct ProblemDetail {
-    let id : Int
+    var id : Int
     var name : String
     var description : String
     var input_description : String
@@ -104,15 +106,15 @@ struct ProblemDetail {
 // api call - 문제 상세 조회
 extension ProblemDetailViewModel{
     
-    func getProblem(problemId: Int)-> ProblemDetail {
+    func getProblem(problemId: Int , token : String)-> ProblemDetail {
         print(" get Problem : \(problemId)")
-        let url = "\(baseURL):8081/api/problem_catalogs/\(problemId)"
+        let url = "\(baseURL):8080/api/problem_catalogs/\(problemId)"
         var problemDetail = ProblemDetail(id: 0, name: "", description: "", input_description: "", output_description: "", score: 0)
         AF.request(url,
                    method: .get,
                    parameters: nil,
                    encoding: URLEncoding.default,
-                   headers: ["Content-Type":"application/json", "Accept":"application/json"])
+                   headers: ["Content-Type":"application/json", "Accept":"application/json", "Authorization": "Bearer \(token)"])
             .validate(statusCode: 200..<300)
             .responseJSON(completionHandler: { response in
                 //여기서 가져온 데이터를 자유롭게 활용하세요.
@@ -121,8 +123,14 @@ extension ProblemDetailViewModel{
                     print(response)
                     let json = JSON(value)
                     let data = json["data"]
-                    problemDetail = ProblemDetail(id: data["id"].intValue, name: data["name"].stringValue, description: data["description"].stringValue, input_description: data["input_description"].stringValue, output_description: data["output_description"].stringValue, score: data["score"].intValue)
-                    self.problem = problemDetail
+//                    problemDetail = ProblemDetail(id: data["id"].intValue, name: data["name"].stringValue, description: data["description"].stringValue, input_description: data["input_description"].stringValue, output_description: data["output_description"].stringValue, score: data["score"].intValue)
+                    
+                    self.problem.id = data["id"].intValue
+                    self.problem.name = data["name"].stringValue
+                    self.problem.description = data["description"].stringValue
+                    self.problem.input_description = data["input_description"].stringValue
+                    self.problem.output_description = data["output_description"].stringValue
+                    self.problem.score = data["score"].intValue
                  
                 case.failure(let error) :
                     print(error.localizedDescription)
@@ -138,11 +146,11 @@ extension ProblemDetailViewModel{
 extension ProblemDetailView {
   
     var submitBtn : some View {
-        NavigationLink(destination: SubmitView(problemDetail: $problemDetailViewModel.problem), label: {
+        NavigationLink(destination: SubmitView(challenge_id: $challenge.challeng_id, problemDetail: $problemDetailViewModel.problem), label: {
             HStack {
                     Image(systemName: "envelope")
                     .font(.body)
-                    Text("Submit")
+                    Text("제출     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )

@@ -7,7 +7,9 @@
 
 import SwiftUI
 import Alamofire
+import SwiftyJSON
 struct AuthorEditView: View {
+    @State var showAlert = false
     @Binding var challengeId : Int
     
     @State var numOfAuthors : Int = 1
@@ -177,14 +179,30 @@ extension AuthorEditView {
                        parameters: editAuthor,
                        encoder: JSONParameterEncoder.default).response { response in
                 debugPrint(response)
-            }
+            }.responseJSON(completionHandler: {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+//                    if json["error"]["status"] != NULL {
+//
+//                        showAlert = true
+//                        return
+//                    }
+                   
+                default:
+                    showAlert = true
+                    return
+                }
+
+            })
             
             
         }, label: {
             HStack {
                     Image(systemName: "person.2")
                     .font(.body)
-                    Text("Edit")
+                    Text("수정     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -193,7 +211,11 @@ extension AuthorEditView {
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
-        })
+        }).alert("대회의 주최자가 아닙니다.", isPresented: $showAlert) {
+            Button("확인"){}
+        } message: {
+            Text("대회의 주최자만 대회 정보를 수정 가능합니다.😘")
+        }
             
                 
        

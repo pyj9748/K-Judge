@@ -80,7 +80,7 @@ extension Challenge_date_time {
 
 // Model
 
-struct Challenge{
+struct Challenge : Identifiable{
     
     var id : Int
     var name : String

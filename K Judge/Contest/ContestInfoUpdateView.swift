@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContestInfoUpdateView: View {
     @Binding var challenge : Challenge
+   
     var body: some View {
        
         VStack{
@@ -16,7 +17,7 @@ struct ContestInfoUpdateView: View {
                 HStack {
                         Image(systemName: "highlighter")
                             .font(.title)
-                        Text("Edit Info")
+                        Text("정보수정")
                             .fontWeight(.semibold)
                             .font(.title)
                     }
@@ -32,7 +33,7 @@ struct ContestInfoUpdateView: View {
                 HStack {
                 Image(systemName: "person.2")
                     .font(.title)
-                Text("Edit Author")
+                Text("주최자 수정")
                     .fontWeight(.semibold)
                     .font(.title)
             }
@@ -48,7 +49,7 @@ struct ContestInfoUpdateView: View {
                 HStack {
                 Image(systemName: "square.grid.3x1.folder.badge.plus")
                     .font(.title)
-                Text("Edit Problem")
+                Text("문제수정")
                     .fontWeight(.semibold)
                     .font(.title)
             }

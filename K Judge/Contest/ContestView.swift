@@ -29,7 +29,7 @@ struct ContestView: View {
             }
             .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
             .padding(.horizontal, 12)
-            .navigationBarTitle("Contest",displayMode:.inline)
+            .navigationBarTitle(" 대회 " ,displayMode:.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
@@ -50,9 +50,9 @@ struct ContestCustomTopTabBar: View {
     @Binding var tabIndex: Int
     var body: some View {
         HStack(spacing: 20) {
-            TabBarButton(text: "Contests", isSelected: .constant(tabIndex == 0))
+            TabBarButton(text: "대회 목록", isSelected: .constant(tabIndex == 0))
                 .onTapGesture { onButtonTapped(index: 0) }
-            TabBarButton(text: "Create", isSelected: .constant(tabIndex == 1))
+            TabBarButton(text: "대회 생성", isSelected: .constant(tabIndex == 1))
                 .onTapGesture { onButtonTapped(index: 1) }
           
            

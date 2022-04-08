@@ -7,8 +7,10 @@
 
 import SwiftUI
 import Alamofire
-
+import SwiftyJSON
 struct InfoEditView: View {
+    @State var showAlert = false
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var challengeId : Int
     @State var name : String
     @State var start : Date
@@ -40,21 +42,21 @@ extension InfoEditView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("Name"){
-            TextField("Enter Name", text:self.$name )
+        GroupBox("대회명 수정"){
+            TextField("대회 이름을 입력하세요.", text:self.$name )
                 .textFieldStyle(.roundedBorder)
         }
     }
     // Challenge_date_time
     var start_datePicker : some View {
-        GroupBox("Start Date"){
+        GroupBox("대회 시작 시각 설정"){
             DatePicker("start_date", selection: self.$start, in: Date()...)
                        .datePickerStyle(WheelDatePickerStyle())
                        .labelsHidden()
         }
     }
     var end_datePicker : some View {
-        GroupBox("End Date"){
+        GroupBox("대회 종료 시각 설정"){
             DatePicker("end_date", selection: self.$end, in: Date()...)
                 .datePickerStyle(WheelDatePickerStyle())
                 .labelsHidden()
@@ -78,18 +80,38 @@ extension InfoEditView {
             let endTime = dateFormatter.string(from: self.end)
             let editInfo = PutInfo(name: name, challenge_date_time: PostChallengeDate(start_time: startTime, end_time: endTime))
 
-            AF.request("\(baseURL):8082/api/challenges/\(challengeId)/info",
+            // Header
+            let headers : HTTPHeaders = [
+                        "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
+            
+            AF.request("\(baseURL):8080/api/challenges/\(challengeId)/info",
                        method: .put,
                        parameters: editInfo,
-                       encoder: JSONParameterEncoder.default).response { response in
+                       encoder: JSONParameterEncoder.default,headers:  headers).response { response in
                 debugPrint(response)
-            }
+            }.responseJSON(completionHandler: {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+//                    if json["error"]["status"] != NULL {
+//
+//                        showAlert = true
+//                        return
+//                    }
+                   
+                default:
+                    showAlert = true
+                    return
+                }
+
+            })
             
         }, label: {
             HStack {
                     Image(systemName: "highlighter")
                     .font(.body)
-                    Text("Edit")
+                    Text("수정     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -98,7 +120,11 @@ extension InfoEditView {
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
-        })
+        }) .alert("대회의 주최자가 아닙니다.", isPresented: $showAlert) {
+            Button("확인"){}
+        } message: {
+            Text("대회의 주최자만 대회 정보를 수정 가능합니다.😘")
+        }
             
        
         

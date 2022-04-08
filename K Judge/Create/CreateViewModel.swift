@@ -36,7 +36,7 @@ class CreateViewModel :ObservableObject {
 extension CreateViewModel{
     
     // /api/problems
-    func createProblem() {
+    func createProblem(token : String) {
         let input_file_content1 = self.input_file1
         let input_file_url1 = self.getDocumentDirectory().appendingPathComponent("1.in")
         do {
@@ -85,7 +85,7 @@ extension CreateViewModel{
             
         }
       
-        uploadProblem(inputData: [input_file_url1, input_file_url2], outputData: [output_file_url1,output_file_url2])
+        uploadProblem(inputData: [input_file_url1, input_file_url2], outputData: [output_file_url1,output_file_url2],token: token)
         
         
     }
@@ -99,7 +99,7 @@ extension CreateViewModel{
 
 
 extension CreateViewModel {
-    func uploadProblem(inputData : [URL], outputData: [URL]){
+    func uploadProblem(inputData : [URL], outputData: [URL] , token :String){
         
         let json : JSON = [
             "name" : self.problem.name,
@@ -125,10 +125,10 @@ extension CreateViewModel {
             return
         }
        
-      
+       
         // header
         let headers : HTTPHeaders = [
-                    "Content-Type" : "multipart/form-data" ]
+                    "Content-Type" : "multipart/form-data","Authorization": "Bearer \(token)" ]
         // multipart upload
         AF.upload(multipartFormData: {
             (multipart) in

@@ -14,16 +14,16 @@ struct ProblemDescriptionView: View {
     var body: some View {
         ScrollView{
             VStack{
-                GroupBox("Name"){
+                GroupBox("문제 이름"){
                     Text(problemDetail.name)
                 }
-                GroupBox("Description"){
+                GroupBox("문제"){
                     Text(problemDetail.description)
                 }
-                GroupBox("InPut Description"){
+                GroupBox("입력"){
                     Text(problemDetail.input_description)
                 }
-                GroupBox("OutPut Description"){
+                GroupBox("출력"){
                     Text(problemDetail.output_description)
                 }
             

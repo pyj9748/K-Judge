@@ -8,9 +8,42 @@
 import SwiftUI
 
 struct MySubmissionView: View {
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var challenge : Challenge
+    @StateObject var mySubmissionViewModel = MySubmissionViewModel()
     var body: some View {
-        Text("my submission view")
+        VStack{
+            HStack{
+                Text("문제 번호")
+                Spacer()
+             
+                Text("제출 시각")
+                Spacer()
+                Text("제출 상태")
+               
+            }.padding()
+            ScrollView{
+                VStack{
+                    Text("").onAppear(){
+                        print("MySubmissionView \(challenge.id)")
+                        // get submission list
+                        mySubmissionViewModel.submissionList =
+                        mySubmissionViewModel.getSubmissionList(challengeId: challenge.id, token: token )
+                       
+                       
+                    }
+                }
+                ForEach($mySubmissionViewModel.submissionList ){ item in
+                    NavigationLink(destination:SubmissionDetailView(challengeId: $challenge.id,submissionId:.constant(item.id.wrappedValue)),label: {
+                        SubmissionListItem(submissionListItem: item)
+                    })
+                   
+                }
+                    
+               
+            }.padding()
+            Spacer()
+        }
     }
 }
 

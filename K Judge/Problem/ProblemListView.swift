@@ -9,18 +9,18 @@ import SwiftUI
 
 struct ProblemListView: View {
     @StateObject var problemListViewModel = ProblemListViewModel()
-    
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     var body: some View {
         VStack{
             HStack{
-                Text("id").onAppear(perform: {
-                    problemListViewModel.problemList = problemListViewModel.getProblemList()
+                Text("아이디").onAppear(perform: {
+                    problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
                 
                 })
                 Spacer()
-                Text("name")
+                Text("제목")
                 Spacer()
-                Text("score")
+                Text("점수")
                
             }.padding()
             ScrollView{

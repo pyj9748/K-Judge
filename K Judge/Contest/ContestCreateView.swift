@@ -10,7 +10,7 @@ import SwiftyJSON
 import Alamofire
 
 struct ContestCreateView: View {
-    
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
     @State var questions : String = ""
     @State var numOfAuthors : Int = 1
@@ -44,23 +44,23 @@ struct ContestCreateView: View {
                 ScrollView{
                     nameTextField
                     questionsTextField
-                    numOfAuthorsPicker
-                    if numOfAuthors >= 1 {
-                        author1
-                    }
-                    if numOfAuthors >= 2 {
-                        author2
-                    }
-                    if numOfAuthors >= 3 {
-                        author3
-                    }
-                    if numOfAuthors >= 4 {
-                        author4
-                    }
+//                    numOfAuthorsPicker
+//                    if numOfAuthors >= 1 {
+//                        author1
+//                    }
+//                    if numOfAuthors >= 2 {
+//                        author2
+//                    }
+//                    if numOfAuthors >= 3 {
+//                        author3
+//                    }
+//                    if numOfAuthors >= 4 {
+//                        author4
+//                    }
                     start_datePicker
                     end_datePicker
                 }.padding()
-            }  .navigationBarTitle("Create Contest",displayMode:.inline)
+            }  .navigationBarTitle(" 대회 생성 ",displayMode:.inline)
                 .toolbar(content: {
                     createBtn
                 })
@@ -91,35 +91,35 @@ extension ContestCreateView {
             // api call = create Contest
           
             // authors
-            var authorArray : [Author] = [
-                Author( user_id: 0, name: author1_name, accumulate_score: 0),
-                Author(  user_id:0, name: author2_name, accumulate_score: 0),
-                Author( user_id: 0, name: author3_name, accumulate_score: 0),
-                Author( user_id: 0, name: author4_name, accumulate_score: 0),
-            ]
-            for i in 0..<numOfAuthors {
-                if i == 0{
-                    authorArray[i].user_id = Int(author1_user_id)!
-                    authorArray[i].accumulate_score = Int(author1_accumulate_score)!
-                }
-                else if i == 1 {
-                    authorArray[i].user_id = Int(author2_user_id)!
-                    authorArray[i].accumulate_score = Int(author2_accumulate_score)!
-                }
-                else if i == 2 {
-                    authorArray[i].user_id = Int(author3_user_id)!
-                    authorArray[i].accumulate_score = Int(author3_accumulate_score)!
-                }
-                else {
-                    authorArray[i].user_id = Int(author4_user_id)!
-                    authorArray[i].accumulate_score = Int(author4_accumulate_score)!
-                }
-              
-            }
-            contestCreateViewModel.contest.authors = []
-            for i in 0..<numOfAuthors {
-                contestCreateViewModel.contest.authors.append( authorArray[i])
-            }
+//            var authorArray : [Author] = [
+//                Author( user_id: 0, name: author1_name, accumulate_score: 0),
+//                Author(  user_id:0, name: author2_name, accumulate_score: 0),
+//                Author( user_id: 0, name: author3_name, accumulate_score: 0),
+//                Author( user_id: 0, name: author4_name, accumulate_score: 0),
+//            ]
+//            for i in 0..<numOfAuthors {
+//                if i == 0{
+//                    authorArray[i].user_id = Int(author1_user_id)!
+//                    authorArray[i].accumulate_score = Int(author1_accumulate_score)!
+//                }
+//                else if i == 1 {
+//                    authorArray[i].user_id = Int(author2_user_id)!
+//                    authorArray[i].accumulate_score = Int(author2_accumulate_score)!
+//                }
+//                else if i == 2 {
+//                    authorArray[i].user_id = Int(author3_user_id)!
+//                    authorArray[i].accumulate_score = Int(author3_accumulate_score)!
+//                }
+//                else {
+//                    authorArray[i].user_id = Int(author4_user_id)!
+//                    authorArray[i].accumulate_score = Int(author4_accumulate_score)!
+//                }
+//
+//            }
+//            contestCreateViewModel.contest.authors = []
+//            for i in 0..<numOfAuthors {
+//                contestCreateViewModel.contest.authors.append( authorArray[i])
+//            }
             // author의 user id , accumulate 값이 유효한지
 //            for i in 0..<numOfAuthors {
 //
@@ -144,15 +144,17 @@ extension ContestCreateView {
            
             
             //contestCreateViewModel.createContest(parameters: parameters)
+            // Header
+            let headers : HTTPHeaders = [
+                        "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
             
-            
-            let postContest = PostContest(authors: contestCreateViewModel.contest.authors, name: contestCreateViewModel.contest.name, challenge_date_time: PostChallengeDate(start_time: start, end_time: end), questions: contestCreateViewModel.contest.questions)
+            let postContest = PostContest( name: contestCreateViewModel.contest.name, challenge_date_time: PostChallengeDate(start_time: start, end_time: end), questions: contestCreateViewModel.contest.questions)
            
 
-            AF.request("\(baseURL):8082/api/challenges",
+            AF.request("\(baseURL):8080/api/challenges",
                        method: .post,
                        parameters: postContest,
-                       encoder: JSONParameterEncoder.default).response { response in
+                       encoder: JSONParameterEncoder.default,headers: headers).response { response in
                 debugPrint(response)
             }
             
@@ -162,7 +164,7 @@ extension ContestCreateView {
             HStack {
                     Image(systemName: "plus.circle")
                     .font(.body)
-                    Text("Create")
+                    Text("생성     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -187,7 +189,7 @@ extension ContestCreateView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("Name"){
+        GroupBox("대회 이름"){
             TextField("Enter Name", text:self.$contestCreateViewModel.contest.name)
                 .textFieldStyle(.roundedBorder)
         }
@@ -195,7 +197,7 @@ extension ContestCreateView {
     
     //Qusetions
     var questionsTextField : some View {
-        GroupBox("Questions"){
+        GroupBox("출제 문제"){
             TextField("Enter Questions EX) 1,2,3,4", text:$questions )
                 .textFieldStyle(.roundedBorder)
         }
@@ -264,14 +266,14 @@ extension ContestCreateView {
     
     // Challenge_date_time
     var start_datePicker : some View {
-        GroupBox("Start Date"){
+        GroupBox("대회 시작"){
             DatePicker("start_date", selection: $contestCreateViewModel.contest.challenge_date_time.start_time, in: Date()...)
                        .datePickerStyle(WheelDatePickerStyle())
                        .labelsHidden()
         }
     }
     var end_datePicker : some View {
-        GroupBox("End Date"){
+        GroupBox("대회 종료"){
             DatePicker("end_date", selection: $contestCreateViewModel.contest.challenge_date_time.end_time, in: Date()...)
                 .datePickerStyle(WheelDatePickerStyle())
                 .labelsHidden()
@@ -289,7 +291,7 @@ struct ContestCreateView_Previews: PreviewProvider {
 }
 
 struct PostContest : Encodable {
-    let authors : [Author]
+   
     let name : String
     let challenge_date_time : PostChallengeDate
     let questions : [Int]

@@ -12,7 +12,10 @@ struct ProblemListItem: View {
     var body: some View {
         GroupBox{
             HStack{
-                Text(String(problemListItem.problem_id))
+                Text(String(problemListItem.problem_id)).onAppear(){
+                    print(problemListItem.problem_id)
+                    
+                }
                 Spacer()
                 Text(problemListItem.title)
                 
@@ -23,6 +26,6 @@ struct ProblemListItem: View {
 
 struct ProblemListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemListItem(problemListItem: .constant(ChallengeProblem(id: 1, problem_id: 1, title: "asd")))
+        ProblemListItem(problemListItem: .constant(ChallengeProblem(id: 1, problem_id: 1, title: "asd",challeng_id: 1)))
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct K_JudgeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+           ContentView()
         }
     }
 }

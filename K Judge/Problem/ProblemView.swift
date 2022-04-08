@@ -15,7 +15,7 @@ struct ProblemView: View {
         NavigationView{
             VStack{
                 ProblemListView()
-            } .navigationBarTitle("Problems",displayMode:.inline)
+            } .navigationBarTitle("문제목록",displayMode:.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {

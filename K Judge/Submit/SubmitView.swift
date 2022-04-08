@@ -9,8 +9,9 @@ import SwiftUI
 
 // View
 struct SubmitView: View {
-    
-    
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
+    @Binding var challenge_id : Int
+    let languages = [Language.JAVA.string , Language.CPP.string , Language.C.string]
     @State var selected_option : Int = 0
     
     @StateObject var submitViewModel = SubmitViewModel()
@@ -21,7 +22,7 @@ struct SubmitView: View {
                 
                 pickerView
 
-                Text("Language : \(languages[self.selected_option])")
+                Text("언어 : \(languages[self.selected_option])")
                
                 CodeEditorView(source_code: self.$submitViewModel.submit.source_code, selected_option: self.$selected_option)
               
@@ -29,7 +30,7 @@ struct SubmitView: View {
                 
                 
                 Spacer()
-            }.navigationBarTitle("Submit Problem",displayMode:.inline)
+            }.navigationBarTitle("코드 제출",displayMode:.inline)
                 .toolbar(content: {
                     submitBtn
                 })
@@ -49,6 +50,7 @@ extension SubmitView {
             
         }.onChange(of: selected_option, perform: { _ in
             self.$submitViewModel.submit.source_code.wrappedValue = init_codes[selected_option]
+            self.submitViewModel.submit.programming_language = languages[selected_option]
         })
     }
 }
@@ -59,15 +61,18 @@ extension SubmitView {
        
         Button(action: {
             print("submitBtn")
-            print(self.$selected_option.wrappedValue)
-               
+            print("problemid : ",self.problemDetail.id)
+            print("challengeid : ",self.challenge_id)
+            print("source code : ",self.submitViewModel.submit.source_code)
+            print("language : ",self.submitViewModel.submit.programming_language)
             // submit api 콜
+            submitViewModel.gradeSubmitCode(problemId: problemDetail.id, challengeId: challenge_id, token: token)
             
         }, label: {
             HStack {
                     Image(systemName: "envelope")
                     .font(.body)
-                    Text("Submit")
+                    Text("제출     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -82,7 +87,7 @@ extension SubmitView {
 
 struct SubmitView_Previews: PreviewProvider {
     static var previews: some View {
-        SubmitView(problemDetail: .constant(ProblemDetail(id: 1, name: "name", description: "des", input_description: "in_des", output_description: "out_des", score: 100)))
+        SubmitView(challenge_id: .constant(10), problemDetail: .constant(ProblemDetail(id: 1, name: "name", description: "des", input_description: "in_des", output_description: "out_des", score: 100)))
     }
 }
 

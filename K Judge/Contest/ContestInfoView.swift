@@ -61,7 +61,7 @@ extension ContestInfoViewModel {
                        "size": 300  // 여기는 한번에 가져올 문제 개수 값
         ]
         // api call - 대회 목록조회
-        let url = "\(baseURL):8082/api/challenges/\(challengeId)/participations"
+        let url = "\(baseURL):8080/api/challenges/\(challengeId)/participations"
                AF.request(url,
                           method: .get,
                           parameters:parameters,

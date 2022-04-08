@@ -275,7 +275,7 @@ private let swiftReservedIds =
    
    // C reservedIDs
     "asm", "auto", "char" , "const" ,  "double" , "extern" , "float", "goto",
-   "int", "long" , "register", "short", "signed","sizeof", "typedef", "union", "unsigned", "void", "volatile",
+   "int", "long" , "register", "short","string", "signed","sizeof", "typedef", "union", "unsigned", "void", "volatile",
    // C++ reservedIDs
    "delete", "friend", "inline" , "new", "protected", "template", "this", "virtual",
    // JAVA reservedIDS

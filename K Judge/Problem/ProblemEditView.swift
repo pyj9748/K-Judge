@@ -9,6 +9,7 @@ import SwiftUI
 import Alamofire
 
 struct ProblemEditView: View {
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var problemId : String
     @StateObject var problemEditViewModel = ProblemEditViewModel()
     @State var showingAlert = false
@@ -35,7 +36,7 @@ struct ProblemEditView: View {
         }// VStack
        
       
-        .navigationBarTitle("Edit Problem",displayMode:.inline)
+        .navigationBarTitle("문제 수정",displayMode:.inline)
         .toolbar(content: {
             editBtn
         })
@@ -47,29 +48,29 @@ extension ProblemEditView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("Name"){
-            TextField("Enter Name", text:self.$problemEditViewModel.problem.name )
+        GroupBox("문제 이름"){
+            TextField("문제 이름을 입력하세요", text:self.$problemEditViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
         }
     }
     
     // Description
     var descriptionTextEditor : some View{
-        GroupBox("Description"){
+        GroupBox("문제"){
             TextEditor(text:self.$problemEditViewModel.problem.description.description)
         }
     }
    
     // input_description
     var input_descriptionTextEditor : some View{
-        GroupBox("InPut Description"){
+        GroupBox("입력"){
             TextEditor(text:self.$problemEditViewModel.problem.description.input_description)
         }
     }
    
     // output_description
     var output_descriptionTextEditor : some View{
-        GroupBox("OutPut Description"){
+        GroupBox("출력"){
             TextEditor(text:self.$problemEditViewModel.problem.description.output_description)
         }
     }
@@ -77,7 +78,7 @@ extension ProblemEditView {
 
     // memory
     var memoryTextField : some View{
-        GroupBox("Memory"){
+        GroupBox("메모리 제한"){
             TextField("256", text:self.$problemEditViewModel.problem.limit.memory)
                 .textFieldStyle(.roundedBorder)
         }
@@ -86,7 +87,7 @@ extension ProblemEditView {
 
     // time
     var timeTextField : some View{
-        GroupBox("Time"){
+        GroupBox("시간 제한"){
             TextField("2", text:self.$problemEditViewModel.problem.limit.time)
                 .textFieldStyle(.roundedBorder)
         }
@@ -94,7 +95,7 @@ extension ProblemEditView {
     
     // score
     var scoreTextField : some View{
-        GroupBox("Score"){
+        GroupBox("점수"){
             TextField("1000", text:self.$problemEditViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
         }
@@ -124,13 +125,16 @@ extension ProblemEditView {
                
             // api 콜
             
-          
+            // Header
+            let headers : HTTPHeaders = [
+                        "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
+            
             let editProblem = EditProblem(name: problemEditViewModel.problem.name, score:Int( problemEditViewModel.problem.score)!, limit: PostLimit(time: Int(problemEditViewModel.problem.limit.time)!, memory: Int(problemEditViewModel.problem.limit.memory)!), description: PostDescription(description: problemEditViewModel.problem.description.description, input_description: problemEditViewModel.problem.description.input_description, output_description: problemEditViewModel.problem.description.output_description))
 
             AF.request("\(baseURL):8080/api/problems/\(problemId)",
                        method: .put,
                        parameters: editProblem,
-                       encoder: JSONParameterEncoder.default).response { response in
+                       encoder: JSONParameterEncoder.default,headers: headers).response { response in
                 debugPrint(response)
             }
             
@@ -138,7 +142,7 @@ extension ProblemEditView {
             HStack {
                     Image(systemName: "pencil.circle")
                     .font(.body)
-                    Text("Edit")
+                    Text("수정     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )

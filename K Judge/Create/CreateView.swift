@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CreateView: View {
+    
+    @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
     
     @StateObject var createViewModel = CreateViewModel()
@@ -39,7 +41,7 @@ struct CreateView: View {
             }// VStack
            
           
-            .navigationBarTitle("Create Problem",displayMode:.inline)
+            .navigationBarTitle("문제 생성",displayMode:.inline)
             .toolbar(content: {
                 createBtn
                     
@@ -86,13 +88,13 @@ extension CreateView {
     
                
             // api 콜
-            createViewModel.createProblem()
+            createViewModel.createProblem(token: token)
             
         }, label: {
             HStack {
                     Image(systemName: "plus.circle")
                     .font(.body)
-                    Text("Create")
+                    Text("생성     ")
                         .fontWeight(.semibold)
                         .font(.body
                         )
@@ -117,62 +119,62 @@ extension CreateView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("Name"){
-            TextField("Enter Name", text:self.$createViewModel.problem.name )
+        GroupBox("문제 이름"){
+            TextField("문제 이름을 입력하세요.", text:self.$createViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
         }
     }
     
     // Description
     var descriptionTextEditor : some View{
-        GroupBox("Description"){
+        GroupBox("문제"){
             TextEditor(text:self.$createViewModel.problem.description.description)
         }
     }
    
     // input_description
     var input_descriptionTextEditor : some View{
-        GroupBox("InPut Description"){
+        GroupBox("입력"){
             TextEditor(text:self.$createViewModel.problem.description.input_description)
         }
     }
    
     // output_description
     var output_descriptionTextEditor : some View{
-        GroupBox("OutPut Description"){
+        GroupBox("출력"){
             TextEditor(text:self.$createViewModel.problem.description.output_description)
         }
     }
     // input_file 1
     var input_file1TextEditor : some View{
-        GroupBox("InPut File1"){
+        GroupBox("예제 입력 1"){
             TextEditor(text:self.$createViewModel.input_file1)
         }
     }
     // output_file 1
     var output_file1TextEditor : some View{
-        GroupBox("OutPut File1"){
+        GroupBox("예제 출력 1"){
             TextEditor(text:self.$createViewModel.output_file1)
         }
     }
 
     // input_file 2
     var input_file2TextEditor : some View{
-        GroupBox("InPut File2"){
+        GroupBox("예제 입력 2"){
             TextEditor(text:self.$createViewModel.input_file2)
         }
     }
 
     // output_file 2
     var output_file2TextEditor : some View{
-        GroupBox("OutPut File2"){
+        GroupBox("예제 출력 2"){
             TextEditor(text:self.$createViewModel.output_file2)
         }
     }
 
     // memory
     var memoryTextField : some View{
-        GroupBox("Memory"){
+        GroupBox("메모리 제한"){
             TextField("256", text:self.$createViewModel.problem.limit.memory)
                 .textFieldStyle(.roundedBorder)
         }
@@ -181,7 +183,7 @@ extension CreateView {
 
     // time
     var timeTextField : some View{
-        GroupBox("Time"){
+        GroupBox("시간 제한"){
             TextField("2", text:self.$createViewModel.problem.limit.time)
                 .textFieldStyle(.roundedBorder)
         }
@@ -189,7 +191,7 @@ extension CreateView {
     
     // score
     var scoreTextField : some View{
-        GroupBox("Score"){
+        GroupBox("점수"){
             TextField("1000", text:self.$createViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
         }

@@ -13,38 +13,33 @@ import SwiftyJSON
 // View Model
 class SubmitViewModel :ObservableObject {
     
-    @Published var submit = Submit(source_code: init_codes[0], programming_language: languages[0])
+    @Published var submit = Submit(source_code: init_codes[0], programming_language: languages[0],problem_id: 1)
     
 }
 
 // api call - 문제 채점 요청
 extension SubmitViewModel {
-    func gradeSubmitCode() {
+    func gradeSubmitCode(problemId: Int, challengeId: Int,token: String) {
         
-        let url = "\(baseURL)/api/problems/" ///////////
+        let url = "\(baseURL):8080/api/challenges/\(challengeId)/participations/submits" ///////////
                 var request = URLRequest(url: URL(string: url)!)
                 request.httpMethod = "POST"
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.timeoutInterval = 10
                 
-                // POST 로 보낼 정보
-        let params = ["source_code":submit.source_code, "programming_language":submit.programming_language] as Dictionary
+        let headers : HTTPHeaders = [
+                    "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
+        
+        let postSubmit = Submit(source_code: submit.source_code, programming_language: submit.programming_language, problem_id: problemId)
+       
 
-                // httpBody 에 parameters 추가
-                do {
-                    try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
-                } catch {
-                    print("http Body Error")
-                }
-                
-                AF.request(request).responseString { (response) in
-                    switch response.result {
-                    case .success:
-                        print("POST 성공")
-                    case .failure(let error):
-                        print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
-                    }
-                }
+        AF.request(url,
+                   method: .post,
+                   parameters: postSubmit,
+                   encoder: JSONParameterEncoder.default,headers: headers).response { response in
+            debugPrint(response)
+        }
+
         
         
     }

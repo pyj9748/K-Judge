@@ -8,9 +8,25 @@
 import Foundation
 
 // Model
-struct Login : Codable {
+
+struct User :Encodable{
+    var id : String
+    var password : String
+    var token : String
+}
+
+
+struct Login : Encodable {
     
     var user : User
+    
+    
+}
+struct SignUp : Encodable {
+    
+    var id : String
+    var password : String
+    var checkPassword : String
     
     
 }

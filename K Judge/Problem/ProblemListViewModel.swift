@@ -42,7 +42,10 @@ extension ProblemListViewModel {
                  switch response.result{
                  case.success(let value):
                      //print(response)
+                     
                      let json = JSON(value)
+                     guard let a = json["data"].array?.count else {return}
+                     
                      let dataList = json["data"].array
                      
                      for i in (dataList?.indices)! {

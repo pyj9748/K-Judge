@@ -43,7 +43,7 @@ extension SubmissionDetailView {
     
     // problemID
     var problemIDText: some View{
-        GroupBox("문제 번호"){
+        GroupBox("문제 아이디"){
             Text(String($submissionDetailViewModel.submissionDetail.problem_id.wrappedValue) )
                 
         }

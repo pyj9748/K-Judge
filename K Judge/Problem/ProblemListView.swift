@@ -10,19 +10,11 @@ import SwiftUI
 struct ProblemListView: View {
     @StateObject var problemListViewModel = ProblemListViewModel()
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
+  
     var body: some View {
-        VStack{
-            HStack{
-                Text("아이디").onAppear(perform: {
-                    problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
-                
-                })
-                Spacer()
-                Text("제목")
-                Spacer()
-                Text("점수")
-               
-            }.padding()
+        VStack(alignment : .leading){
+              
+
             ScrollView{
                 ForEach($problemListViewModel.problemList){ item in
                     NavigationLink(destination:ProblemItemView(problemId: .constant(item.id)), label: {
@@ -31,7 +23,11 @@ struct ProblemListView: View {
                    
                 }
             }.padding()
+            
             Spacer()
+              
+        }.onAppear(){
+            problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
         }
      
         

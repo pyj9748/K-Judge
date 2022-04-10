@@ -13,15 +13,15 @@ struct MySubmissionView: View {
     @StateObject var mySubmissionViewModel = MySubmissionViewModel()
     var body: some View {
         VStack{
-            HStack{
-                Text("문제 번호")
-                Spacer()
-             
-                Text("제출 시각")
-                Spacer()
-                Text("제출 상태")
-               
-            }.padding()
+//            HStack{
+//                Text("문제 번호")
+//                Spacer()
+//
+//                Text("제출 시각")
+//                Spacer()
+//                Text("제출 상태")
+//
+//            }.padding()
             ScrollView{
                 VStack{
                     Text("").onAppear(){
@@ -41,7 +41,7 @@ struct MySubmissionView: View {
                 }
                     
                
-            }.padding()
+            }
             Spacer()
         }
     }

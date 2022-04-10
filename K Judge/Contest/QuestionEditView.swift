@@ -14,9 +14,15 @@ struct QuestionEditView: View {
     @State var showingAlert = false
     @State var questions : String = ""
     @Binding var challengeId : Int
+    @State var multiSelection = Set<String>()
+    @StateObject var problemListViewModel = ProblemListViewModel()
+    
     var body: some View {
         VStack{
-            questionsTextField
+            Text("").onAppear(){
+                problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
+            }
+            questionsListSelect
             
         } .navigationBarTitle("Edit Question",displayMode:.inline)
             .toolbar(content: {
@@ -39,7 +45,16 @@ struct PutQuestion : Encodable{
 // questions Edit section
 extension  QuestionEditView {
     
-   
+    var questionsListSelect: some View {
+        GroupBox("출제 문제"){
+            NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
+               Text("출제 문제 선택하기")
+            })
+            Text("출제 문제 개수 : \(multiSelection.count)")
+            Text("출제 문제 개수 : \(multiSelection.description)")
+        }
+       
+    }
     
     //Qusetions
     var questionsTextField : some View {
@@ -59,21 +74,24 @@ extension QuestionEditView {
         Button(action: {
           
             // 문제의 값이 잘 들어갔는지
-            guard self.questions.split(separator: ",").map({
-                Int($0)!
-            }) != []
-            else {
-                self.showingAlert = true
-                return
-            }
+//            guard self.questions.split(separator: ",").map({
+//                Int($0)!
+//            }) != []
+//            else {
+//                self.showingAlert = true
+//                return
+//            }
             
             
             
             
-           
-            let questions = self.questions.split(separator: ",").map({
+            let questions =
+            self.$multiSelection.wrappedValue.map({
                 Int($0)!
             })
+//            let questions = self.questions.split(separator: ",").map({
+//                Int($0)!
+//            })
             
             // Header
             let headers : HTTPHeaders = [

@@ -10,17 +10,26 @@ import SwiftUI
 struct ProblemListItem: View {
     @Binding var problemListItem : ChallengeProblem
     var body: some View {
-        GroupBox{
-            HStack{
-                Text(String(problemListItem.problem_id)).onAppear(){
-                    print(problemListItem.problem_id)
+      
+        
+        HStack{
+            
+                HStack(spacing: 20){
+                    Image(systemName: "octagon")
+                        .font(.largeTitle)
+                        
                     
-                }
-                Spacer()
-                Text(problemListItem.title)
-                
-            }
-        }
+                    VStack(alignment: .leading){
+                        
+                        Text(problemListItem.title).foregroundColor(Color.black).font(.bold(.title)())
+                        Text("문제 아이디 : \(String(problemListItem.problem_id))").foregroundColor(Color.black)
+                       
+                    }
+                }.padding(.horizontal)
+               
+            
+            Spacer()
+        }.padding(3)
     }
 }
 

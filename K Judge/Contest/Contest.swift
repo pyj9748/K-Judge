@@ -89,6 +89,8 @@ struct Challenge : Identifiable{
     var num_of_participation : Int
     var num_of_question : Int
     
+    
+    
 }
 
 

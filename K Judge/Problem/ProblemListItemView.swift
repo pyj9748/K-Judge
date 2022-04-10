@@ -11,15 +11,30 @@ struct ProblemListItemView: View {
     @Binding var problemListItem : ProblemCatalogs
      
      var body: some View {
-         GroupBox{
-             HStack{
-                 Text(String(problemListItem.id))
-                 Spacer()
-                 Text(problemListItem.name)
-                 Spacer()
-                 Text(String(problemListItem.score))
-             }
-         }
+         HStack{
+             
+                 HStack(spacing: 20){
+                     Image(systemName: "octagon")
+                         .font(.largeTitle)
+                         
+                     
+                     VStack(alignment: .leading){
+                         
+                         Text(problemListItem.name).foregroundColor(Color.black).font(.bold(.title)())
+                         Text("문제 아이디 : \(String(problemListItem.id))").foregroundColor(Color.black)
+                         Text("점수   : \(String(problemListItem.score))").foregroundColor(Color.black)
+                     }
+                 }.padding(.horizontal)
+                
+             
+             Spacer()
+         }.padding(3)
+       
+        
+            
+         
+             
+        
         
      }
 }

@@ -15,13 +15,13 @@ struct ProblemsView: View {
     var body: some View {
         
         VStack{
-            HStack{
-                Text("문제 번호")
-                Spacer()
-             
-                Text("문제 이름")
-               
-            }.padding()
+//            HStack{
+//                Text("문제 번호")
+//                Spacer()
+//
+//                Text("문제 이름")
+//
+//            }.padding()
             ScrollView{
                 VStack{
                     Text("").onAppear(){
@@ -40,7 +40,7 @@ struct ProblemsView: View {
                     })
                    
                 }
-            }.padding()
+            }
             Spacer()
         }
     }

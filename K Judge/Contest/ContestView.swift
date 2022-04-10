@@ -14,7 +14,7 @@ struct ContestView: View {
     
     var body: some View {
         NavigationView{
-            VStack{
+            VStack(alignment : .leading){
                 ContestCustomTopTabBar(tabIndex: $tabIndex)
                 if tabIndex == 0 {
                    ContestListView()

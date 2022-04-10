@@ -67,11 +67,8 @@ let init_codes : [String] = [
     int main()
 
     {
-
         std::cout << "Hello World\n";
-        
-    return 0;
-
+        return 0;
     }
     
     """
@@ -83,7 +80,6 @@ let init_codes : [String] = [
     int main(void)
     {
         printf("Hello World\n");
-     
         return 0;
     }
     

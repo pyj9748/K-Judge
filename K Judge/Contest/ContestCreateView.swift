@@ -10,32 +10,16 @@ import SwiftyJSON
 import Alamofire
 
 struct ContestCreateView: View {
+  
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
     @State var questions : String = ""
-    @State var numOfAuthors : Int = 1
+    @State var multiSelection = Set<String>()
     
-    let numOfAuthorArray = [1,2,3,4]
-    @State var selectedNumOfAuthor = 0
-    
-    
-    @State var author1_user_id : String = ""
-    @State var author1_name : String = ""
-    @State var author1_accumulate_score : String = ""
-    @State var author2_user_id : String = ""
-    @State var author2_name : String = ""
-    @State var author2_accumulate_score : String = ""
-    @State var author3_user_id : String = ""
-    @State var author3_name : String = ""
-    @State var author3_accumulate_score : String = ""
-    @State var author4_user_id : String = ""
-    @State var author4_name : String = ""
-    @State var author4_accumulate_score : String = ""
-     
     
     @StateObject var contestCreateViewModel = ContestCreateViewModel()
     
-        
+    @StateObject var problemListViewModel = ProblemListViewModel()
     
     
     var body: some View {
@@ -43,23 +27,14 @@ struct ContestCreateView: View {
             VStack{
                 ScrollView{
                     nameTextField
-                    questionsTextField
-//                    numOfAuthorsPicker
-//                    if numOfAuthors >= 1 {
-//                        author1
-//                    }
-//                    if numOfAuthors >= 2 {
-//                        author2
-//                    }
-//                    if numOfAuthors >= 3 {
-//                        author3
-//                    }
-//                    if numOfAuthors >= 4 {
-//                        author4
-//                    }
+                    questionsListSelect
                     start_datePicker
                     end_datePicker
                 }.padding()
+                    .onAppear(){
+                        problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
+                        
+                    }
             }  .navigationBarTitle(" 대회 생성 ",displayMode:.inline)
                 .toolbar(content: {
                     createBtn
@@ -77,66 +52,28 @@ extension ContestCreateView {
         Button(action: {
             print("createBtn")
             // 문제의 값이 잘 들어갔는지
-            guard self.questions.split(separator: ",").map({
-                Int($0)!
-            }) != []
-            else {
-                self.showingAlert = true
-                return
-            }
-            
+//            guard self.questions.split(separator: ",").map({
+//                Int($0)!
+//            }) != []
+//            else {
+//                self.showingAlert = true
+//                return
+//            }
+//
             
             
             
             // api call = create Contest
           
-            // authors
-//            var authorArray : [Author] = [
-//                Author( user_id: 0, name: author1_name, accumulate_score: 0),
-//                Author(  user_id:0, name: author2_name, accumulate_score: 0),
-//                Author( user_id: 0, name: author3_name, accumulate_score: 0),
-//                Author( user_id: 0, name: author4_name, accumulate_score: 0),
-//            ]
-//            for i in 0..<numOfAuthors {
-//                if i == 0{
-//                    authorArray[i].user_id = Int(author1_user_id)!
-//                    authorArray[i].accumulate_score = Int(author1_accumulate_score)!
-//                }
-//                else if i == 1 {
-//                    authorArray[i].user_id = Int(author2_user_id)!
-//                    authorArray[i].accumulate_score = Int(author2_accumulate_score)!
-//                }
-//                else if i == 2 {
-//                    authorArray[i].user_id = Int(author3_user_id)!
-//                    authorArray[i].accumulate_score = Int(author3_accumulate_score)!
-//                }
-//                else {
-//                    authorArray[i].user_id = Int(author4_user_id)!
-//                    authorArray[i].accumulate_score = Int(author4_accumulate_score)!
-//                }
-//
-//            }
-//            contestCreateViewModel.contest.authors = []
-//            for i in 0..<numOfAuthors {
-//                contestCreateViewModel.contest.authors.append( authorArray[i])
-//            }
-            // author의 user id , accumulate 값이 유효한지
-//            for i in 0..<numOfAuthors {
-//
-//                guard let _ = contestCreateViewModel.contest.authors[i].user_id
-//                else {
-//                    self.showingAlert = true
-//                    return
-//                }
-//                guard let _ = contestCreateViewModel.contest.authors[i].accumulate_score
-//                else {
-//                    self.showingAlert = true
-//                    return
-//                }
-//            }
-            contestCreateViewModel.contest.questions = self.questions.split(separator: ",").map({
+    
+            contestCreateViewModel.contest.questions =
+            self.$multiSelection.wrappedValue.map({
                 Int($0)!
             })
+            
+//            self.questions.split(separator: ",").map({
+//                Int($0)!
+//            })
             
             let start = contestCreateViewModel.getStartDate()
             let end = contestCreateViewModel.getEndDate()
@@ -203,67 +140,17 @@ extension ContestCreateView {
         }
     }
     
-    // Authors
-    var numOfAuthorsPicker : some View {
-        GroupBox("Authors"){
-            VStack {
-                Picker("작성자 수를 고르세요", selection: $selectedNumOfAuthor) {
-                    ForEach(0 ..< numOfAuthorArray.count, id:\.self) { i in
-                        Text(String(numOfAuthorArray[i]))
-                    }
-                }.onChange(of: selectedNumOfAuthor, perform: { _ in
-                    self.numOfAuthors = numOfAuthorArray[selectedNumOfAuthor]
-                })
-                
-                Text("\(numOfAuthorArray[selectedNumOfAuthor])명의 작성자가 있습니다.")
-            }.pickerStyle(SegmentedPickerStyle())
+    var questionsListSelect: some View {
+        GroupBox("출제 문제"){
+            NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
+               Text("출제 문제 선택하기")
+            })
+            Text("출제 문제 : \(multiSelection.description)")
         }
-    }
-
-    // author1
-    var author1 : some View {
-        GroupBox("Author1"){
-            VStack{
-                TextField("user id ex) 1",text: $author1_user_id)
-                    .textFieldStyle(.roundedBorder)
-                TextField("name",text: $author1_name)
-                    .textFieldStyle(.roundedBorder)
-                TextField("score ex) 1000",text: $author1_accumulate_score)
-                    .textFieldStyle(.roundedBorder)
-            }
-        }
-    }
-    // author2
-    var author2 : some View {
-        GroupBox("Author2"){
-            VStack{
-                TextField("user id ex) 2",text: $author2_user_id) .textFieldStyle(.roundedBorder)
-                TextField("name",text: $author2_name) .textFieldStyle(.roundedBorder)
-                TextField("score ex) 1000",text: $author2_accumulate_score) .textFieldStyle(.roundedBorder)
-            }
-        }
-    }
-    // author3
-    var author3 : some View {
-        GroupBox("Author3"){
-            VStack{
-                TextField("user id ex) 3",text: $author3_user_id) .textFieldStyle(.roundedBorder)
-                TextField("name",text: $author3_name) .textFieldStyle(.roundedBorder)
-                TextField("score ex) 1000",text: $author3_accumulate_score) .textFieldStyle(.roundedBorder)
-            }
-        }
-    }
-    // author4
-    var author4 : some View {
-        GroupBox("Author4"){
-            VStack{
-                TextField("user id ex) 4",text: $author4_user_id) .textFieldStyle(.roundedBorder)
-                TextField("name",text: $author4_name) .textFieldStyle(.roundedBorder)
-                TextField("score ex) 1000",text: $author4_accumulate_score) .textFieldStyle(.roundedBorder)
-            }
-        }
+       
     }
     
+
     // Challenge_date_time
     var start_datePicker : some View {
         GroupBox("대회 시작"){

@@ -10,36 +10,48 @@ import SwiftUI
 struct ContestListItemView: View {
    
    @Binding var challengeListItem : Challenge
-    var dateFormatter = DateFormatter()
-    
+   
+    @State var start = Date()
+    @State var end = Date()
     var body: some View {
-        GroupBox{
-            HStack{
-                Spacer()
-                Text(challengeListItem.name).frame(width:70, height: 50 )
-                Spacer()
-                start_dateText.frame(width: 100, height: 50 )
-                Spacer()
-                end_dateText.frame(width: 100, height: 50 )
-                Spacer()
-            }
-        }
-       
+        
+            
+        
+        HStack{
+            
+                HStack(spacing: 20){
+                    Image(systemName: "octagon")
+                        .font(.largeTitle)
+                        
+                    
+                    VStack(alignment:.leading){
+                        
+                        Text(challengeListItem.name).foregroundColor(Color.black).font(.bold(.title)())
+                        Text("대회시작 : \(self.editDate(str: challengeListItem.start_time))").foregroundColor(Color.black)
+                        Text("대회종료 : \(self.editDate(str: challengeListItem.end_time))").foregroundColor(Color.black)
+                    }
+                }.padding(.horizontal)
+               
+            
+            Spacer()
+        }.padding(3)
     }
-}
-extension ContestListItemView {
-    var start_dateText : some View {
-       
-        Text(challengeListItem.start_time)
-    }
-    
-    var end_dateText : some View {
-     
-        Text(challengeListItem.end_time)
-    }
-  
 }
 
+extension ContestListItemView {
+    func editDate(str:String) -> String {
+        let startIndex1 = str.startIndex
+        let endIndex1 = str.index(startIndex1, offsetBy: 9)
+        var str1 = str[startIndex1...endIndex1]
+        let startIndex2 = str.index(startIndex1, offsetBy: 11)
+        let endIndex2 = str.index(startIndex2, offsetBy: 4)
+        var str2 = str[startIndex2...endIndex2]
+        str1 += " "
+        str1 += str2
+        return String(str1)
+    }
+    
+}
 
 struct ContestListItemView_Previews: PreviewProvider {
     static var previews: some View {

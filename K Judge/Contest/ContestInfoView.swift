@@ -24,9 +24,24 @@ struct ContestInfoView: View {
             Text("참가자 수는 \(contestInfoViewModel.participationList.count)명")
             // 참가자 List
             ForEach(contestInfoViewModel.participationList, id: \.participation_id){ item in
-                GroupBox{
-                    Text("\(item.name)")
-                }
+                HStack{
+                    
+                        HStack(spacing: 20){
+                            Image(systemName: "person.crop.circle")
+                                .font(.largeTitle)
+                                
+                            
+                            VStack(alignment:.leading){
+                                Text("참가 번호 : \(String(item.participation_id))").foregroundColor(Color.black)
+                                Text("이름 : \(String(item.name))").foregroundColor(Color.black)
+                                Text("점수 : \(String(item.challenge_score))").foregroundColor(Color.black)
+                              
+                            }
+                        }.padding(.horizontal)
+                       
+                    
+                    Spacer()
+                }.padding(3)
                
             }
            

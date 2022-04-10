@@ -75,6 +75,7 @@
 		28A1CEE227DB06D300ED38A5 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A1CEE127DB06D300ED38A5 /* Problem.swift */; };
 		28CB442327F8709F00023E1C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB442227F8709F00023E1C /* MainView.swift */; };
 		28CB442527F88CDB00023E1C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB442427F88CDB00023E1C /* SignUpView.swift */; };
+		28DCA30F2802C27F00BA31CB /* ProblemSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +146,7 @@
 		28A1CEE127DB06D300ED38A5 /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
 		28CB442227F8709F00023E1C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		28CB442427F88CDB00023E1C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemSelectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,12 +271,13 @@
 				2885659927DCF031009E5B57 /* ContestListViewModel.swift */,
 				288565A527DCF6B7009E5B57 /* ContestListItemView.swift */,
 				2885659327DCECDC009E5B57 /* ContestCreateView.swift */,
+				28588C5B27E75D9E00152B88 /* ProblemListItem.swift */,
 				2885659B27DCF047009E5B57 /* ContestCreateViewModel.swift */,
+				28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */,
 				28A1CED727DB067300ED38A5 /* ContestItemView.swift */,
 				2885659F27DCF08F009E5B57 /* ContestItemViewModel.swift */,
 				2885658527DCADC1009E5B57 /* ProblemsView.swift */,
 				288565A127DCF0AA009E5B57 /* ProblemsViewModel.swift */,
-				28588C5B27E75D9E00152B88 /* ProblemListItem.swift */,
 				28588C5927E75C4400152B88 /* ProblemDetailView.swift */,
 				2885658727DCADDB009E5B57 /* MySubmissionView.swift */,
 				288565A327DCF0C3009E5B57 /* MySubmissionViewModel.swift */,
@@ -403,6 +406,7 @@
 				28A1CEDC27DB069700ED38A5 /* SubmitView.swift in Sources */,
 				2885659827DCEDAB009E5B57 /* ContestListView.swift in Sources */,
 				2885658C27DCE530009E5B57 /* LoginView.swift in Sources */,
+				28DCA30F2802C27F00BA31CB /* ProblemSelectionView.swift in Sources */,
 				2868E77227EF76E40068994A /* QuestionEditView.swift in Sources */,
 				2885659A27DCF031009E5B57 /* ContestListViewModel.swift in Sources */,
 				28A1CEBA27DB04D600ED38A5 /* CodeStorageDelegate.swift in Sources */,

@@ -21,29 +21,14 @@ struct ContestInfoUpdateView: View {
                             .fontWeight(.semibold)
                             .font(.title)
                     }
-                    .padding()
+                    .padding(30)
                     .foregroundColor(.white)
-                    .background(Color.red)
-                    .cornerRadius(40)
+                    .background(Color("KWColor1"))
+                    .cornerRadius(10)
                 
             })
-            Spacer()
-            NavigationLink(destination:AuthorEditView(challengeId: $challenge.id), label: {
-                
-                HStack {
-                Image(systemName: "person.2")
-                    .font(.title)
-                Text("주최자 수정")
-                    .fontWeight(.semibold)
-                    .font(.title)
-            }
-            .padding()
-            .foregroundColor(.white)
-            .background(Color.red)
-            .cornerRadius(40)
-              
-            })
-            Spacer()
+       
+           
             NavigationLink(destination:QuestionEditView(challengeId: $challenge.id), label: {
                 
                 HStack {
@@ -53,10 +38,10 @@ struct ContestInfoUpdateView: View {
                     .fontWeight(.semibold)
                     .font(.title)
             }
-            .padding()
+            .padding(30)
             .foregroundColor(.white)
-            .background(Color.red)
-            .cornerRadius(40)
+            .background(Color("KWColor1"))
+            .cornerRadius(10)
                
             })
         }

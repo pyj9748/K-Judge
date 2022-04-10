@@ -73,7 +73,9 @@ extension Limit {
 }
 
 struct ProblemCatalogs :Codable,Identifiable{
+   
     var id : String
     var name : String
     var score : String
+    
 }

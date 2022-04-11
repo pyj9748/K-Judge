@@ -20,9 +20,9 @@ struct ProblemListItemView: View {
                      
                      VStack(alignment: .leading){
                          
-                         Text(problemListItem.name).foregroundColor(Color.black).font(.bold(.title)())
-                         Text("문제 아이디 : \(String(problemListItem.id))").foregroundColor(Color.black)
-                         Text("점수   : \(String(problemListItem.score))").foregroundColor(Color.black)
+                         Text(problemListItem.name).foregroundColor(Color("DefaultTextColor")).font(.bold(.title)())
+                         Text("문제 아이디 : \(String(problemListItem.id))").foregroundColor(Color("DefaultTextColor"))
+                         Text("점수   : \(String(problemListItem.score))").foregroundColor(Color("DefaultTextColor"))
                      }
                  }.padding(.horizontal)
                 

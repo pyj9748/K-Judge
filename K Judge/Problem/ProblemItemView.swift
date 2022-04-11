@@ -15,25 +15,28 @@ struct ProblemItemView: View {
     @StateObject var problemItemViewModel = ProblemItemViewModel()
     
     var body: some View {
-        ScrollView{
-            VStack{
-                Text("").onAppear(){
-                    print("ProblemItemView \(problemId)")
-                    problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId,token: token)
+        VStack{
+            ScrollView{
+                VStack(alignment : .leading){
+                    Text("").onAppear(){
+                        print("ProblemItemView \(problemId)")
+                        problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId,token: token)
+                    }
+                    nameText
+                    descriptionText
+                    input_descriptionText
+                    output_descriptionText
+                    scoreText
+                    
                 }
-                nameText
-                descriptionText
-                input_descriptionText
-                output_descriptionText
-                scoreText
-                
             }
+           .padding()
+           .navigationBarTitle("문제 생성",displayMode:.inline)
+           .toolbar(content: {
+               editBtn
+           })
         }
-       .padding()
-       .navigationBarTitle("문제 생성",displayMode:.inline)
-       .toolbar(content: {
-           editBtn
-       })
+       
     }
 }
 // 문제 수정 뷰 이동 버튼
@@ -60,7 +63,8 @@ extension ProblemItemView {
     
     // Name
     var nameText: some View{
-        GroupBox("문제명"){
+        VStack(alignment:.leading){
+            Text("문제 이름").font(.headline)
             Text(problemItemViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
         }
@@ -68,28 +72,32 @@ extension ProblemItemView {
     
     // Description
     var descriptionText : some View{
-        GroupBox("문제"){
+        VStack(alignment:.leading){
+            Text("문제").font(.headline)
             Text(problemItemViewModel.problem.description.description)
         }
     }
    
     // input_description
     var input_descriptionText : some View{
-        GroupBox("입력"){
+        VStack(alignment:.leading){
+            Text("입력").font(.headline)
             Text(problemItemViewModel.problem.description.input_description)
         }
     }
    
     // output_description
     var output_descriptionText: some View{
-        GroupBox("출력"){
+        VStack(alignment:.leading){
+            Text("출력").font(.headline)
             Text(problemItemViewModel.problem.description.output_description)
         }
     }
 
     // score
     var scoreText : some View{
-        GroupBox("점수"){
+        VStack(alignment:.leading){
+            Text("점수").font(.headline)
             Text(problemItemViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
         }

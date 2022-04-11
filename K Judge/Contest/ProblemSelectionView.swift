@@ -11,14 +11,15 @@ struct ProblemSelectionView: View {
     @Binding var problemList : [ProblemCatalogs]
     @Binding var multiSelection : Set<String>
     var body: some View {
-        //NavigationView{
-            List(problemList,selection: $multiSelection){
-               
-                Text($0.name)
-            
-            }
-            .toolbar { EditButton() }
-       // }
+       
+        List(problemList,selection: $multiSelection){
+           
+            Text($0.name)
+        
+        }
+        .toolbar { EditButton() }
+          
+      
        
     }
 }

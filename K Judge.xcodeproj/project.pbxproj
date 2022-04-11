@@ -75,6 +75,7 @@
 		28A1CEE227DB06D300ED38A5 /* Problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A1CEE127DB06D300ED38A5 /* Problem.swift */; };
 		28CB442327F8709F00023E1C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB442227F8709F00023E1C /* MainView.swift */; };
 		28CB442527F88CDB00023E1C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB442427F88CDB00023E1C /* SignUpView.swift */; };
+		28CC002928047E6200D4F68A /* UITextViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CC002828047E6200D4F68A /* UITextViewRepresentable.swift */; };
 		28DCA30F2802C27F00BA31CB /* ProblemSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +147,7 @@
 		28A1CEE127DB06D300ED38A5 /* Problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Problem.swift; sourceTree = "<group>"; };
 		28CB442227F8709F00023E1C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		28CB442427F88CDB00023E1C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		28CC002828047E6200D4F68A /* UITextViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewRepresentable.swift; sourceTree = "<group>"; };
 		28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemSelectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 				2885658F27DCE543009E5B57 /* Login.swift */,
 				2885658B27DCE530009E5B57 /* LoginView.swift */,
 				28CB442427F88CDB00023E1C /* SignUpView.swift */,
+				28CC002828047E6200D4F68A /* UITextViewRepresentable.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -271,8 +274,8 @@
 				2885659927DCF031009E5B57 /* ContestListViewModel.swift */,
 				288565A527DCF6B7009E5B57 /* ContestListItemView.swift */,
 				2885659327DCECDC009E5B57 /* ContestCreateView.swift */,
-				28588C5B27E75D9E00152B88 /* ProblemListItem.swift */,
 				2885659B27DCF047009E5B57 /* ContestCreateViewModel.swift */,
+				28588C5B27E75D9E00152B88 /* ProblemListItem.swift */,
 				28DCA30E2802C27F00BA31CB /* ProblemSelectionView.swift */,
 				28A1CED727DB067300ED38A5 /* ContestItemView.swift */,
 				2885659F27DCF08F009E5B57 /* ContestItemViewModel.swift */,
@@ -436,6 +439,7 @@
 				28A1CEC427DB04D600ED38A5 /* TextView.swift in Sources */,
 				28A1CEC027DB04D600ED38A5 /* OSDefinitions.swift in Sources */,
 				2868E76C27EF76010068994A /* ContestInfoView.swift in Sources */,
+				28CC002928047E6200D4F68A /* UITextViewRepresentable.swift in Sources */,
 				2885659C27DCF047009E5B57 /* ContestCreateViewModel.swift in Sources */,
 				2885658A27DCE4E2009E5B57 /* ContestView.swift in Sources */,
 				282E3FC227DE1E2A00360E33 /* ProblemListView.swift in Sources */,

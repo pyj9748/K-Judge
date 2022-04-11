@@ -12,7 +12,7 @@ import SwiftyJSON
 // View Model
 class CreateViewModel :ObservableObject {
     
-    @Published var problem = Problem( id : "" , name: "name", description: Description(description: "Enter description", input_description: "Enter input description", output_description: "Enter output description"), limit: Limit(memory: "256", time: "2"),score: "1500")
+    @Published var problem = Problem( id : "" , name: "", description: Description(description: "Enter description", input_description: "Enter input description", output_description: "Enter output description"), limit: Limit(memory: "256", time: "2"),score: "1500")
     
     @Published var input_file1 : String = """
     Enter Input File Content

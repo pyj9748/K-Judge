@@ -12,7 +12,7 @@ import SwiftyJSON
 // View Model
 class ContestCreateViewModel :ObservableObject {
     
-    @Published var contest = Contest(id : "0", authors: [], name: "name", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date() ), questions: [])
+    @Published var contest = Contest(id : "0", authors: [], name: "", challenge_date_time: Challenge_date_time(start_time: Date(), end_time: Date() ), questions: [])
     
 }
 

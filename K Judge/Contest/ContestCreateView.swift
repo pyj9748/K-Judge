@@ -30,12 +30,13 @@ struct ContestCreateView: View {
                     questionsListSelect
                     start_datePicker
                     end_datePicker
-                }.padding()
-                    .onAppear(){
-                        problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
-                        
-                    }
-            }  .navigationBarTitle(" 대회 생성 ",displayMode:.inline)
+                }.onAppear(){
+                    problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
+                    
+                }
+                
+            }.padding()
+            .navigationBarTitle(" 대회 생성 ",displayMode:.inline)
                 .toolbar(content: {
                     createBtn
                 })
@@ -126,26 +127,34 @@ extension ContestCreateView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("대회 이름"){
+        VStack(alignment:.leading){
+            Text("대회 이름").font(.headline)
             TextField("Enter Name", text:self.$contestCreateViewModel.contest.name)
                 .textFieldStyle(.roundedBorder)
+                .border(Color("DefaultTextColor"), width: 1)
         }
     }
     
-    //Qusetions
-    var questionsTextField : some View {
-        GroupBox("출제 문제"){
-            TextField("Enter Questions EX) 1,2,3,4", text:$questions )
-                .textFieldStyle(.roundedBorder)
-        }
-    }
+
     
     var questionsListSelect: some View {
-        GroupBox("출제 문제"){
-            NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
-               Text("출제 문제 선택하기")
-            })
-            Text("출제 문제 : \(multiSelection.description)")
+        VStack(alignment: .leading){
+            
+            Text("출제 문제").font(.headline)
+            Spacer()
+            HStack{
+                Spacer()
+                NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
+                    
+                    Text("출제 문제 선택하러 가기")
+                        //.frame(width: 380, height: 100, alignment: .center)
+                        //.cornerRadius(10)
+                       // .background(Color("KWColor3"))
+                })
+                Spacer()
+            }
+          
+            //Text("출제 문제 : \(multiSelection.description)")
         }
        
     }
@@ -153,16 +162,18 @@ extension ContestCreateView {
 
     // Challenge_date_time
     var start_datePicker : some View {
-        GroupBox("대회 시작"){
+        VStack(alignment:.leading){
+            Text("대회 시작").font(.headline)
             DatePicker("start_date", selection: $contestCreateViewModel.contest.challenge_date_time.start_time, in: Date()...)
-                       .datePickerStyle(WheelDatePickerStyle())
+                       .datePickerStyle(GraphicalDatePickerStyle())
                        .labelsHidden()
         }
     }
     var end_datePicker : some View {
-        GroupBox("대회 종료"){
+        VStack(alignment:.leading){
+            Text("대회 종료").font(.headline)
             DatePicker("end_date", selection: $contestCreateViewModel.contest.challenge_date_time.end_time, in: Date()...)
-                .datePickerStyle(WheelDatePickerStyle())
+                .datePickerStyle(GraphicalDatePickerStyle())
                 .labelsHidden()
         }
     }

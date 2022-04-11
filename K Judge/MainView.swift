@@ -47,9 +47,10 @@ struct MainView: View {
                  
             }
             .accentColor(Color.blue)
-            .navigationTitle("")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarHidden(true)
+           // .navigationBarHidden(true)
+            //.navigationTitle("")
+            //.navigationBarBackButtonHidden(true)
+            
            
         }
       

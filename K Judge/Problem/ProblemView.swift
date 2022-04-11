@@ -28,7 +28,7 @@ struct ProblemView: View {
                     }
                    
                 })
-        }
+        }.navigationBarBackButtonHidden(true)
     }
 }
 

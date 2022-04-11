@@ -44,8 +44,10 @@ extension ProblemsViewModel {
                  case.success(let value):
                      print(response)
                      let json = JSON(value)
-                     let dataList = json["data"].array
-                     for i in (dataList?.indices)! {
+                     // let dataList = json["data"].array
+                     guard let dataList = json["data"].array else {return}
+                     
+                     for i in (dataList.indices) {
                          let data = json["data"].arrayValue[i]
                          let problem = ChallengeProblem(id: data["id"].intValue, problem_id: data["problem_id"].intValue, title: data["title"].stringValue,challeng_id: challengeId)
                          list.append(problem)

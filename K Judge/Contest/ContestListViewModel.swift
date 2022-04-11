@@ -41,8 +41,11 @@ extension ContestListViewModel {
                        case.success(let value):
                            print(response)
                            let json = JSON(value)
-                           let dataList = json["data"].array
-                           for i in (dataList?.indices)! {
+                         
+                           guard let dataList = json["data"].array else {return}
+                           
+                           
+                           for i in (dataList.indices) {
                                let data = json["data"].arrayValue[i]
                             
                                let challenge = Challenge(id: data["id"].intValue, name: data["name"].stringValue, start_time: data["challenge_date_time"]["start_time"].stringValue,  end_time: data["challenge_date_time"]["end_time"].stringValue, num_of_participation: data["num_of_participation"].intValue, num_of_question: data["num_of_question"].intValue)

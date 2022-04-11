@@ -26,9 +26,10 @@ struct ContestListItemView: View {
                     
                     VStack(alignment:.leading){
                         
-                        Text(challengeListItem.name).foregroundColor(Color.black).font(.bold(.title)())
-                        Text("대회시작 : \(self.editDate(str: challengeListItem.start_time))").foregroundColor(Color.black)
-                        Text("대회종료 : \(self.editDate(str: challengeListItem.end_time))").foregroundColor(Color.black)
+                        Text(challengeListItem.name).foregroundColor(Color("DefaultTextColor"))
+                            .font(.bold(.title)())
+                        Text("대회시작 : \(self.editDate(str: challengeListItem.start_time))").foregroundColor(Color("DefaultTextColor"))
+                        Text("대회종료 : \(self.editDate(str: challengeListItem.end_time))").foregroundColor(Color("DefaultTextColor"))
                     }
                 }.padding(.horizontal)
                

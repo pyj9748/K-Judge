@@ -51,14 +51,14 @@ extension InfoEditView {
     var start_datePicker : some View {
         GroupBox("대회 시작 시각 설정"){
             DatePicker("start_date", selection: self.$start, in: Date()...)
-                       .datePickerStyle(WheelDatePickerStyle())
+                       .datePickerStyle(GraphicalDatePickerStyle())
                        .labelsHidden()
         }
     }
     var end_datePicker : some View {
         GroupBox("대회 종료 시각 설정"){
             DatePicker("end_date", selection: self.$end, in: Date()...)
-                .datePickerStyle(WheelDatePickerStyle())
+                .datePickerStyle(GraphicalDatePickerStyle())
                 .labelsHidden()
         }
     }

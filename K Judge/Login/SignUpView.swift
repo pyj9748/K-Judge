@@ -41,6 +41,7 @@ extension SignUpView {
     var idTextField : some View {
         TextField("아이디를 입력하세요", text:self.$signUpViewModel.signUp.id)
             .textFieldStyle(.roundedBorder)
+            .autocapitalization(.none)
     }
   
     
@@ -122,7 +123,7 @@ extension SignUpView {
             .font(.body)
             .padding(10)
             .foregroundColor(.white)
-            .background(Color("Color3"))
+            .background(Color("KWColor3"))
             .cornerRadius(40)
             
         }).alert("회원가입 오류", isPresented: $showAlert) {

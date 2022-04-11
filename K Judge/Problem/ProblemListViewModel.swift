@@ -44,11 +44,11 @@ extension ProblemListViewModel {
                      //print(response)
                      
                      let json = JSON(value)
-                     guard let a = json["data"].array?.count else {return}
+                     guard let dataList = json["data"].array else {return}
                      
-                     let dataList = json["data"].array
+                    // let dataList = json["data"].array
                      
-                     for i in (dataList?.indices)! {
+                     for i in (dataList.indices) {
                          let data = json["data"].arrayValue[i]
                          let problem = ProblemCatalogs(id: String(data["id"].intValue), name: data["name"].stringValue, score: data["score"].stringValue)
                          list.append(problem)

@@ -55,12 +55,14 @@ extension LoginView {
     var idTextField : some View {
         TextField("아이디룰 입력하세요.", text:self.$loginViewModel.login.user.id)
             .textFieldStyle(.roundedBorder)
+            .autocapitalization(.none)
     }
     // saved id text Field
     var savedIdTextField : some View{
       
         TextField(self.id, text:self.$id)
             .textFieldStyle(.roundedBorder)
+            .autocapitalization(.none)
     }
     
     // pwd text field
@@ -189,7 +191,7 @@ extension LoginView {
             .font(.body)
             .padding(10)
             .foregroundColor(.white)
-            .background(Color("Color3"))
+            .background(Color("KWColor3"))
             .cornerRadius(40)
             
         })

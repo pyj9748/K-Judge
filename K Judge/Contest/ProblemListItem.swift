@@ -14,22 +14,27 @@ struct ProblemListItem: View {
         
         HStack{
             
-                HStack(spacing: 20){
+                HStack(spacing: 10){
                     Image(systemName: "octagon")
                         .font(.largeTitle)
                         
                     
                     VStack(alignment: .leading){
                         
-                        Text(problemListItem.title).foregroundColor(Color.black).font(.bold(.title)())
-                        Text("문제 아이디 : \(String(problemListItem.problem_id))").foregroundColor(Color.black)
+                        Text(problemListItem.title)
+                            .foregroundColor(Color("DefaultTextColor"))
+                            .font(.bold(.title)())
+                            
+                        Text("문제 아이디 : \(String(problemListItem.problem_id))").foregroundColor(Color("DefaultTextColor"))
                        
-                    }
-                }.padding(.horizontal)
+                    }.padding(.horizontal)
+                }
+               
                
             
             Spacer()
         }.padding(3)
+            .border(width: 0.6, edges: [.bottom], color: Color("DefaultTextColor"))
     }
 }
 

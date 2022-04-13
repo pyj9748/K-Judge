@@ -21,10 +21,7 @@ struct ContestView: View {
                 }
                 else  {
                     ContestCreateView()
-                }
-//                else {
-//                   ContestInfoUpdateView()
-//                }
+                }          
                 Spacer()
             }
             .frame(width: UIScreen.main.bounds.width - 24, alignment: .center)
@@ -58,7 +55,7 @@ struct ContestCustomTopTabBar: View {
            
             Spacer()
         }
-        .border(width: 1, edges: [.bottom], color: .black)
+        .border(width: 1, edges: [.bottom], color: Color("DefaultTextColor"))
     }
     
     private func onButtonTapped(index: Int) {

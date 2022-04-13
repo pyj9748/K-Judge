@@ -15,27 +15,35 @@ struct ProblemItemView: View {
     @StateObject var problemItemViewModel = ProblemItemViewModel()
     
     var body: some View {
-        VStack{
-            ScrollView{
-                VStack(alignment : .leading){
-                    Text("").onAppear(){
-                        print("ProblemItemView \(problemId)")
-                        problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId,token: token)
+        HStack {
+            
+            VStack(alignment : .leading){
+                ScrollView{
+                    VStack(alignment : .leading){
+                        Text("").onAppear(){
+                            print("ProblemItemView \(problemId)")
+                            problemItemViewModel.problem = problemItemViewModel.getProblem(problemId: self.problemId,token: token)
+                        }
+                        
+                            nameText
+                            descriptionText
+                            input_descriptionText
+                            output_descriptionText
+                            scoreText
+                        
+                       
+                        
                     }
-                    nameText
-                    descriptionText
-                    input_descriptionText
-                    output_descriptionText
-                    scoreText
-                    
                 }
+               .padding()
+               .navigationBarTitle("문제 생성",displayMode:.inline)
+               .toolbar(content: {
+                   editBtn
+               })
             }
-           .padding()
-           .navigationBarTitle("문제 생성",displayMode:.inline)
-           .toolbar(content: {
-               editBtn
-           })
+            Spacer()
         }
+        
        
     }
 }
@@ -65,8 +73,12 @@ extension ProblemItemView {
     var nameText: some View{
         VStack(alignment:.leading){
             Text("문제 이름").font(.headline)
+            Text(" ")
             Text(problemItemViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
+               // .padding()
+                //.background(Color.gray)
+            Text(" ")
         }
     }
     
@@ -74,7 +86,9 @@ extension ProblemItemView {
     var descriptionText : some View{
         VStack(alignment:.leading){
             Text("문제").font(.headline)
+            Text(" ")
             Text(problemItemViewModel.problem.description.description)
+            Text(" ")
         }
     }
    
@@ -82,7 +96,9 @@ extension ProblemItemView {
     var input_descriptionText : some View{
         VStack(alignment:.leading){
             Text("입력").font(.headline)
+            Text(" ")
             Text(problemItemViewModel.problem.description.input_description)
+            Text(" ")
         }
     }
    
@@ -90,7 +106,9 @@ extension ProblemItemView {
     var output_descriptionText: some View{
         VStack(alignment:.leading){
             Text("출력").font(.headline)
+            Text(" ")
             Text(problemItemViewModel.problem.description.output_description)
+            Text(" ")
         }
     }
 
@@ -98,8 +116,10 @@ extension ProblemItemView {
     var scoreText : some View{
         VStack(alignment:.leading){
             Text("점수").font(.headline)
+            Text(" ")
             Text(problemItemViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
+            Text(" ")
         }
     }
     

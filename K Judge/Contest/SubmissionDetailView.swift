@@ -17,24 +17,28 @@ struct SubmissionDetailView: View {
     
     @StateObject var submissionDetailViewModel =  SubmissionDetailViewModel()
     var body: some View {
-        VStack{
-            ScrollView{
-                VStack{
-                    Text("").onAppear(){
-                        //guard submissionID != nil else {return}
-                      //  print(submissionID)
-                     //   let submitID = submissionID
-                        //guard submissionId != nil else {return}
-                        print("submissionId : \(submissionId )")
-                        submissionDetailViewModel.submissionDetail = submissionDetailViewModel.getSubmission(challengeId: challengeId, submitId: submissionId, token: token)
-                        
-                    }
-                    problemIDText
-                    programmingLanguageText
-                    sourceCodeText
-                }.padding()
-            } .navigationBarTitle("",displayMode:.inline)
+        HStack{
+            VStack(alignment : .leading){
+                ScrollView{
+                    VStack(alignment : .leading){
+                        Text("").onAppear(){
+                            //guard submissionID != nil else {return}
+                          //  print(submissionID)
+                         //   let submitID = submissionID
+                            //guard submissionId != nil else {return}
+                            print("submissionId : \(submissionId )")
+                            submissionDetailViewModel.submissionDetail = submissionDetailViewModel.getSubmission(challengeId: challengeId, submitId: submissionId, token: token)
+                            
+                        }
+                        problemIDText
+                        programmingLanguageText
+                        sourceCodeText
+                    }.padding()
+                } .navigationBarTitle("",displayMode:.inline)
+            }
+            Spacer()
         }
+        
     }
 }
 
@@ -43,23 +47,32 @@ extension SubmissionDetailView {
     
     // problemID
     var problemIDText: some View{
-        GroupBox("문제 아이디"){
+        VStack(alignment:.leading){
+            Text("문제 아이디").font(.headline)
+            Text(" ")
             Text(String($submissionDetailViewModel.submissionDetail.problem_id.wrappedValue) )
+            Text(" ")
                 
         }
     }
 
     // programmingLanguage
     var programmingLanguageText : some View{
-        GroupBox("프로그래밍 언어"){
+        VStack(alignment:.leading){
+            Text("프로그래밍 언어").font(.headline)
+            Text(" ")
             Text($submissionDetailViewModel.submissionDetail.programming_language .wrappedValue)
+            Text(" ")
         }
     }
 
     // isourceCode
     var sourceCodeText : some View{
-        GroupBox("소스 코드"){
+        VStack(alignment:.leading){
+            Text("소스 코드").font(.headline)
+            Text(" ")
             Text($submissionDetailViewModel.submissionDetail.source_code .wrappedValue)
+            Text(" ")
         }
     }
 

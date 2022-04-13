@@ -11,12 +11,12 @@ struct ProblemListItemView: View {
     @Binding var problemListItem : ProblemCatalogs
      
      var body: some View {
-         HStack{
-             
-                 HStack(spacing: 20){
-                     Image(systemName: "octagon")
-                         .font(.largeTitle)
-                         
+         HStack(alignment:.center){
+             Image(systemName: "octagon")
+                 .font(.largeTitle)
+                 
+                 HStack(spacing: 10){
+                     
                      
                      VStack(alignment: .leading){
                          
@@ -24,12 +24,17 @@ struct ProblemListItemView: View {
                          Text("문제 아이디 : \(String(problemListItem.id))").foregroundColor(Color("DefaultTextColor"))
                          Text("점수   : \(String(problemListItem.score))").foregroundColor(Color("DefaultTextColor"))
                      }
-                 }.padding(.horizontal)
-                
+                     Spacer()
+                 }
              
-             Spacer()
-         }.padding(3)
-       
+            
+         } .padding(3)
+             .border(width: 0.6, edges: [.bottom], color: Color("DefaultTextColor"))
+
+          
+        
+        
+           
         
             
          

@@ -19,14 +19,16 @@ struct ProblemListView: View {
                 ForEach($problemListViewModel.problemList){ item in
                     NavigationLink(destination:ProblemItemView(problemId: .constant(item.id)), label: {
                         ProblemListItemView(problemListItem:item)
+                            .padding(.horizontal)
                     })
                    
                 }
-            }.padding()
+            }
             
             Spacer()
               
-        }.onAppear(){
+        }
+        .onAppear(){
             problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
         }
      

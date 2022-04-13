@@ -23,24 +23,32 @@ struct ContestCreateView: View {
     
     
     var body: some View {
-        NavigationView{
+        //NavigationView{
             VStack{
                 ScrollView{
-                    nameTextField
-                    questionsListSelect
-                    start_datePicker
-                    end_datePicker
+                    VStack{
+                        nameTextField
+
+                    }.padding()
+                    VStack{
+                        questionsListSelect
+                    }.padding()
+                    VStack{
+                        start_datePicker
+                        end_datePicker
+                    }.padding()
+                   
                 }.onAppear(){
                     problemListViewModel.problemList = problemListViewModel.getProblemList(token: token)
                     
                 }
                 
-            }.padding()
+            }
             .navigationBarTitle(" 대회 생성 ",displayMode:.inline)
                 .toolbar(content: {
                     createBtn
                 })
-        }
+       // }
     }
 }
 
@@ -131,7 +139,7 @@ extension ContestCreateView {
             Text("대회 이름").font(.headline)
             TextField("Enter Name", text:self.$contestCreateViewModel.contest.name)
                 .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 1)
+                .border(Color("DefaultTextColor"), width: 2)
         }
     }
     
@@ -147,9 +155,12 @@ extension ContestCreateView {
                 NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
                     
                     Text("출제 문제 선택하러 가기")
+                        .padding()
                         //.frame(width: 380, height: 100, alignment: .center)
-                        //.cornerRadius(10)
+                       
                        // .background(Color("KWColor3"))
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .cornerRadius(6)
                 })
                 Spacer()
             }

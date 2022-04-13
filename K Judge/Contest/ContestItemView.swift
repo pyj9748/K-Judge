@@ -188,7 +188,7 @@ struct ContestItemCustomTopTabBar: View {
                 .onTapGesture { onButtonTapped(index: 0) }
             TabBarButton(text: " 제출목록 ", isSelected: .constant(tabIndex == 1))
                 .onTapGesture { onButtonTapped(index: 1) }
-            TabBarButton(text: " 정보 ", isSelected: .constant(tabIndex == 2))
+            TabBarButton(text: " 참가자 ", isSelected: .constant(tabIndex == 2))
                 .onTapGesture { onButtonTapped(index: 2) }
             TabBarButton(text: " 수정 ", isSelected: .constant(tabIndex == 3))
                 .onTapGesture { onButtonTapped(index: 3) }
@@ -196,7 +196,7 @@ struct ContestItemCustomTopTabBar: View {
 //                .onTapGesture { onButtonTapped(index: 2) }
             Spacer()
         }
-        .border(width: 1, edges: [.bottom], color: .black)
+        .border(width: 1, edges: [.bottom], color: Color("DefaultTextColor"))
     }
     
     private func onButtonTapped(index: Int) {
@@ -213,7 +213,7 @@ struct TabBarButton: View {
             .font(.custom("Arial", size: 16))
             .font(.custom("Avenir", size: 16))
             .padding(.bottom,10)
-            .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .black)
+            .border(width: isSelected ? 2 : 1, edges: [.bottom], color: Color("DefaultTextColor"))
     }
 }
 

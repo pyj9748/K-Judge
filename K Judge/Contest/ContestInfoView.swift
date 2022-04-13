@@ -22,28 +22,32 @@ struct ContestInfoView: View {
             }
             // 참가자 수
             Text("참가자 수는 \(contestInfoViewModel.participationList.count)명")
-            // 참가자 List
-            ForEach(contestInfoViewModel.participationList, id: \.participation_id){ item in
-                HStack{
-                    
-                        HStack(spacing: 20){
-                            Image(systemName: "person.crop.circle")
-                                .font(.largeTitle)
+            ScrollView{
+                // 참가자 List
+                ForEach(contestInfoViewModel.participationList, id: \.participation_id){ item in
+                    HStack{
+                        
+                            HStack(spacing: 10){
+                                Image(systemName: "person.crop.circle")
+                                    .font(.largeTitle)
+                                    
                                 
-                            
-                            VStack(alignment:.leading){
-                                Text("참가 번호 : \(String(item.participation_id))").foregroundColor(Color.black)
-                                Text("이름 : \(String(item.name))").foregroundColor(Color.black)
-                                Text("점수 : \(String(item.challenge_score))").foregroundColor(Color.black)
-                              
-                            }
-                        }.padding(.horizontal)
-                       
-                    
-                    Spacer()
-                }.padding(3)
-               
+                                VStack(alignment:.leading){
+                                    Text("참가 번호 : \(String(item.participation_id))").foregroundColor(Color("DefaultTextColor"))
+                                    Text("이름 : \(String(item.name))").foregroundColor(Color("DefaultTextColor"))
+                                    Text("점수 : \(String(item.challenge_score))").foregroundColor(Color("DefaultTextColor"))
+                                  
+                                }
+                            }//.padding(.horizontal)
+                           
+                        
+                        Spacer()
+                    }.padding(3)
+                        .border(width: 0.6, edges: [.bottom], color: Color("DefaultTextColor"))
+                   
+                }
             }
+          
            
         }
     }

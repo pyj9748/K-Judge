@@ -110,7 +110,7 @@ extension Theme {
 
   public static var defaultDark: Theme
     = Theme(fontName: "SFMono-Medium",
-            fontSize: 16.0,
+            fontSize: 14.0,
             textColour: OSColor(red: 0.87, green: 0.87, blue: 0.88, alpha: 1.0),
             commentColour: OSColor(red: 0.51, green: 0.55, blue: 0.59, alpha: 1.0),
             stringColour: OSColor(red: 0.94, green: 0.53, blue: 0.46, alpha: 1.0),
@@ -126,7 +126,7 @@ extension Theme {
 
   public static var defaultLight: Theme
     = Theme(fontName: "SFMono-Regular",
-            fontSize: 16.0,
+            fontSize: 14.0,
             textColour: OSColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0),
             commentColour: OSColor(red: 0.45, green: 0.50, blue: 0.55, alpha: 1.0),
             stringColour: OSColor(red: 0.76, green: 0.24, blue: 0.16, alpha: 1.0),

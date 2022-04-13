@@ -19,7 +19,7 @@ struct ContestListItemView: View {
         
         HStack{
             
-                HStack(spacing: 20){
+                HStack(spacing: 10){
                     Image(systemName: "octagon")
                         .font(.largeTitle)
                         
@@ -36,6 +36,8 @@ struct ContestListItemView: View {
             
             Spacer()
         }.padding(3)
+        .border(width: 0.6, edges: [.bottom], color: Color("DefaultTextColor"))
+
     }
 }
 

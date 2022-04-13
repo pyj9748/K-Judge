@@ -12,24 +12,45 @@ import SwiftUI
 struct ProblemDescriptionView: View {
     @Binding var problemDetail : ProblemDetail
     var body: some View {
-        ScrollView{
-            VStack{
-                GroupBox("문제 이름"){
-                    Text(problemDetail.name)
+      
+            ScrollView{
+                HStack{
+                VStack(alignment: .leading){
+                    // Name
+                        VStack(alignment:.leading){
+                            Text("문제 이름").font(.headline)
+                            Text(" ")
+                            Text( problemDetail.name )
+                                .textFieldStyle(.roundedBorder)
+                            Text(" ")
+                        }
+                    // Description
+                        VStack(alignment:.leading){
+                            Text("문제").font(.headline)
+                            Text(" ")
+                            Text(problemDetail.description)
+                            Text(" ")
+                        }
+                    // input_description
+                        VStack(alignment:.leading){
+                            Text("입력").font(.headline)
+                            Text(" ")
+                            Text(problemDetail.input_description)
+                            Text(" ")
+                        }
+                    // output_description
+                        VStack(alignment:.leading){
+                            Text("출력").font(.headline)
+                            Text(" ")
+                            Text(problemDetail.output_description)
+                            Text(" ")
+                        }
+                }.padding()
+                    Spacer()
                 }
-                GroupBox("문제"){
-                    Text(problemDetail.description)
-                }
-                GroupBox("입력"){
-                    Text(problemDetail.input_description)
-                }
-                GroupBox("출력"){
-                    Text(problemDetail.output_description)
-                }
-            
-                
-            }.padding()
-        }
+            }
+         
+        
        
     }
 }

@@ -14,24 +14,28 @@ struct ProblemDetailView: View {
     @Binding var challenge: ChallengeProblem
     @StateObject var problemDetailViewModel =  ProblemDetailViewModel()
     var body: some View {
-        VStack{
-            ScrollView{
-                VStack{
-                    
-                    nameText.onAppear(){
-                        print("problemDetailView",challenge.challeng_id,challenge.problem_id)
-                        problemDetailViewModel.problem = problemDetailViewModel.getProblem(problemId: challenge.problem_id,token: token)
-                    }
-                    descriptionText
-                    input_descriptionText
-                    output_descriptionText
-                    scoreText
-                }.padding()
-            } .navigationBarTitle(challenge.title,displayMode:.inline)
-        } .navigationBarTitle(" 제출 ",displayMode:.inline)
-            .toolbar(content: {
-                submitBtn
-            })
+        HStack{
+            VStack(alignment : .leading){
+                ScrollView{
+                    VStack(alignment : .leading){
+                        
+                        nameText.onAppear(){
+                            print("problemDetailView",challenge.challeng_id,challenge.problem_id)
+                            problemDetailViewModel.problem = problemDetailViewModel.getProblem(problemId: challenge.problem_id,token: token)
+                        }
+                        descriptionText
+                        input_descriptionText
+                        output_descriptionText
+                        scoreText
+                    }.padding()
+                } .navigationBarTitle(challenge.title,displayMode:.inline)
+            } .navigationBarTitle(" 제출 ",displayMode:.inline)
+                .toolbar(content: {
+                    submitBtn
+                })
+            Spacer()
+        }
+        
     }
 }
 
@@ -40,38 +44,53 @@ extension ProblemDetailView {
     
     // Name
     var nameText: some View{
-        GroupBox("문제 이름"){
+        VStack(alignment:.leading){
+            Text("문제 이름").font(.headline)
+            Text(" ")
             Text( $problemDetailViewModel.problem.name.wrappedValue )
                 .textFieldStyle(.roundedBorder)
+            Text(" ")
         }
     }
 
     // Description
     var descriptionText : some View{
-        GroupBox("문제"){
+        VStack(alignment:.leading){
+            Text("문제").font(.headline)
+            Text(" ")
             Text($problemDetailViewModel.problem.description.wrappedValue)
+            Text(" ")
         }
     }
 
     // input_description
     var input_descriptionText : some View{
-        GroupBox("입력"){
+        VStack(alignment:.leading){
+            Text("입력").font(.headline)
+            Text(" ")
             Text($problemDetailViewModel.problem.input_description.wrappedValue)
+            Text(" ")
         }
     }
 
     // output_description
     var output_descriptionText: some View{
-        GroupBox("출력"){
+        VStack(alignment:.leading){
+            Text("출력").font(.headline)
+            Text(" ")
             Text($problemDetailViewModel.problem.output_description.wrappedValue)
+            Text(" ")
         }
     }
 
     // score
     var scoreText : some View{
-        GroupBox("점수"){
+        VStack(alignment:.leading){
+            Text("점수").font(.headline)
+            Text(" ")
             Text(String($problemDetailViewModel.problem.score.wrappedValue))
                 .textFieldStyle(.roundedBorder)
+            Text(" ")
         }
     }
     

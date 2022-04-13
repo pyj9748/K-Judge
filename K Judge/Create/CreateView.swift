@@ -27,32 +27,32 @@ struct CreateView: View {
             VStack{
                 ScrollView{
                     VStack{
-                        //GroupBox{
+                       
                             nameTextField.onAppear (perform : UIApplication.shared.hideKeyboard)
-
                             descriptionTextEditor
                             input_descriptionTextEditor
-                        
-                     
                             output_descriptionTextEditor
-                       // }
-                        //GroupBox{
+                      
+                        
+                        
+                    }.padding()
+                    VStack{
+                        
                             input_file1TextEditor
                             output_file1TextEditor
                             input_file2TextEditor
                             output_file2TextEditor
-                        //}
-                    }
+                    }.padding()
                     VStack{
-                       // GroupBox{
+                      
                             memoryTextField
                             timeTextField
                             scoreTextField
-                       // }
                       
-                    }
+                      
+                    }.padding()
                     
-                }.padding()
+                }
                     .navigationBarTitle("문제 생성",displayMode:.inline)
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarLeading) {
@@ -159,7 +159,7 @@ extension CreateView {
             Text("문제 이름").font(.headline)
                 TextField("문제 이름을 입력하세요.", text:self.$createViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 1)
+                .border(Color("DefaultTextColor"), width: 2)
         }
         
      
@@ -171,7 +171,7 @@ extension CreateView {
             Text("문제").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
                     .frame(height: descriptionHeight)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
             
         }
     }
@@ -182,7 +182,7 @@ extension CreateView {
             Text("입력").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.problem.description.input_description, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
                     .frame(height: input_descriptiontHeight)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
 //            TextEditor(text:self.$createViewModel.problem.description.input_description).border(Color("DefaultTextColor"), width: 1)
 //                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 400)
 //                .cornerRadius(6.0)
@@ -195,7 +195,7 @@ extension CreateView {
             Text("출력").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.problem.description.output_description, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
                     .frame(height: output_descriptiontHeightHeight)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
 
         }
     }
@@ -205,7 +205,7 @@ extension CreateView {
             Text("예제 입력 1").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file1, isFocused: .constant(true), inputHeight: $input_file1Height)
                     .frame(height: input_file1Height)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
            
         }
     }
@@ -215,7 +215,7 @@ extension CreateView {
             Text("예제 출력 1").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file1, isFocused: .constant(true), inputHeight: $output_file1Height)
                     .frame(height: output_file1Height)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
         }
     }
 
@@ -225,7 +225,7 @@ extension CreateView {
             Text("예제 입력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file2, isFocused: .constant(true), inputHeight: $input_file2Height)
                     .frame(height: input_file2Height)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
         }
     }
 
@@ -235,7 +235,7 @@ extension CreateView {
             Text("예제 출력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file2, isFocused: .constant(true), inputHeight: $output_file2Height)
                     .frame(height: output_file2Height)
-                    .border(Color("DefaultTextColor"), width: 1)
+                    .border(Color("DefaultTextColor"), width: 2)
         }
     }
 
@@ -245,7 +245,7 @@ extension CreateView {
             Text("메모리 제한").font(.headline)
             TextField("256", text:self.$createViewModel.problem.limit.memory)
                 .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 1)
+                .border(Color("DefaultTextColor"), width: 2)
         }
     }
 
@@ -256,7 +256,7 @@ extension CreateView {
             Text("시간 제한").font(.headline)
             TextField("2", text:self.$createViewModel.problem.limit.time)
                 .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 1)
+                .border(Color("DefaultTextColor"), width: 2)
         }
     }
     
@@ -266,7 +266,7 @@ extension CreateView {
             Text("점수").font(.headline)
             TextField("1000", text:self.$createViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 1)
+                .border(Color("DefaultTextColor"), width: 2)
         }
     }
 

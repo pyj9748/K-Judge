@@ -29,15 +29,16 @@ struct SubmissionListItem: View {
                     
                     VStack(alignment:.leading){
                         
-                        Text("문제아이디 : \(String(submissionListItem.problem_id))").foregroundColor(Color.black)
-                        Text("제출시각 : \(self.editDate (str : submissionListItem.submitted_at))").foregroundColor(Color.black)
-                        Text("채점결과 : \(submissionListItem.status)").foregroundColor(Color.black)
+                        Text("문제아이디 : \(String(submissionListItem.problem_id))").foregroundColor(Color("DefaultTextColor"))
+                        Text("제출시각 : \(self.editDate (str : submissionListItem.submitted_at))").foregroundColor(Color("DefaultTextColor"))
+                        Text("채점결과 : \(submissionListItem.status)").foregroundColor(Color("DefaultTextColor"))
                     }
-                }.padding(.horizontal)
+                }//.padding(.horizontal)
                
             
             Spacer()
         }.padding(3)
+            .border(width: 0.6, edges: [.bottom], color: Color("DefaultTextColor"))
     }
 }
 extension SubmissionListItem {

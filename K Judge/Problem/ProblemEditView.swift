@@ -12,6 +12,9 @@ struct ProblemEditView: View {
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var problemId : String
     @StateObject var problemEditViewModel = ProblemEditViewModel()
+    @State private var descriptionHeight: CGFloat = 40
+    @State private var input_descriptiontHeight: CGFloat = 40
+    @State private var output_descriptiontHeightHeight: CGFloat = 40
     @State var showingAlert = false
     var body: some View {
         VStack{
@@ -22,15 +25,15 @@ struct ProblemEditView: View {
                     input_descriptionTextEditor
                     output_descriptionTextEditor
                    
-                }
+                }.padding()
                 VStack{
                    
                     memoryTextField
                     timeTextField
                     scoreTextField
-                }
+                }.padding()
                 
-            }.padding()
+            }
                 
             
         }// VStack
@@ -48,57 +51,91 @@ extension ProblemEditView {
     
     // Name
     var nameTextField : some View{
-        GroupBox("문제 이름"){
+        VStack(alignment:.leading){
+            Text("문제 이름").font(.headline)
             TextField("문제 이름을 입력하세요", text:self.$problemEditViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
+                .border(Color("DefaultTextColor"), width: 2)
+            
+            
         }
     }
     
     // Description
     var descriptionTextEditor : some View{
-        GroupBox("문제"){
-            TextEditor(text:self.$problemEditViewModel.problem.description.description)
+        VStack(alignment:.leading){
+            Text("문제").font(.headline)
+            UITextViewRepresentable(text: self.$problemEditViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
+                    .frame(height: descriptionHeight)
+                    .border(Color("DefaultTextColor"), width: 2)
+            
         }
+//        GroupBox("문제"){
+//            TextEditor(text:self.$problemEditViewModel.problem.description.description)
+//        }
     }
    
     // input_description
     var input_descriptionTextEditor : some View{
-        GroupBox("입력"){
-            TextEditor(text:self.$problemEditViewModel.problem.description.input_description)
+        VStack(alignment:.leading){
+            Text("입력").font(.headline)
+            UITextViewRepresentable(text: self.$problemEditViewModel.problem.description.input_description, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
+                    .frame(height: input_descriptiontHeight)
+                    .border(Color("DefaultTextColor"), width: 2)
+//        GroupBox("입력"){
+//            TextEditor(text:self.$problemEditViewModel.problem.description.input_description)
+            
         }
     }
    
     // output_description
     var output_descriptionTextEditor : some View{
-        GroupBox("출력"){
-            TextEditor(text:self.$problemEditViewModel.problem.description.output_description)
+        
+        VStack(alignment:.leading){
+            Text("출력").font(.headline)
+            UITextViewRepresentable(text: self.$problemEditViewModel.problem.description.output_description, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
+                    .frame(height: output_descriptiontHeightHeight)
+                    .border(Color("DefaultTextColor"), width: 2)
+
         }
+//        GroupBox("출력"){
+//            TextEditor(text:self.$problemEditViewModel.problem.description.output_description)
+//        }
     }
    
 
     // memory
     var memoryTextField : some View{
-        GroupBox("메모리 제한"){
+        VStack(alignment:.leading){
+            Text("메모리 제한").font(.headline)
             TextField("256", text:self.$problemEditViewModel.problem.limit.memory)
                 .textFieldStyle(.roundedBorder)
+                .border(Color("DefaultTextColor"), width: 2)
         }
+      
     }
 
 
     // time
     var timeTextField : some View{
-        GroupBox("시간 제한"){
+        VStack(alignment:.leading){
+            Text("시간 제한").font(.headline)
             TextField("2", text:self.$problemEditViewModel.problem.limit.time)
                 .textFieldStyle(.roundedBorder)
+                .border(Color("DefaultTextColor"), width: 2)
         }
+       
     }
     
     // score
     var scoreTextField : some View{
-        GroupBox("점수"){
+        VStack(alignment:.leading){
+            Text("점수").font(.headline)
             TextField("1000", text:self.$problemEditViewModel.problem.score)
                 .textFieldStyle(.roundedBorder)
+                .border(Color("DefaultTextColor"), width: 2)
         }
+       
     }
 
 }

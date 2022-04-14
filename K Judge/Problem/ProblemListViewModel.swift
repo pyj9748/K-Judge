@@ -13,8 +13,8 @@ import SwiftyJSON
 class ProblemListViewModel :ObservableObject {
     
     @Published var problemList : [ProblemCatalogs] = []
-
     
+    @Published var needToRenewToken : Bool = false
 }
 
 // 서버에서 problem List 받아오기
@@ -44,7 +44,13 @@ extension ProblemListViewModel {
                      //print(response)
                      
                      let json = JSON(value)
-                     guard let dataList = json["data"].array else {return}
+                     guard let dataList = json["data"].array else {
+                         
+                         self.needToRenewToken = true
+                         print("토큰 갱신 필요")
+                         return
+                         
+                     }
                      
                     // let dataList = json["data"].array
                      

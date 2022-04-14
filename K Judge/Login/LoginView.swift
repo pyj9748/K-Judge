@@ -21,6 +21,7 @@ struct LoginView: View {
     @AppStorage("idSaveToggle") var idSaveToggle: Bool = UserDefaults.standard.bool(forKey: "idSaveToggle")
     @AppStorage("id") var id: String = (UserDefaults.standard.string(forKey: "id") ?? "")
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
+    @AppStorage("password") var password: String = (UserDefaults.standard.string(forKey: "password") ?? "")
     
     var body: some View {
         NavigationView{
@@ -105,6 +106,7 @@ extension LoginView {
                         case .success(let value):
                             let json = JSON(value)
                             self.token = json["data"]["token"].stringValue
+                            self.id = loginViewModel.login.user.id
                         default:
                             return
                         }
@@ -124,6 +126,8 @@ extension LoginView {
                         case .success(let value):
                             let json = JSON(value)
                             self.token = json["data"]["token"].stringValue
+                            self.password = loginViewModel.login.user.password
+                            //self.id = loginViewModel.login.user.password
                             if json["error"]["status"].intValue == 401{
                                 shouldNavigate = false
                                 showAlert = true

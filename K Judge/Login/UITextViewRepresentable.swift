@@ -50,6 +50,9 @@ struct UITextViewRepresentable: UIViewRepresentable {
             } else if text == "" {
                 inputHeight = 40
             }
+            if textView.contentSize.height < inputHeight - spacing {
+                inputHeight -= spacing
+            }
         }
         
         func textViewDidChangeSelection(_ textView: UITextView) {

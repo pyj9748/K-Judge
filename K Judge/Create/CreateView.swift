@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct CreateView: View {
+    var difficulty : [String] = ["상","중","하"]
+    @FocusState var isInputActive: Bool
+    @State private var testCaseNum: Int = 2
+    @State private var selectedDifficulty: Int = 2
+    
     @State private var descriptionHeight: CGFloat = 40
     @State private var input_descriptiontHeight: CGFloat = 40
     @State private var output_descriptiontHeightHeight: CGFloat = 40
@@ -15,6 +20,18 @@ struct CreateView: View {
     @State private var output_file1Height: CGFloat = 40
     @State private var input_file2Height: CGFloat = 40
     @State private var output_file2Height: CGFloat = 40
+    @State private var input_file3Height: CGFloat = 40
+    @State private var output_file3Height: CGFloat = 40
+    @State private var input_file4Height: CGFloat = 40
+    @State private var output_file4Height: CGFloat = 40
+    @State private var input_file5Height: CGFloat = 40
+    @State private var output_file5Height: CGFloat = 40
+    @State private var input_file6Height: CGFloat = 40
+    @State private var output_file6Height: CGFloat = 40
+    @State private var input_file7Height: CGFloat = 40
+    @State private var output_file7Height: CGFloat = 40
+    @State private var input_file8Height: CGFloat = 40
+    @State private var output_file8Height: CGFloat = 40
   
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
@@ -37,18 +54,51 @@ struct CreateView: View {
                         
                     }.padding()
                     VStack{
-                        
+                        Group{
                             input_file1TextEditor
                             output_file1TextEditor
                             input_file2TextEditor
                             output_file2TextEditor
+                            
+                            
+                            
+                           
+                            
+                            
+                        }
+                        Group{
+                            if testCaseNum >= 3 {
+                                input_file3TextEditor
+                                output_file3TextEditor
+                            }
+                            if testCaseNum >= 4 {
+                                input_file4TextEditor
+                                output_file4TextEditor
+                            }
+                            if testCaseNum >= 5 {
+                                input_file5TextEditor
+                                output_file5TextEditor
+                            }
+                            if testCaseNum >= 6 {
+                                input_file6TextEditor
+                                output_file6TextEditor
+                            }
+                            if testCaseNum >= 7 {
+                                input_file7TextEditor
+                                output_file7TextEditor
+                            }
+                            if testCaseNum >= 8 {
+                                input_file8TextEditor
+                                output_file8TextEditor
+                            }
+                            appendButton
+                        }
                     }.padding()
                     VStack{
                       
-                            memoryTextField
+                          
                             timeTextField
-                            scoreTextField
-                      
+                            scoreField
                       
                     }.padding()
                     
@@ -109,11 +159,11 @@ extension CreateView {
         Button(action: {
             print("createBtn")
             // 메모리와 타임이 숫자인지
-            guard Int(self.$createViewModel.problem.limit.memory.wrappedValue) != nil
-            else {
-                self.showingAlert = true
-                return
-            }
+//            guard Int(self.$createViewModel.problem.limit.memory.wrappedValue) != nil
+//            else {
+//                self.showingAlert = true
+//                return
+//            }
       
             guard Int(self.$createViewModel.problem.limit.time.wrappedValue) != nil
             else {
@@ -123,7 +173,7 @@ extension CreateView {
     
                
             // api 콜
-            createViewModel.createProblem(token: token)
+            createViewModel.createProblem(token: token,testCaseNum: self.testCaseNum)
             
         }, label: {
             HStack {
@@ -160,6 +210,9 @@ extension CreateView {
                 TextField("문제 이름을 입력하세요.", text:self.$createViewModel.problem.name )
                 .textFieldStyle(.roundedBorder)
                 .border(Color("DefaultTextColor"), width: 2)
+                //.submitLabel(.next)
+                
+                
         }
         
      
@@ -168,11 +221,11 @@ extension CreateView {
     // Description
     var descriptionTextEditor : some View{
         VStack(alignment:.leading){
-            Text("문제").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
-                    .frame(height: descriptionHeight)
-                    .border(Color("DefaultTextColor"), width: 2)
-            
+                Text("문제").font(.headline)
+                UITextViewRepresentable(text: self.$createViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
+
+                        .frame(height: descriptionHeight)
+                        .border(Color("DefaultTextColor"), width: 2)
         }
     }
    
@@ -202,7 +255,7 @@ extension CreateView {
     // input_file 1
     var input_file1TextEditor : some View{
         VStack(alignment:.leading){
-            Text("예제 입력 1").font(.headline)
+            Text("테케 입력 1").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file1, isFocused: .constant(true), inputHeight: $input_file1Height)
                     .frame(height: input_file1Height)
                     .border(Color("DefaultTextColor"), width: 2)
@@ -212,7 +265,7 @@ extension CreateView {
     // output_file 1
     var output_file1TextEditor : some View{
         VStack(alignment:.leading){
-            Text("예제 출력 1").font(.headline)
+            Text("테케 출력 1").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file1, isFocused: .constant(true), inputHeight: $output_file1Height)
                     .frame(height: output_file1Height)
                     .border(Color("DefaultTextColor"), width: 2)
@@ -222,7 +275,7 @@ extension CreateView {
     // input_file 2
     var input_file2TextEditor : some View{
         VStack(alignment:.leading){
-            Text("예제 입력 2").font(.headline)
+            Text("테케 입력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file2, isFocused: .constant(true), inputHeight: $input_file2Height)
                     .frame(height: input_file2Height)
                     .border(Color("DefaultTextColor"), width: 2)
@@ -232,9 +285,123 @@ extension CreateView {
     // output_file 2
     var output_file2TextEditor : some View{
         VStack(alignment:.leading){
-            Text("예제 출력 2").font(.headline)
+            Text("테케 출력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file2, isFocused: .constant(true), inputHeight: $output_file2Height)
                     .frame(height: output_file2Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 3
+    var input_file3TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 3").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file3, isFocused: .constant(true), inputHeight: $input_file3Height)
+                    .frame(height: input_file3Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 3
+    var output_file3TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 3").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file3, isFocused: .constant(true), inputHeight: $output_file3Height)
+                    .frame(height: output_file3Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 4
+    var input_file4TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 4").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file4, isFocused: .constant(true), inputHeight: $input_file4Height)
+                    .frame(height: input_file4Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 4
+    var output_file4TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 4").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file4, isFocused: .constant(true), inputHeight: $output_file4Height)
+                    .frame(height: output_file4Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 5
+    var input_file5TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 5").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file5, isFocused: .constant(true), inputHeight: $input_file5Height)
+                    .frame(height: input_file5Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 5
+    var output_file5TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 5").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file5, isFocused: .constant(true), inputHeight: $output_file5Height)
+                    .frame(height: output_file5Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 6
+    var input_file6TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 6").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file6, isFocused: .constant(true), inputHeight: $input_file6Height)
+                    .frame(height: input_file6Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 6
+    var output_file6TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 6").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file6, isFocused: .constant(true), inputHeight: $output_file6Height)
+                    .frame(height: output_file6Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 7
+    var input_file7TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 7").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file7, isFocused: .constant(true), inputHeight: $input_file7Height)
+                    .frame(height: input_file7Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 7
+    var output_file7TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 7").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file7, isFocused: .constant(true), inputHeight: $output_file7Height)
+                    .frame(height: output_file7Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+    // input_file 8
+    var input_file8TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 입력 8").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.input_file8, isFocused: .constant(true), inputHeight: $input_file8Height)
+                    .frame(height: input_file8Height)
+                    .border(Color("DefaultTextColor"), width: 2)
+        }
+    }
+
+    // output_file 8
+    var output_file8TextEditor : some View{
+        VStack(alignment:.leading){
+            Text("테케 출력 8").font(.headline)
+            UITextViewRepresentable(text: self.$createViewModel.output_file8, isFocused: .constant(true), inputHeight: $output_file8Height)
+                    .frame(height: output_file8Height)
                     .border(Color("DefaultTextColor"), width: 2)
         }
     }
@@ -261,15 +428,114 @@ extension CreateView {
     }
     
     // score
-    var scoreTextField : some View{
-        VStack(alignment:.leading){
-            Text("점수").font(.headline)
-            TextField("1000", text:self.$createViewModel.problem.score)
-                .textFieldStyle(.roundedBorder)
-                .border(Color("DefaultTextColor"), width: 2)
-        }
+    var scoreField : some View{
+        HStack(alignment: .center, spacing: 10){
+           
+            
+            Button(action: {
+                createViewModel.problem.score = "150"
+                selectedDifficulty = 0
+            }, label: {
+                
+                Text(" 상            ")
+                    .padding(20)
+                    .background( self.selectedDifficulty == 0 ? Color.blue : Color.gray)
+                    .foregroundColor(Color("DefaultTextColor"))
+                    .buttonBorderShape(.roundedRectangle)
+                    .cornerRadius(20)
+                
+            })
+            Button(action: {
+                createViewModel.problem.score = "100"
+                selectedDifficulty = 1
+            }, label: {
+                
+                Text(" 중            ")
+                    .padding(20)
+                    .background( self.selectedDifficulty == 1 ? Color.blue : Color.gray)
+                    .foregroundColor(Color("DefaultTextColor"))
+                    .buttonBorderShape(.roundedRectangle)
+                    .cornerRadius(20)
+                
+            })
+            Button(action: {
+                createViewModel.problem.score = "50"
+                selectedDifficulty = 2
+            }, label: {
+                
+                Text(" 하            ")
+                    .padding(20)
+                    .background( self.selectedDifficulty == 2 ? Color.blue : Color.gray)
+                    .foregroundColor(Color("DefaultTextColor"))
+                    .buttonBorderShape(.roundedRectangle)
+                    .cornerRadius(20)
+                
+            })
+         
+        }.background(Color.gray)
+            .cornerRadius(20)
     }
 
+    // difficulty : 상:150 중:100 하:50
+    var scoreDifficultyField : some View{
+            
+        VStack(alignment:.leading) {
+                Text("난이도").font(.headline)
+                    Picker("문제의 난이도를 골라주세요", selection: $selectedDifficulty) {
+                        ForEach(0 ..< difficulty.count) {
+                            Text(self.difficulty[$0])       .border(Color("DefaultTextColor"), width: 2)
+                            
+                        }
+                    }.onChange(of: selectedDifficulty) { select in
+                        switch select{
+                        case 0:
+                            createViewModel.problem.score = "150"
+                        case 1:
+                            createViewModel.problem.score = "100"
+                        case 2:
+                            createViewModel.problem.score = "50"
+                        default:
+                            return
+                        }
+                    }
+        }
+        .pickerStyle(SegmentedPickerStyle())
+    }
+    
+    var appendButton : some View{
+        HStack{
+            Button(action: {
+                if testCaseNum < 8 {
+                    self.testCaseNum += 1
+                }
+                
+            }, label: {
+                
+                Text(" 테스트케이스 + ")
+                    .padding(20)
+                    .background(Color.gray)
+                    .foregroundColor(Color("DefaultTextColor"))
+                    .buttonBorderShape(.roundedRectangle)
+                    .cornerRadius(20)
+            })
+            Button(action: {
+                
+                if testCaseNum > 2 {
+                    self.testCaseNum -= 1
+                }
+            }, label: {
+                
+                Text(" 테스트케이스 - ")
+                    .padding(20)
+                    .background(Color.gray)
+                    .foregroundColor(Color("DefaultTextColor"))
+                    .buttonBorderShape(.roundedRectangle)
+                    .cornerRadius(20)
+            })
+        }
+       
+        
+    }
 }
 
 

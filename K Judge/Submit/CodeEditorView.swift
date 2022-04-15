@@ -30,7 +30,15 @@ struct CodeEditorView: View {
                        language: .swift)
               .environment(\.codeEditorTheme,
                            colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight)
-            
+              .toolbar {
+                                  ToolbarItemGroup(placement: .keyboard) {
+                                      Spacer()
+
+                                      Button("Done") {
+                                         print("aa")
+                                      }
+                                  }
+                              }
         
       
     }

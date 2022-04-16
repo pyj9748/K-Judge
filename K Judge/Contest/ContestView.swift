@@ -29,13 +29,14 @@ struct ContestView: View {
             .navigationBarTitle(" 대회 " ,displayMode:.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        print("계정 정보")
+                    NavigationLink(destination: UserInfoView(), label: {
+                       
+                            Image(systemName: "person.crop.circle")
+                            .font(.body)
                         
-                    }) {
-                        Image(systemName: "person.crop.circle")
-                        .font(.body)
-                    }
+                        
+                    })
+                    
                 }
                
             })

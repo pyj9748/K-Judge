@@ -12,8 +12,8 @@ struct ContentView: View {
     @State private var selection:Tab = .Problems
     
     var body: some View {
-//        LoginView().navigationBarHidden(true)
-        MainView()
+        LoginView().navigationBarHidden(true)
+        //MainView()
     }
 }
 

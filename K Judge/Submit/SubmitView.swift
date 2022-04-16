@@ -25,6 +25,7 @@ struct SubmitView: View {
                 Text("언어 : \(languages[self.selected_option])")
                
                 CodeEditorView(source_code: self.$submitViewModel.submit.source_code, selected_option: self.$selected_option)
+                   
               
                 ProblemDescriptionView(problemDetail: $problemDetail)
                 

@@ -11,7 +11,7 @@ struct CreateView: View {
     var difficulty : [String] = ["상","중","하"]
     @FocusState var isInputActive: Bool
     @State private var testCaseNum: Int = 2
-    @State private var selectedDifficulty: Int = 2
+    @State private var selectedDifficulty: Int = 1
     
     @State private var descriptionHeight: CGFloat = 40
     @State private var input_descriptiontHeight: CGFloat = 40
@@ -106,13 +106,13 @@ struct CreateView: View {
                     .navigationBarTitle("문제 생성",displayMode:.inline)
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            Button(action: {
-                                print("계정 정보")
+                            NavigationLink(destination: UserInfoView(), label: {
+                               
+                                    Image(systemName: "person.crop.circle")
+                                    .font(.body)
                                 
-                            }) {
-                                Image(systemName: "person.crop.circle")
-                                .font(.body)
-                            }
+                                
+                            })
                         }
                         ToolbarItem(placement: .navigationBarTrailing){
                             createBtn
@@ -421,7 +421,7 @@ extension CreateView {
     var timeTextField : some View{
         VStack(alignment:.leading){
             Text("시간 제한").font(.headline)
-            TextField("2", text:self.$createViewModel.problem.limit.time)
+            TextField("5", text:self.$createViewModel.problem.limit.time)
                 .textFieldStyle(.roundedBorder)
                 .border(Color("DefaultTextColor"), width: 2)
         }

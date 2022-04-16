@@ -48,8 +48,16 @@ struct LoginView: View {
 extension LoginView {
     //Logo
     var KJudgeLogo : some View {
-        Text("K - JUDGE")
-            .font(.largeTitle)
+        VStack{
+            Image("AppLogo").resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 100, height: 100)
+            Text("K - JUDGE")
+                .font(.largeTitle)
+        }
+        
+       
+
         
     }
     // id text field

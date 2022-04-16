@@ -15,6 +15,8 @@
 		282E3FC427DE1E3F00360E33 /* ProblemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC327DE1E3F00360E33 /* ProblemListViewModel.swift */; };
 		282E3FC627DE1E5200360E33 /* ProblemListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC527DE1E5200360E33 /* ProblemListItemView.swift */; };
 		282E3FCA27DE242000360E33 /* ProblemItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282E3FC927DE242000360E33 /* ProblemItemView.swift */; };
+		284FD91B280A96560009B881 /* KeyboardToolbar in Frameworks */ = {isa = PBXBuildFile; productRef = 284FD91A280A96560009B881 /* KeyboardToolbar */; };
+		284FD91D280AA3DB0009B881 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284FD91C280AA3DB0009B881 /* UserInfoView.swift */; };
 		28588C5A27E75C4400152B88 /* ProblemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5927E75C4400152B88 /* ProblemDetailView.swift */; };
 		28588C5C27E75D9E00152B88 /* ProblemListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5B27E75D9E00152B88 /* ProblemListItem.swift */; };
 		28588C5E27E768D900152B88 /* ProblemEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28588C5D27E768D900152B88 /* ProblemEditView.swift */; };
@@ -86,6 +88,7 @@
 		282E3FC327DE1E3F00360E33 /* ProblemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListViewModel.swift; sourceTree = "<group>"; };
 		282E3FC527DE1E5200360E33 /* ProblemListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListItemView.swift; sourceTree = "<group>"; };
 		282E3FC927DE242000360E33 /* ProblemItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemItemView.swift; sourceTree = "<group>"; };
+		284FD91C280AA3DB0009B881 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
 		28588C5927E75C4400152B88 /* ProblemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemDetailView.swift; sourceTree = "<group>"; };
 		28588C5B27E75D9E00152B88 /* ProblemListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemListItem.swift; sourceTree = "<group>"; };
 		28588C5D27E768D900152B88 /* ProblemEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProblemEditView.swift; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				282E3FBC27DE1C1200360E33 /* SwiftyJSON in Frameworks */,
+				284FD91B280A96560009B881 /* KeyboardToolbar in Frameworks */,
 				282E3FB927DE1BF800360E33 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,15 +168,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2885658427DCA268009E5B57 /* Login */ = {
+		2885658427DCA268009E5B57 /* User */ = {
 			isa = PBXGroup;
 			children = (
 				2885658F27DCE543009E5B57 /* Login.swift */,
 				2885658B27DCE530009E5B57 /* LoginView.swift */,
 				28CB442427F88CDB00023E1C /* SignUpView.swift */,
 				28CC002828047E6200D4F68A /* UITextViewRepresentable.swift */,
+				284FD91C280AA3DB0009B881 /* UserInfoView.swift */,
 			);
-			path = Login;
+			path = User;
 			sourceTree = "<group>";
 		};
 		28A1CE8A27DB04A400ED38A5 = {
@@ -203,7 +208,7 @@
 				28A1CECC27DB054E00ED38A5 /* Contest */,
 				28A1CECA27DB053C00ED38A5 /* Submit */,
 				28A1CECD27DB055600ED38A5 /* Setting */,
-				2885658427DCA268009E5B57 /* Login */,
+				2885658427DCA268009E5B57 /* User */,
 				28A1CE9A27DB04A600ED38A5 /* Assets.xcassets */,
 				28A1CE9C27DB04A600ED38A5 /* Preview Content */,
 			);
@@ -338,6 +343,7 @@
 			packageProductDependencies = (
 				282E3FB827DE1BF800360E33 /* Alamofire */,
 				282E3FBB27DE1C1200360E33 /* SwiftyJSON */,
+				284FD91A280A96560009B881 /* KeyboardToolbar */,
 			);
 			productName = "K Judge";
 			productReference = 28A1CE9327DB04A400ED38A5 /* K Judge.app */;
@@ -370,6 +376,7 @@
 			packageReferences = (
 				282E3FB727DE1BF800360E33 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				282E3FBA27DE1C1200360E33 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				284FD919280A96560009B881 /* XCRemoteSwiftPackageReference "KeyboardToolbar" */,
 			);
 			productRefGroup = 28A1CE9427DB04A400ED38A5 /* Products */;
 			projectDirPath = "";
@@ -453,6 +460,7 @@
 				28588C5C27E75D9E00152B88 /* ProblemListItem.swift in Sources */,
 				282E3FC027DE1E1600360E33 /* ProblemViewModel.swift in Sources */,
 				28CB442527F88CDB00023E1C /* SignUpView.swift in Sources */,
+				284FD91D280AA3DB0009B881 /* UserInfoView.swift in Sources */,
 				28A1CEBF27DB04D600ED38A5 /* ViewModifiers.swift in Sources */,
 				288565A627DCF6B7009E5B57 /* ContestListItemView.swift in Sources */,
 				282E3FC427DE1E3F00360E33 /* ProblemListViewModel.swift in Sources */,
@@ -683,6 +691,14 @@
 				kind = branch;
 			};
 		};
+		284FD919280A96560009B881 /* XCRemoteSwiftPackageReference "KeyboardToolbar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cameronshemilt/KeyboardToolbar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -695,6 +711,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 282E3FBA27DE1C1200360E33 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		284FD91A280A96560009B881 /* KeyboardToolbar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 284FD919280A96560009B881 /* XCRemoteSwiftPackageReference "KeyboardToolbar" */;
+			productName = KeyboardToolbar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

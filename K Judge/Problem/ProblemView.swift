@@ -18,13 +18,13 @@ struct ProblemView: View {
             } .navigationBarTitle("문제목록",displayMode:.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            print("계정 정보")
+                        NavigationLink(destination: UserInfoView(), label: {
+                           
+                                Image(systemName: "person.crop.circle")
+                                .font(.body)
                             
-                        }) {
-                            Image(systemName: "person.crop.circle")
-                            .font(.body)
-                        }
+                            
+                        })
                     }
                    
                 })

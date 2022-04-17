@@ -39,20 +39,20 @@ extension UserInfoView {
             VStack(alignment:.leading){
                 
                 Text(" ")
-                Text(self.userInfoViewModel.userInfo.name)
+                Text(self.$userInfoViewModel.userInfo.name.wrappedValue)
                     .font(.largeTitle)
                     .foregroundColor(Color("DefaultTextColor"))
                 Text(" ")
             }
             HStack(alignment: .center){
                 Group{
-                    if self.userInfoViewModel.userInfo.rank == "GOLD"{
+                    if self.$userInfoViewModel.userInfo.rank.wrappedValue == "GOLD"{
                         Text("🥇").font(.system(size: 80))
                     }
-                    else if self.userInfoViewModel.userInfo.rank == "SILVER"{
+                    else if self.$userInfoViewModel.userInfo.rank.wrappedValue == "SILVER"{
                         Text("🥈").font(.system(size: 80))
                     }
-                    else if self.userInfoViewModel.userInfo.rank == "BRONZE" {
+                    else if self.$userInfoViewModel.userInfo.rank.wrappedValue == "BRONZE" {
                         Text("🥉").font(.system(size: 80))
                     }
                     else {
@@ -60,7 +60,7 @@ extension UserInfoView {
                     }
                 }
                 Text(" ")
-                Text("\(self.userInfoViewModel.userInfo.rank) 등급 입니다!") .font(.headline)
+                Text("\(self.$userInfoViewModel.userInfo.rank.wrappedValue) 등급 입니다!") .font(.headline)
                     .foregroundColor(Color("DefaultTextColor"))
                 Text(" ")
                 
@@ -113,7 +113,7 @@ class UserInfoViewModel : ObservableObject {
 // 서버에서 problem List 받아오기
 extension UserInfoViewModel {
     func getUserInfo(token:String) -> UserInfo{
-        var userInfo :UserInfo = UserInfo(id: 0, name: "", accumulate_score: 0, rank: "")
+        var userInfo :UserInfo = UserInfo(id: 0, name: "dudwns", accumulate_score: 0, rank: "")
         print("getUserInfo")
         
         // api call - 문제 목록조회
@@ -133,14 +133,14 @@ extension UserInfoViewModel {
                  //여기서 가져온 데이터를 자유롭게 활용하세요.
                  switch response.result{
                  case.success(let value):
-                     print(response)
+                     //print(response)
                      
                      let json = JSON(value)
-                     guard let dataList = json["data"].array else {return}
-                    
-                     let data = json["data"].arrayValue[0]
-                     let info = UserInfo(id: data["id"].intValue, name: data["name"].stringValue, accumulate_score:  data["accumulate_score"].intValue, rank: data["rank"].stringValue)
                      
+                     let info = UserInfo(id: json["data"]["id"].intValue, name: json["data"]["name"].stringValue, accumulate_score:  json["data"]["accumulate_score"].intValue, rank: json["data"]["rank"].stringValue)
+
+                     self.userInfo = info
+                  
                      userInfo = info
                  case.failure(let error) :
                      print(error.localizedDescription)

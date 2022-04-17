@@ -27,19 +27,27 @@ struct ProblemsView: View {
                     Text("").onAppear(){
                         print("ContestItemView \(challenge.id)")
                         // get problem list
-                       
                         problemsViewModel.getProblemList(challengeId: challenge.id)
                        
                     }
                 }
-                
-                
-                ForEach($problemsViewModel.challengeProblemList){ item in
-                    NavigationLink( destination:ProblemDetailView(challenge: item),label: {
-                        ProblemListItem(problemListItem: item)
-                    })
+                Group{
+                    if problemsViewModel.getNowDate() > challenge.start_time{
+                        
+                        ForEach($problemsViewModel.challengeProblemList){ item in
+                            NavigationLink( destination:ProblemDetailView(challenge: item),label: {
+                                ProblemListItem(problemListItem: item)
+                            })
+                        }
+                    }
+                    else {
+                        Text("대회 시작시각 이전에는 문제정보를 볼 수 없습니다.")
+                    }
+                    
                    
                 }
+                
+                
             }
             Spacer()
         }

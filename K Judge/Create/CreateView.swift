@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateView: View {
     var difficulty : [String] = ["상","중","하"]
-    @FocusState var isInputActive: Bool
+    //@FocusState var isInputActive: Bool
     @State private var testCaseNum: Int = 2
     @State private var selectedDifficulty: Int = 1
     
@@ -35,6 +35,7 @@ struct CreateView: View {
   
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
+    @State var showingTitleAlert = false
     
     @StateObject var createViewModel = CreateViewModel()
     
@@ -158,16 +159,17 @@ extension CreateView {
     var createBtn : some View {
         Button(action: {
             print("createBtn")
-            // 메모리와 타임이 숫자인지
-//            guard Int(self.$createViewModel.problem.limit.memory.wrappedValue) != nil
-//            else {
-//                self.showingAlert = true
-//                return
-//            }
+             // 메모리  숫자인지
       
             guard Int(self.$createViewModel.problem.limit.time.wrappedValue) != nil
             else {
                 self.showingAlert = true
+                return
+            }
+            
+            guard self.$createViewModel.problem.name.wrappedValue != ""
+            else {
+                self.showingTitleAlert = true
                 return
             }
     
@@ -192,10 +194,15 @@ extension CreateView {
             .alert("타임과 메모리값 오류", isPresented: $showingAlert) {
                 Button("확인"){}
             } message: {
-                Text("타임과 메모리는 정수값을 가져야 합니다.")
+                Text("시간제한은 정수값을 가져야 합니다.")
+            }
+            .alert("타임과 메모리값 오류", isPresented: $showingTitleAlert) {
+                Button("확인"){}
+            } message: {
+                Text("문제이름은 공백일 수 없습니다.")
             }
                 
-       
+        
         
     }
 }
@@ -439,8 +446,8 @@ extension CreateView {
                 
                 Text(" 상            ")
                     .padding(20)
-                    .background( self.selectedDifficulty == 0 ? Color.blue : Color.gray)
-                    .foregroundColor(Color("DefaultTextColor"))
+                    .background( self.selectedDifficulty == 0 ? Color.blue : Color("KWColor1"))
+                    .foregroundColor(Color.white)
                     .buttonBorderShape(.roundedRectangle)
                     .cornerRadius(20)
                 
@@ -452,8 +459,8 @@ extension CreateView {
                 
                 Text(" 중            ")
                     .padding(20)
-                    .background( self.selectedDifficulty == 1 ? Color.blue : Color.gray)
-                    .foregroundColor(Color("DefaultTextColor"))
+                    .background( self.selectedDifficulty == 1 ? Color.blue : Color("KWColor1"))
+                    .foregroundColor(Color.white)
                     .buttonBorderShape(.roundedRectangle)
                     .cornerRadius(20)
                 
@@ -465,14 +472,14 @@ extension CreateView {
                 
                 Text(" 하            ")
                     .padding(20)
-                    .background( self.selectedDifficulty == 2 ? Color.blue : Color.gray)
-                    .foregroundColor(Color("DefaultTextColor"))
+                    .background( self.selectedDifficulty == 2 ? Color.blue : Color("KWColor1"))
+                    .foregroundColor(Color.white)
                     .buttonBorderShape(.roundedRectangle)
                     .cornerRadius(20)
                 
             })
          
-        }.background(Color.gray)
+        }//.background(Color.gray)
             .cornerRadius(20)
     }
 
@@ -482,7 +489,7 @@ extension CreateView {
         VStack(alignment:.leading) {
                 Text("난이도").font(.headline)
                     Picker("문제의 난이도를 골라주세요", selection: $selectedDifficulty) {
-                        ForEach(0 ..< difficulty.count) {
+                        ForEach(0..<difficulty.count) {
                             Text(self.difficulty[$0])       .border(Color("DefaultTextColor"), width: 2)
                             
                         }
@@ -513,8 +520,8 @@ extension CreateView {
                 
                 Text(" 테스트케이스 + ")
                     .padding(20)
-                    .background(Color.gray)
-                    .foregroundColor(Color("DefaultTextColor"))
+                    .background(Color("KWColor1"))
+                    .foregroundColor(Color.white)
                     .buttonBorderShape(.roundedRectangle)
                     .cornerRadius(20)
             })
@@ -527,8 +534,8 @@ extension CreateView {
                 
                 Text(" 테스트케이스 - ")
                     .padding(20)
-                    .background(Color.gray)
-                    .foregroundColor(Color("DefaultTextColor"))
+                    .background(Color("KWColor1"))
+                    .foregroundColor(Color.white)
                     .buttonBorderShape(.roundedRectangle)
                     .cornerRadius(20)
             })

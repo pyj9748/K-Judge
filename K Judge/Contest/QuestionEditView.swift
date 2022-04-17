@@ -9,7 +9,14 @@ import SwiftUI
 import Alamofire
 import SwiftyJSON
 struct QuestionEditView: View {
+    //  정부수정은 대회 시작 전에만
+    @State var showNow = false
+    // 출제 문제 배열 공백
+    @State var showQuestionsAlert = false
+    // 주최자가 아닌 경우
     @State var showAlert = false
+    // 성공
+    @State var showSuccess = false
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
     @State var questions : String = ""
@@ -46,13 +53,22 @@ struct PutQuestion : Encodable{
 extension  QuestionEditView {
     
     var questionsListSelect: some View {
-        GroupBox("출제 문제"){
+      
             NavigationLink(destination: ProblemSelectionView(problemList: $problemListViewModel.problemList , multiSelection: $multiSelection),label: {
-               Text("출제 문제 선택하기")
+               //Text("출제 문제 선택하기")
+              
+                
+                Text("출제 문제 선택하기")
+                    .fontWeight(.semibold)
+                    .font(.title)
+                    .padding(30)
+                    .padding(.horizontal, 8)
+                    .foregroundColor(.white)
+                    .background(Color("KWColor1"))
+                    .cornerRadius(10)
             })
-            Text("출제 문제 개수 : \(multiSelection.count)")
-            Text("출제 문제 개수 : \(multiSelection.description)")
-        }
+           
+       
        
     }
     
@@ -73,25 +89,20 @@ extension QuestionEditView {
     var editBtn : some View {
         Button(action: {
           
-            // 문제의 값이 잘 들어갔는지
-//            guard self.questions.split(separator: ",").map({
-//                Int($0)!
-//            }) != []
-//            else {
-//                self.showingAlert = true
-//                return
-//            }
-            
-            
+      
+            // 출제 문제 배열 공백
+            guard self.$multiSelection.wrappedValue.count != 0
+            else {
+                showQuestionsAlert = true
+                return
+            }
             
             
             let questions =
             self.$multiSelection.wrappedValue.map({
                 Int($0)!
             })
-//            let questions = self.questions.split(separator: ",").map({
-//                Int($0)!
-//            })
+
             
             // Header
             let headers : HTTPHeaders = [
@@ -110,11 +121,21 @@ extension QuestionEditView {
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
-//                    if json["error"]["status"] != NULL {
-//
-//                        showAlert = true
-//                        return
-//                    }
+                     
+                    if json["error"]["status"].intValue == 403 {
+                        showAlert = true
+                       
+                        //return
+                    }
+                    if json["error"]["status"].intValue == 400 {
+                        showNow = true
+                       
+                        return
+                    }
+                    if json["data"]["message"].stringValue == "You have successfully changed the questions."{
+                        showSuccess = true
+                        //return
+                    }
                    
                 default:
                     showAlert = true
@@ -138,14 +159,25 @@ extension QuestionEditView {
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
         })
-            .alert("문제값 오류", isPresented: $showingAlert) {
-                Button("확인"){}
-            } message: {
-                Text("문제의 양식을 잘 지켜주세요😘")
-            }.alert("대회의 주최자가 아닙니다.", isPresented: $showAlert) {
+        .alert("출제문제 배열 공백오류", isPresented: $showQuestionsAlert) {
+            Button("확인"){}
+        } message: {
+            Text("적어도 한 문제이상 출제해야 합니다.")
+        }
+            .alert("대회의 주최자가 아닙니다.", isPresented: $showAlert) {
                 Button("확인"){}
             } message: {
                 Text("대회의 주최자만 대회 정보를 수정 가능합니다.😘")
+            }
+            .alert("성공", isPresented: $showSuccess) {
+                Button("확인"){}
+            } message: {
+                Text("대회문제 수정 완료")
+            }
+            .alert("대회수정 시각오류", isPresented: $showNow) {
+                Button("확인"){}
+            } message: {
+                Text("대회수정은 대회시작 전에만 가능합니다.")
             }
                 
        

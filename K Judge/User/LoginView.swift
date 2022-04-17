@@ -15,7 +15,11 @@ struct LoginView: View {
     
     @StateObject var loginViewModel = LoginViewModel()
     @State var canLogin : Bool = false
+    
+    @State var showIDAlert: Bool = false
+    @State var showPWDAlert: Bool = false
     @State var showAlert: Bool = false
+    
     @State var shouldNavigate = false
     @AppStorage("isLoggedIn") var isLoggendIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
     @AppStorage("idSaveToggle") var idSaveToggle: Bool = UserDefaults.standard.bool(forKey: "idSaveToggle")
@@ -136,9 +140,14 @@ extension LoginView {
                             self.token = json["data"]["token"].stringValue
                             self.password = loginViewModel.login.user.password
                             //self.id = loginViewModel.login.user.password
+                            if json["error"]["status"].intValue == 401 && json["error"]["message"].stringValue == "해당 username의 사용자는 존재하지 않습니다."{
+                                shouldNavigate = false
+                                showIDAlert = true
+                                return
+                            }
                             if json["error"]["status"].intValue == 401{
                                 shouldNavigate = false
-                                showAlert = true
+                                showPWDAlert = true
                                 return
                             }
                             else {
@@ -181,10 +190,20 @@ extension LoginView {
                     .foregroundColor(.white)
                     .background(Color("KWColor1"))
                     .cornerRadius(40)
-            }) .alert("로그인 오류", isPresented: $showAlert) {
+            }) .alert("로그인 오류", isPresented: $showIDAlert) {
                 Button("확인"){}
             } message: {
-                Text("회원가입은 하셨나요? 하셨다면, 아이디/패스워드를 확인해주세요.")
+                Text("해당 아이디가 존재하지 않습니다. 회원가입 해주세요.")
+            }
+            .alert("로그인 오류", isPresented: $showPWDAlert) {
+                Button("확인"){}
+            } message: {
+                Text("비밀번호가 일치하지 않습니다.")
+            }
+            .alert("로그인 오류", isPresented: $showAlert) {
+                Button("확인"){}
+            } message: {
+                Text("아이디/비밀번호를 확인하세요.")
             }
 
         })

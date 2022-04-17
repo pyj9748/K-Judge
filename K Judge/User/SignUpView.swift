@@ -13,7 +13,13 @@ import SwiftyJSON
 struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var signUpViewModel = SignUpViewModel()
-    @State var showAlert: Bool = false
+    
+    // 비밀번호 와 비밀번호 확인 문자열 불일치
+    @State var showPwdDiscrepancy : Bool = false
+    // 비밀번호 길이 10자 이상
+    @State var showPwdShort: Bool = false
+    // 아이디가 이미 사용중인 아이디
+    @State var showIDUsed: Bool = false
     @State var showAlert2: Bool = false
 
     var body: some View {
@@ -64,19 +70,21 @@ extension SignUpView {
     // signup Button
     var signUpBtn : some View {
         Button(action: {
-          
+            // 비밀번호 와 비밀번호 확인 문자열 불일치 확인
+            guard self.signUpViewModel.signUp.password == self.signUpViewModel.signUp.checkPassword  else {
+                showPwdDiscrepancy = true
+                return
+            }
+            
             guard self.signUpViewModel.signUp.id != "" || self.signUpViewModel.signUp.password != "" else {
-                showAlert = true
+                showPwdDiscrepancy = true
                 return
             }
             guard self.signUpViewModel.signUp.password.count >= 10 else {
-                showAlert = true
+                showPwdShort = true
                 return
             }
-            guard self.signUpViewModel.signUp.password == self.signUpViewModel.signUp.checkPassword  else {
-                showAlert = true
-                return
-            }
+           
             
             // api call
             print("singupBtn")
@@ -95,9 +103,9 @@ extension SignUpView {
                 case .success(let value):
                     let json = JSON(value)
                     print(json)
-                   
+                    
                     if json["error"]["status"].intValue == 400 {
-                        showAlert2 = true
+                        showIDUsed = true
                     }
                     else {
                         presentationMode.wrappedValue.dismiss()
@@ -126,12 +134,18 @@ extension SignUpView {
             .background(Color("KWColor3"))
             .cornerRadius(40)
             
-        }).alert("회원가입 오류", isPresented: $showAlert) {
+        })
+        .alert("회원가입 오류", isPresented: $showPwdDiscrepancy) {
             Button("확인"){}
         } message: {
-            Text("아이디/패스워드(10글자 이상)를 확인해주세요. 또는 패스워드와 체크 패스워드가 일치해야합니다.")
+            Text("패스워드와 체크 패스워드가 일치해야합니다. 비밀번호를 확인해주세요")
         }
-        .alert("회원가입 오류", isPresented: $showAlert2) {
+        .alert("회원가입 오류", isPresented: $showPwdShort) {
+            Button("확인"){}
+        } message: {
+            Text("패스워드(10글자 이상)를 확인해주세요.")
+        }
+        .alert("회원가입 오류", isPresented: $showIDUsed) {
             Button("확인"){}
         } message: {
             Text("해당 username이 이미 존재합니다.")

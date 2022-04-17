@@ -12,7 +12,16 @@ import Alamofire
 struct ContestCreateView: View {
   
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
-    @State var showingAlert = false
+    // 문제명 공백
+    @State var showTitleAlert = false
+    // 출제 문제 배열 공백
+    @State var showQuestionsAlert = false
+    // 대회 시작 날짜가 지금보다 빠르다
+    @State var showStartAlert = false
+    // 대회 종료 날짜가 시작날짜보다 빠르다
+    @State var showEndAlert = false
+    
+   
     @State var questions : String = ""
     @State var multiSelection = Set<String>()
     
@@ -60,15 +69,36 @@ extension ContestCreateView {
     var createBtn : some View {
         Button(action: {
             print("createBtn")
+            
+            // 문제명 공백
+            guard self.$contestCreateViewModel.contest.name.wrappedValue != ""
+            else {
+                self.showTitleAlert = true
+                return
+            }
+            
+            // 출제 문제 배열 공백
+            guard self.$multiSelection.wrappedValue.count != 0
+            else {
+                showQuestionsAlert = true
+                return
+            }
+
+            // 대회 시작 날짜가 지금보다 빠르다
+            guard self.$contestCreateViewModel.contest.challenge_date_time.start_time.wrappedValue > Date.now
+            else {
+                self.showStartAlert = true
+                return
+            }
+            // 대회 종료 날짜가 시작날짜보다 빠르다
+            guard self.$contestCreateViewModel.contest.challenge_date_time.end_time.wrappedValue > self.$contestCreateViewModel.contest.challenge_date_time.start_time.wrappedValue
+            else {
+                self.showEndAlert = true
+                return
+            }
+            
             // 문제의 값이 잘 들어갔는지
-//            guard self.questions.split(separator: ",").map({
-//                Int($0)!
-//            }) != []
-//            else {
-//                self.showingAlert = true
-//                return
-//            }
-//
+
             
             
             
@@ -120,11 +150,27 @@ extension ContestCreateView {
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
         })
-            .alert("문제값 오류", isPresented: $showingAlert) {
+            .alert("대회이름 공백오류", isPresented: $showTitleAlert) {
                 Button("확인"){}
             } message: {
-                Text("문제의 양식을 잘 지켜주세요😘")
+                Text("대회 이름은 공백일 수 없습니다.")
             }
+            .alert("출제문제 배열 공백오류", isPresented: $showQuestionsAlert) {
+                Button("확인"){}
+            } message: {
+                Text("적어도 한 문제이상 출제해야 합니다.")
+            }
+            .alert("대회시작 값 오류", isPresented: $showStartAlert) {
+                Button("확인"){}
+            } message: {
+                Text("대회시작은 현재보다 미래시각이어야 합니다.")
+            }
+            .alert("대회종료 값 오류", isPresented: $showEndAlert) {
+                Button("확인"){}
+            } message: {
+                Text("대회종료는 대회시작보다 미래시각이어야 합니다.")
+            }
+
                 
        
         

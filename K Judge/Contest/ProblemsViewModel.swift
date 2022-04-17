@@ -20,6 +20,15 @@ class ProblemsViewModel :ObservableObject {
 
 // api call - 문제 목록 조회
 extension ProblemsViewModel {
+    
+    func getNowDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd\'T\'HH:mm:ss"
+        return dateFormatter.string(from: Date.now)
+        
+    }
+    
+    
     func getProblemList(challengeId : Int){
         var list :[ChallengeProblem] = []
         print("getChallengeProblemList", challengeId)
@@ -42,7 +51,7 @@ extension ProblemsViewModel {
                  //여기서 가져온 데이터를 자유롭게 활용하세요.
                  switch response.result{
                  case.success(let value):
-                     print(response)
+                     //print(response)
                      let json = JSON(value)
                      // let dataList = json["data"].array
                      guard let dataList = json["data"].array else {return}

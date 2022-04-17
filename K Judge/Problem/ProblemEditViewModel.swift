@@ -12,7 +12,7 @@ import SwiftyJSON
 // View Model
 class ProblemEditViewModel :ObservableObject {
     
-    @Published var problem = Problem(id: "", name: "", description: Description(description: "Enter Description", input_description: "Enter Input Description", output_description: "Enter Output Description"), limit: Limit(memory: "", time: ""), score: "")
+    @Published var problem = Problem(id: "", name: "", description: Description(description: "Enter Description", input_description: "Enter Input Description", output_description: "Enter Output Description"), limit: Limit(memory: "256", time: ""), score: "100")
     
    
     

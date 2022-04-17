@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct ContestListView: View {
-    
     @StateObject var contestListViewModel = ContestListViewModel()
     
     var body: some View {
         VStack{
-           
-          
-               
             ScrollView{
                 ForEach($contestListViewModel.challengeList, id: \.id ){ item in
                     NavigationLink(destination: ContestItemView(challenge: item), label: {

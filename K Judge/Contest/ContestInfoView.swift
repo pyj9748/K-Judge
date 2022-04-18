@@ -9,12 +9,14 @@ import SwiftUI
 import Alamofire
 import SwiftyJSON
 struct ContestInfoView: View {
+    @Binding var didIParticapted : Bool
     @Binding var challenge : Challenge
     @StateObject var contestInfoViewModel = ContestInfoViewModel()
     
     var body: some View {
         
         VStack{
+          
             Text("").onAppear(){
                 contestInfoViewModel.participationList = contestInfoViewModel.getParticipationList(challengeId: challenge.id)
                 
@@ -58,7 +60,7 @@ struct ContestInfoView: View {
 
 struct ContestInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ContestInfoView(challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)))
+        ContestInfoView(didIParticapted: .constant(true) ,challenge: .constant(Challenge(id: 1, name: "name", start_time: "start_time", end_time: "end_time", num_of_participation: 3, num_of_question: 3)))
     }
 }
 

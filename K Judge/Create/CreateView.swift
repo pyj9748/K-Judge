@@ -36,6 +36,8 @@ struct CreateView: View {
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @State var showingAlert = false
     @State var showingTitleAlert = false
+    @State var showSuccess = false
+    
     
     @StateObject var createViewModel = CreateViewModel()
     
@@ -176,6 +178,7 @@ extension CreateView {
                
             // api 콜
             createViewModel.createProblem(token: token,testCaseNum: self.testCaseNum)
+            showSuccess = true
             
         }, label: {
             HStack {
@@ -200,6 +203,10 @@ extension CreateView {
                 Button("확인"){}
             } message: {
                 Text("문제이름은 공백일 수 없습니다.")
+            }.alert("성공", isPresented: $showSuccess) {
+                Button("확인"){}
+            } message: {
+                Text("문제생성 완료")
             }
                 
         

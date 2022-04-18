@@ -7,7 +7,9 @@
 
 import SwiftUI
 import Alamofire
+import SwiftyJSON
 struct ContestInfoUpdateView: View {
+    @State var showSuccess = false
     @Binding var challenge : Challenge
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     var body: some View {
@@ -58,7 +60,21 @@ struct ContestInfoUpdateView: View {
                            parameters: post,
                            encoder: JSONParameterEncoder.default,headers: headers).response { response in
                     debugPrint(response)
-                }
+                }.responseJSON(completionHandler: {
+                    response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                      
+                        if json["data"]["message"].stringValue == "challenge grading is successfully requested."{
+                            showSuccess = true
+                            return
+                        }
+                    default:
+                        return
+                    }
+
+                })
             }, label: {
                 
                 HStack {
@@ -69,7 +85,13 @@ struct ContestInfoUpdateView: View {
                     .font(.title)
                 }
                 
-            }).padding(30)
+            }).alert("성공", isPresented: $showSuccess) {
+                Button("확인"){}
+            } message: {
+                Text("대회종료 완료")
+            }
+            
+            .padding(30)
                 .padding(.horizontal, 8)
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))

@@ -21,6 +21,8 @@ struct ProblemEditView: View {
     @State private var output_descriptiontHeightHeight: CGFloat = 40
     @State var showingAlert = false
     @State var showingTitleAlert = false
+    @State var showSuccess = false
+    
     var body: some View {
         VStack{
             ScrollView{
@@ -228,6 +230,7 @@ extension ProblemEditView {
                        parameters: editProblem,
                        encoder: JSONParameterEncoder.default,headers: headers).response { response in
                 debugPrint(response)
+                showSuccess = true
             }
             
         }, label: {
@@ -253,6 +256,10 @@ extension ProblemEditView {
             Button("확인"){}
         } message: {
             Text("문제이름은 공백일 수 없습니다.")
+        }.alert("성공", isPresented: $showSuccess) {
+            Button("확인"){}
+        } message: {
+            Text("문제수정 완료")
         }
                 
        

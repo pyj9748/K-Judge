@@ -9,6 +9,7 @@ import SwiftUI
 
 // View
 struct SubmitView: View {
+ 
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var challenge_id : Int
     let languages = [Language.JAVA.string , Language.CPP.string , Language.C.string]
@@ -69,6 +70,7 @@ extension SubmitView {
             // submit api 콜
             submitViewModel.gradeSubmitCode(problemId: problemDetail.id, challengeId: challenge_id, token: token)
             
+            
         }, label: {
             HStack {
                     Image(systemName: "envelope")
@@ -82,7 +84,20 @@ extension SubmitView {
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
-        })
+        }) .alert("성공", isPresented: self.$submitViewModel.showSuccess) {
+            Button("확인"){}
+        } message: {
+            Text("제출 완료")
+        }
+        .alert("실패", isPresented: self.$submitViewModel.showFail) {
+            Button("확인"){}
+        } message: {
+            Text("제출 실패")
+        } .alert("실패", isPresented: self.$submitViewModel.showNoID) {
+            Button("확인"){}
+        } message: {
+            Text("해당 id의 참여자가 존재하지 않습니다.")
+        }
     }
 }
 

@@ -14,7 +14,9 @@ import SwiftyJSON
 class SubmitViewModel :ObservableObject {
     
     @Published var submit = Submit(source_code: init_codes[0], programming_language: languages[0],problem_id: 1)
-    
+    @Published var showSuccess = false
+    @Published var showFail = false
+    @Published var showNoID = false
 }
 
 // api call - 문제 채점 요청
@@ -38,7 +40,30 @@ extension SubmitViewModel {
                    parameters: postSubmit,
                    encoder: JSONParameterEncoder.default,headers: headers).response { response in
             debugPrint(response)
-        }
+        }.responseJSON(completionHandler: {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+             
+                if json["data"]["message"].stringValue == "successfully submit your code."{
+                    self.showSuccess = true
+                    return
+                }
+                if json["error"]["message"].stringValue == "해당 id의 참여자가 존재하지 않습니다."{
+                    self.showNoID = true
+                    return
+                }
+                
+                else {
+                    self.showFail = true
+                    return
+                }
+            default:
+                return
+            }
+
+        })
 
         
         

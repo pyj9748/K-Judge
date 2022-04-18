@@ -21,7 +21,7 @@ struct ContestCreateView: View {
     // 대회 종료 날짜가 시작날짜보다 빠르다
     @State var showEndAlert = false
     
-   
+    @State var showSuccess = false
     @State var questions : String = ""
     @State var multiSelection = Set<String>()
     
@@ -131,7 +131,8 @@ extension ContestCreateView {
                        method: .post,
                        parameters: postContest,
                        encoder: JSONParameterEncoder.default,headers: headers).response { response in
-                debugPrint(response)
+                //debugPrint(response)
+                showSuccess = true
             }
             
             
@@ -169,6 +170,10 @@ extension ContestCreateView {
                 Button("확인"){}
             } message: {
                 Text("대회종료는 대회시작보다 미래시각이어야 합니다.")
+            }.alert("성공", isPresented: $showSuccess) {
+                Button("확인"){}
+            } message: {
+                Text("대회생성 완료")
             }
 
                 

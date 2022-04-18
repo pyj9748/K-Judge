@@ -308,12 +308,19 @@ extension CreateViewModel {
         },to: url,method: .post,headers: headers)
             .responseJSON(completionHandler: {
                 response in
-                print(response)
-                if let err = response.error{
-                               print(err)
-                               return
-                           }
-                print("success")
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                   
+                    
+                   
+                        
+                default:
+                    return
+                }
+               
+                
+                
             })
 
         

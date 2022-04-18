@@ -15,9 +15,14 @@ struct ContestItemView: View {
     @StateObject var contestItemViewModel = ContestItemViewModel()
     @StateObject var contestInfoViewModel = ContestInfoViewModel()
     @State var didIParticapted = false
+    @State var showParticapted = false
+    @State var showParticapteFail = false
+    @State var showParticapteAlready = false
+    @State var showQuit = false
     @State var tabIndex = 0
     
     var body: some View {
+        
        // NavigationView{
             VStack{
                 Text("").onAppear(){
@@ -40,7 +45,7 @@ struct ContestItemView: View {
                     MySubmissionView(challenge: $challenge)
                 }
                 else if tabIndex == 2 {
-                    ContestInfoView(challenge: $challenge)
+                    ContestInfoView( didIParticapted: $didIParticapted,challenge: $challenge)
                 }
                 else {
                    ContestInfoUpdateView(challenge: $challenge)
@@ -93,14 +98,22 @@ extension ContestItemView {
                     let json = JSON(value)
                     if json["data"]["message"].stringValue == "You have been successfully registered." {
                         didIParticapted = true
-                       
+                        showParticapted = true
                         return
                     }
-                    if json["error"]["status"].intValue == 400 {
+                    if json["error"]["message"].stringValue == "대회 시작전에만 참여가 가능합니다." {
+                        didIParticapted = false
+                        showParticapteFail = true
+                        return
+                    }
+                    if json["error"]["message"].stringValue == "이미 대회에 참여했습니다." {
+                        showParticapteAlready = true
                         didIParticapted = true
-                       
+                        
                         return
                     }
+                   
+                   
                    
                 default:
                     
@@ -122,7 +135,25 @@ extension ContestItemView {
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
-        })
+        }).alert("성공", isPresented: $showParticapted) {
+            Button("확인"){}
+        } message: {
+            Text("대회참여 완료")
+        }
+        .alert("실패", isPresented: $showParticapteFail) {
+            Button("확인"){}
+        } message: {
+            Text("대회 시작전에만 참여가 가능합니다.")
+        } .alert("실패", isPresented: $showParticapteAlready) {
+            Button("확인"){}
+        } message: {
+            Text("이미 대회에 참여했습니다.")
+        }.alert("성공", isPresented: $showQuit) {
+            Button("확인"){}
+        } message: {
+            Text("대회참여취소 완료")
+        }
+       
     }
     var unRegisterBtn : some View {
        
@@ -147,7 +178,7 @@ extension ContestItemView {
                     let json = JSON(value)
                     if json["data"]["message"].stringValue == "You have been successfully canceled." {
                         didIParticapted = false
-                       
+                        showQuit = true
                         return
                     }
                    
@@ -172,7 +203,26 @@ extension ContestItemView {
                 .foregroundColor(.white)
                 .background(Color("KWColor1"))
                 .cornerRadius(40)
-        })
+        }).alert("성공", isPresented: $showParticapted) {
+            Button("확인"){}
+        } message: {
+            Text("대회참여 완료")
+        }
+        .alert("실패", isPresented: $showParticapteFail) {
+            Button("확인"){}
+        } message: {
+            Text("대회 시작전에만 참여가 가능합니다.")
+        } .alert("실패", isPresented: $showParticapteAlready) {
+            Button("확인"){}
+        } message: {
+            Text("이미 대회에 참여했습니다.")
+        }
+        
+        .alert("성공", isPresented: $showQuit) {
+            Button("확인"){}
+        } message: {
+            Text("대회참여취소 완료")
+        }
     }
     
 }

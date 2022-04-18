@@ -156,7 +156,7 @@ extension InfoEditView {
                        
                         return
                     }
-                    else{
+                    if json["data"]["message"].stringValue == "You have successfully changed the challenge info."{
                         showSuccess = true
                         return
                     }

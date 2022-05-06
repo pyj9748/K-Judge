@@ -119,6 +119,14 @@ extension LoginView {
                             let json = JSON(value)
                             self.token = json["data"]["token"].stringValue
                             self.id = loginViewModel.login.user.id
+                            if json["error"]["status"].intValue == 401{
+                                shouldNavigate = false
+                                showPWDAlert = true
+                                return
+                            }
+                            else {
+                                shouldNavigate = true
+                            }
                         default:
                             return
                         }

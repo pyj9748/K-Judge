@@ -7,13 +7,8 @@
 
 import SwiftUI
 
-//import KeyboardToolbar
-//let toolbarItems: [KeyboardToolbarItem] = [
-//    .init(text: "Tab", callback: {}),
-//    .init(systemName: "italic", callback: {}),
-//    .init(systemName: "underline", callback: {}),
-//    .dismissKeyboard
-//]
+import KeyboardToolbar
+
 
 struct CodeEditorView: View {
     
@@ -36,7 +31,13 @@ struct CodeEditorView: View {
                        language: .swift)
               .environment(\.codeEditorTheme,
                            colorScheme == .dark ? Theme.defaultDark : Theme.defaultLight)
-             // .keyboardToolbar(toolbarItems)
+//              .keyboardToolbar([
+//                .init(text: "Tab", callback: {
+//                    self.tab()
+//                    
+//                }),
+//                .dismissKeyboard
+//            ])
             
              
         

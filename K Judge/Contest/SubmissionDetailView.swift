@@ -18,6 +18,7 @@ struct SubmissionDetailView: View {
     @StateObject var submissionDetailViewModel =  SubmissionDetailViewModel()
     var body: some View {
         HStack{
+            
             VStack(alignment : .leading){
                 ScrollView{
                     VStack(alignment : .leading){
@@ -35,8 +36,9 @@ struct SubmissionDetailView: View {
                         sourceCodeText
                     }.padding()
                 } .navigationBarTitle("",displayMode:.inline)
+                Spacer()
             }
-            Spacer()
+            
         }
         
     }

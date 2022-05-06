@@ -9,16 +9,15 @@ import SwiftUI
 import Alamofire
 
 struct ProblemEditView: View {
-    
     var difficulty : [String] = ["상","중","하"]
     @State private var selectedDifficulty: Int = 1
     
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var problemId : String
-    @StateObject var problemEditViewModel = ProblemEditViewModel()
-    @State private var descriptionHeight: CGFloat = 40
-    @State private var input_descriptiontHeight: CGFloat = 40
-    @State private var output_descriptiontHeightHeight: CGFloat = 40
+    @Binding var problemEditViewModel :ProblemItemViewModel
+    @State private var descriptionHeight: CGFloat = 280
+    @State private var input_descriptiontHeight: CGFloat = 280
+    @State private var output_descriptiontHeightHeight: CGFloat = 280
     @State var showingAlert = false
     @State var showingTitleAlert = false
     @State var showSuccess = false
@@ -270,7 +269,7 @@ extension ProblemEditView {
 
 struct ProblemEditView_Previews: PreviewProvider {
     static var previews: some View {
-        ProblemEditView(problemId: .constant("1"))
+        ProblemEditView( problemId: .constant("1"), problemEditViewModel: .constant(ProblemItemViewModel()))
     }
 }
 

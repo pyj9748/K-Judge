@@ -225,6 +225,9 @@ extension CreateView {
                 .textFieldStyle(.roundedBorder)
                 .border(Color("DefaultTextColor"), width: 2)
                 //.submitLabel(.next)
+                .onAppear(){
+                    self.$createViewModel.problem.name.wrappedValue = ""
+                }
                 
                 
         }
@@ -240,6 +243,8 @@ extension CreateView {
 
                         .frame(height: descriptionHeight)
                         .border(Color("DefaultTextColor"), width: 2)
+        }.onAppear(){
+            self.$createViewModel.problem.description.description.wrappedValue = "Enter description"
         }
     }
    
@@ -250,6 +255,10 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.problem.description.input_description, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
                     .frame(height: input_descriptiontHeight)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.problem.description.input_description.wrappedValue = "Enter input description"
+                    }
+
 //            TextEditor(text:self.$createViewModel.problem.description.input_description).border(Color("DefaultTextColor"), width: 1)
 //                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 400)
 //                .cornerRadius(6.0)
@@ -263,6 +272,9 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.problem.description.output_description, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
                     .frame(height: output_descriptiontHeightHeight)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.problem.description.output_description.wrappedValue = "Enter output description"
+                    }
 
         }
     }
@@ -273,6 +285,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.input_file1, isFocused: .constant(true), inputHeight: $input_file1Height)
                     .frame(height: input_file1Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.input_file1.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
            
         }
     }
@@ -283,6 +301,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.output_file1, isFocused: .constant(true), inputHeight: $output_file1Height)
                     .frame(height: output_file1Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.output_file1.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
 
@@ -292,7 +316,12 @@ extension CreateView {
             Text("테케 입력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file2, isFocused: .constant(true), inputHeight: $input_file2Height)
                     .frame(height: input_file2Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.input_file2.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -302,7 +331,12 @@ extension CreateView {
             Text("테케 출력 2").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file2, isFocused: .constant(true), inputHeight: $output_file2Height)
                     .frame(height: output_file2Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.output_file2.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 3
@@ -311,7 +345,12 @@ extension CreateView {
             Text("테케 입력 3").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file3, isFocused: .constant(true), inputHeight: $input_file3Height)
                     .frame(height: input_file3Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.input_file3.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -322,6 +361,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.output_file3, isFocused: .constant(true), inputHeight: $output_file3Height)
                     .frame(height: output_file3Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.output_file3.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 4
@@ -330,7 +375,12 @@ extension CreateView {
             Text("테케 입력 4").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file4, isFocused: .constant(true), inputHeight: $input_file4Height)
                     .frame(height: input_file4Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.input_file4.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -340,7 +390,12 @@ extension CreateView {
             Text("테케 출력 4").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file4, isFocused: .constant(true), inputHeight: $output_file4Height)
                     .frame(height: output_file4Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.output_file4.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 5
@@ -350,6 +405,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.input_file5, isFocused: .constant(true), inputHeight: $input_file5Height)
                     .frame(height: input_file5Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.input_file5.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -360,6 +421,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.output_file5, isFocused: .constant(true), inputHeight: $output_file5Height)
                     .frame(height: output_file5Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.output_file5.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 6
@@ -369,6 +436,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.input_file6, isFocused: .constant(true), inputHeight: $input_file6Height)
                     .frame(height: input_file6Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.input_file6.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -379,6 +452,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.output_file6, isFocused: .constant(true), inputHeight: $output_file6Height)
                     .frame(height: output_file6Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.output_file6.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 7
@@ -387,7 +466,12 @@ extension CreateView {
             Text("테케 입력 7").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.input_file7, isFocused: .constant(true), inputHeight: $input_file7Height)
                     .frame(height: input_file7Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.input_file7.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -397,7 +481,12 @@ extension CreateView {
             Text("테케 출력 7").font(.headline)
             UITextViewRepresentable(text: self.$createViewModel.output_file7, isFocused: .constant(true), inputHeight: $output_file7Height)
                     .frame(height: output_file7Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+                        self.$createViewModel.output_file7.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
     // input_file 8
@@ -407,6 +496,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.input_file8, isFocused: .constant(true), inputHeight: $input_file8Height)
                     .frame(height: input_file8Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.input_file8.wrappedValue = """
+    Enter Input File Content
+    """
+                        
+                    }
         }
     }
 
@@ -417,6 +512,12 @@ extension CreateView {
             UITextViewRepresentable(text: self.$createViewModel.output_file8, isFocused: .constant(true), inputHeight: $output_file8Height)
                     .frame(height: output_file8Height)
                     .border(Color("DefaultTextColor"), width: 2)
+                    .onAppear(){
+                        self.$createViewModel.output_file8.wrappedValue = """
+    Enter Output File Content
+    """
+                        
+                    }
         }
     }
 

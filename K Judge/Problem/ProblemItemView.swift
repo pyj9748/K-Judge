@@ -51,7 +51,7 @@ struct ProblemItemView: View {
 extension ProblemItemView {
   
     var editBtn : some View {
-        NavigationLink(destination: ProblemEditView(problemId: $problemId), label: {
+        NavigationLink(destination: ProblemEditView(problemId: $problemId , problemEditViewModel: .constant(   self.problemItemViewModel) ), label: {
             HStack {
                     Image(systemName: "pencil.circle")
                     .font(.body)

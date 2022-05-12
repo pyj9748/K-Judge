@@ -13,7 +13,7 @@ import SwiftyJSON
 struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var signUpViewModel = SignUpViewModel()
-    
+    @AppStorage("id") var id: String = (UserDefaults.standard.string(forKey: "id") ?? "")
     // 비밀번호 와 비밀번호 확인 문자열 불일치
     @State var showPwdDiscrepancy : Bool = false
     // 비밀번호 길이 10자 이상
@@ -108,6 +108,7 @@ extension SignUpView {
                         showIDUsed = true
                     }
                     else {
+                        self.id = self.$signUpViewModel.signUp.id.wrappedValue
                         presentationMode.wrappedValue.dismiss()
                     }
                  

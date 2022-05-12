@@ -37,9 +37,10 @@ struct CreateView: View {
     @State var showingAlert = false
     @State var showingTitleAlert = false
     @State var showSuccess = false
-    
+    @State var  showingDescriptionAlert = false
     
     @StateObject var createViewModel = CreateViewModel()
+    @State var placeholder = "값을 입력하세요"
     
     var body: some View {
         
@@ -49,7 +50,14 @@ struct CreateView: View {
                     VStack{
                        
                             nameTextField.onAppear (perform : UIApplication.shared.hideKeyboard)
-                            descriptionTextEditor
+                            .onAppear(){
+                   
+                                self.placeholder = "값을 입력하세요"
+                            }
+                       
+                        
+                        descriptionTextEditor
+                           
                             input_descriptionTextEditor
                             output_descriptionTextEditor
                       
@@ -174,7 +182,24 @@ extension CreateView {
                 self.showingTitleAlert = true
                 return
             }
-    
+            
+            guard self.$createViewModel.problem.description.description.wrappedValue != ""
+            else {
+                self.showingDescriptionAlert = true
+                return
+            }
+            guard self.$createViewModel.problem.description.input_description.wrappedValue != ""
+            else {
+                self.showingDescriptionAlert = true
+                return
+            }
+            guard self.$createViewModel.problem.description.output_description.wrappedValue != ""
+            else {
+                self.showingDescriptionAlert = true
+                return
+            }
+            
+          
                
             // api 콜
             createViewModel.createProblem(token: token,testCaseNum: self.testCaseNum)
@@ -208,6 +233,11 @@ extension CreateView {
             } message: {
                 Text("문제생성 완료")
             }
+            .alert("문제 설명값 오류", isPresented: $showingDescriptionAlert) {
+                Button("확인"){}
+            } message: {
+                Text("문제 설명정보(문제, 입력, 출력)는 공백일 수 없습니다.")
+            }
                 
         
         
@@ -239,12 +269,21 @@ extension CreateView {
     var descriptionTextEditor : some View{
         VStack(alignment:.leading){
                 Text("문제").font(.headline)
-                UITextViewRepresentable(text: self.$createViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
+                ZStack {
+                    if self.$createViewModel.problem.description.description.wrappedValue.isEmpty {
+                        UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $descriptionHeight)
+                            .frame(height: descriptionHeight)
+                            .border(Color("DefaultTextColor"), width: 2)
+                    }
+                    UITextViewRepresentable(text: self.$createViewModel.problem.description.description, isFocused: .constant(true), inputHeight: $descriptionHeight)
 
-                        .frame(height: descriptionHeight)
-                        .border(Color("DefaultTextColor"), width: 2)
-        }.onAppear(){
-            self.$createViewModel.problem.description.description.wrappedValue = "Enter description"
+                            .frame(height: descriptionHeight)
+                            .border(Color("DefaultTextColor"), width: 2)
+                            .opacity(self.$createViewModel.problem.description.description.wrappedValue.isEmpty ? 0.25 : 1)
+                }   .onAppear(){
+                    self.$createViewModel.problem.description.description.wrappedValue = ""
+                }
+               
         }
     }
    
@@ -252,16 +291,23 @@ extension CreateView {
     var input_descriptionTextEditor : some View{
         VStack(alignment:.leading){
             Text("입력").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.problem.description.input_description, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
-                    .frame(height: input_descriptiontHeight)
-                    .border(Color("DefaultTextColor"), width: 2)
+            
+            ZStack {
+                if self.$createViewModel.problem.description.input_description.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
+                        .frame(height: input_descriptiontHeight)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.problem.description.input_description, isFocused: .constant(true), inputHeight: $input_descriptiontHeight)
+                        .frame(height: input_descriptiontHeight)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.problem.description.input_description.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+           
+                   
                     .onAppear(){
-                        self.$createViewModel.problem.description.input_description.wrappedValue = "Enter input description"
+                        self.$createViewModel.problem.description.input_description.wrappedValue = ""
                     }
-
-//            TextEditor(text:self.$createViewModel.problem.description.input_description).border(Color("DefaultTextColor"), width: 1)
-//                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 400)
-//                .cornerRadius(6.0)
         }
     }
    
@@ -269,11 +315,21 @@ extension CreateView {
     var output_descriptionTextEditor : some View{
         VStack(alignment:.leading){
             Text("출력").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.problem.description.output_description, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
-                    .frame(height: output_descriptiontHeightHeight)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.problem.description.output_description.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
+                        .frame(height: output_descriptiontHeightHeight)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.problem.description.output_description, isFocused: .constant(true), inputHeight: $output_descriptiontHeightHeight)
+                        .frame(height: output_descriptiontHeightHeight)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.problem.description.output_description.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+           
+            
                     .onAppear(){
-                        self.$createViewModel.problem.description.output_description.wrappedValue = "Enter output description"
+                        self.$createViewModel.problem.description.output_description.wrappedValue = ""
                     }
 
         }
@@ -282,12 +338,22 @@ extension CreateView {
     var input_file1TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 1").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file1, isFocused: .constant(true), inputHeight: $input_file1Height)
-                    .frame(height: input_file1Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.input_file1.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file1Height)
+                        .frame(height: input_file1Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file1, isFocused: .constant(true), inputHeight: $input_file1Height)
+                        .frame(height: input_file1Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file1.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+            
+            
+            
                     .onAppear(){
                         self.$createViewModel.input_file1.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -298,12 +364,20 @@ extension CreateView {
     var output_file1TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 1").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file1, isFocused: .constant(true), inputHeight: $output_file1Height)
-                    .frame(height: output_file1Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.output_file1.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file1Height)
+                        .frame(height: output_file1Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file1, isFocused: .constant(true), inputHeight: $output_file1Height)
+                        .frame(height: output_file1Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file1.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+         
                     .onAppear(){
                         self.$createViewModel.output_file1.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -314,11 +388,20 @@ extension CreateView {
     var input_file2TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 2").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file2, isFocused: .constant(true), inputHeight: $input_file2Height)
-                    .frame(height: input_file2Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.input_file2.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file2Height)
+                        .frame(height: input_file2Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file2, isFocused: .constant(true), inputHeight: $input_file2Height)
+                        .frame(height: input_file2Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file2.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+            
+                .onAppear(){
                         self.$createViewModel.input_file2.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -329,11 +412,19 @@ extension CreateView {
     var output_file2TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 2").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file2, isFocused: .constant(true), inputHeight: $output_file2Height)
-                    .frame(height: output_file2Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.output_file2.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file2Height)
+                        .frame(height: output_file2Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file2, isFocused: .constant(true), inputHeight: $output_file2Height)
+                        .frame(height: output_file2Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file2.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+         .onAppear(){
                         self.$createViewModel.output_file2.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -343,11 +434,19 @@ extension CreateView {
     var input_file3TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 3").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file3, isFocused: .constant(true), inputHeight: $input_file3Height)
-                    .frame(height: input_file3Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.input_file3.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file3Height)
+                        .frame(height: input_file3Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file3, isFocused: .constant(true), inputHeight: $input_file3Height)
+                        .frame(height: input_file3Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file3.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+                .onAppear(){
                         self.$createViewModel.input_file3.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -358,12 +457,20 @@ extension CreateView {
     var output_file3TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 3").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file3, isFocused: .constant(true), inputHeight: $output_file3Height)
-                    .frame(height: output_file3Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.output_file3.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file3Height)
+                        .frame(height: output_file3Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file3, isFocused: .constant(true), inputHeight: $output_file3Height)
+                        .frame(height: output_file3Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file3.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+          
                     .onAppear(){
                         self.$createViewModel.output_file3.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -373,11 +480,19 @@ extension CreateView {
     var input_file4TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 4").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file4, isFocused: .constant(true), inputHeight: $input_file4Height)
-                    .frame(height: input_file4Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.input_file4.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file4Height)
+                        .frame(height: input_file4Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file4, isFocused: .constant(true), inputHeight: $input_file4Height)
+                        .frame(height: input_file4Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file4.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+            .onAppear(){
                         self.$createViewModel.input_file4.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -388,11 +503,19 @@ extension CreateView {
     var output_file4TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 4").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file4, isFocused: .constant(true), inputHeight: $output_file4Height)
-                    .frame(height: output_file4Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.output_file4.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file4Height)
+                        .frame(height: output_file4Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file4, isFocused: .constant(true), inputHeight: $output_file4Height)
+                        .frame(height: output_file4Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file4.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+           .onAppear(){
                         self.$createViewModel.output_file4.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -402,12 +525,19 @@ extension CreateView {
     var input_file5TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 5").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file5, isFocused: .constant(true), inputHeight: $input_file5Height)
-                    .frame(height: input_file5Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.input_file5.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file5Height)
+                        .frame(height: input_file5Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file5, isFocused: .constant(true), inputHeight: $input_file5Height)
+                        .frame(height: input_file5Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file5.wrappedValue.isEmpty ? 0.25 : 1)
+            }
                     .onAppear(){
                         self.$createViewModel.input_file5.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -418,12 +548,20 @@ extension CreateView {
     var output_file5TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 5").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file5, isFocused: .constant(true), inputHeight: $output_file5Height)
-                    .frame(height: output_file5Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.output_file5.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file5Height)
+                        .frame(height: output_file5Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file5, isFocused: .constant(true), inputHeight: $output_file5Height)
+                        .frame(height: output_file5Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file5.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+          
                     .onAppear(){
                         self.$createViewModel.output_file5.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -433,12 +571,19 @@ extension CreateView {
     var input_file6TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 6").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file6, isFocused: .constant(true), inputHeight: $input_file6Height)
-                    .frame(height: input_file6Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.input_file6.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file6Height)
+                        .frame(height: input_file6Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file6, isFocused: .constant(true), inputHeight: $input_file6Height)
+                        .frame(height: input_file6Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file6.wrappedValue.isEmpty ? 0.25 : 1)
+            }
                     .onAppear(){
                         self.$createViewModel.input_file6.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -449,12 +594,20 @@ extension CreateView {
     var output_file6TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 6").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file6, isFocused: .constant(true), inputHeight: $output_file6Height)
-                    .frame(height: output_file6Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.output_file6.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file6Height)
+                        .frame(height: output_file6Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file6, isFocused: .constant(true), inputHeight: $output_file6Height)
+                        .frame(height: output_file6Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file6.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+         
                     .onAppear(){
                         self.$createViewModel.output_file6.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -464,11 +617,18 @@ extension CreateView {
     var input_file7TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 7").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file7, isFocused: .constant(true), inputHeight: $input_file7Height)
-                    .frame(height: input_file7Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.input_file7.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file6Height)
+                        .frame(height: input_file7Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file7, isFocused: .constant(true), inputHeight: $input_file7Height)
+                        .frame(height: input_file7Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file7.wrappedValue.isEmpty ? 0.25 : 1)
+            }.onAppear(){
                         self.$createViewModel.input_file7.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -479,11 +639,19 @@ extension CreateView {
     var output_file7TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 7").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file7, isFocused: .constant(true), inputHeight: $output_file7Height)
-                    .frame(height: output_file7Height)
-                    .border(Color("DefaultTextColor"), width: 2).onAppear(){
+            ZStack {
+                if self.$createViewModel.output_file7.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file7Height)
+                        .frame(height: output_file7Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file7, isFocused: .constant(true), inputHeight: $output_file7Height)
+                        .frame(height: output_file7Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file7.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+           .onAppear(){
                         self.$createViewModel.output_file7.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }
@@ -493,12 +661,19 @@ extension CreateView {
     var input_file8TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 입력 8").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.input_file8, isFocused: .constant(true), inputHeight: $input_file8Height)
-                    .frame(height: input_file8Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.input_file8.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file8Height)
+                        .frame(height: input_file8Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.input_file8, isFocused: .constant(true), inputHeight: $input_file8Height)
+                        .frame(height: input_file8Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.input_file8.wrappedValue.isEmpty ? 0.25 : 1)
+            }
                     .onAppear(){
                         self.$createViewModel.input_file8.wrappedValue = """
-    Enter Input File Content
     """
                         
                     }
@@ -509,12 +684,20 @@ extension CreateView {
     var output_file8TextEditor : some View{
         VStack(alignment:.leading){
             Text("테케 출력 8").font(.headline)
-            UITextViewRepresentable(text: self.$createViewModel.output_file8, isFocused: .constant(true), inputHeight: $output_file8Height)
-                    .frame(height: output_file8Height)
-                    .border(Color("DefaultTextColor"), width: 2)
+            ZStack {
+                if self.$createViewModel.output_file8.wrappedValue.isEmpty {
+                    UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file8Height)
+                        .frame(height: output_file8Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                }
+                UITextViewRepresentable(text: self.$createViewModel.output_file8, isFocused: .constant(true), inputHeight: $output_file8Height)
+                        .frame(height: output_file8Height)
+                        .border(Color("DefaultTextColor"), width: 2)
+                        .opacity(self.$createViewModel.output_file8.wrappedValue.isEmpty ? 0.25 : 1)
+            }
+          
                     .onAppear(){
                         self.$createViewModel.output_file8.wrappedValue = """
-    Enter Output File Content
     """
                         
                     }

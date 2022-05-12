@@ -12,6 +12,7 @@ struct ProblemEditView: View {
     var difficulty : [String] = ["상","중","하"]
     @State private var selectedDifficulty: Int = 1
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @Binding var problemId : String
     @Binding var problemEditViewModel :ProblemItemViewModel
@@ -222,7 +223,7 @@ extension ProblemEditView {
             let headers : HTTPHeaders = [
                         "Content-Type" : "application/json","Authorization": "Bearer \(token)" ]
             
-            let editProblem = EditProblem(name: problemEditViewModel.problem.name, score:Int( problemEditViewModel.problem.score)!, limit: PostLimit(time: Int(problemEditViewModel.problem.limit.time)!, memory: Int(problemEditViewModel.problem.limit.memory)!), description: PostDescription(description: problemEditViewModel.problem.description.description, input_description: problemEditViewModel.problem.description.input_description, output_description: problemEditViewModel.problem.description.output_description))
+            let editProblem = EditProblem(name: problemEditViewModel.problem.name, score:Int( problemEditViewModel.problem.score)!, limit: PostLimit(time: Int(problemEditViewModel.problem.limit.time)!, memory: 1500), description: PostDescription(description: problemEditViewModel.problem.description.description, input_description: problemEditViewModel.problem.description.input_description, output_description: problemEditViewModel.problem.description.output_description))
 
             AF.request("\(baseURL):8080/api/problems/\(problemId)",
                        method: .put,
@@ -230,6 +231,7 @@ extension ProblemEditView {
                        encoder: JSONParameterEncoder.default,headers: headers).response { response in
                 debugPrint(response)
                 showSuccess = true
+                presentationMode.wrappedValue.dismiss()
             }
             
         }, label: {

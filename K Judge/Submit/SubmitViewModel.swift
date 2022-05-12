@@ -89,21 +89,18 @@ let init_codes : [String] = [
     """
     #include <iostream>
 
-    int main()
-
-    {
+    int main() {
         std::cout << "Hello World\n";
         return 0;
     }
-    
+
     """
     ,
     
     """
     #include <stdio.h>
      
-    int main(void)
-    {
+    int main(void) {
         printf("Hello World\n");
         return 0;
     }

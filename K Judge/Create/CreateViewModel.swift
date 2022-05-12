@@ -12,67 +12,51 @@ import SwiftyJSON
 // View Model
 class CreateViewModel :ObservableObject {
     
-    @Published var problem = Problem( id : "" , name: "", description: Description(description: "Enter description", input_description: "Enter input description", output_description: "Enter output description"), limit: Limit(memory: "256", time: "5"),score: "100")
+    @Published var problem = Problem( id : "" , name: "", description: Description(description: "", input_description: "", output_description: ""), limit: Limit(memory: "256", time: "5"),score: "100")
     
     @Published var input_file1 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file1 : String = """
-    Enter Output File Content
     """
     
     @Published var input_file2 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file2 : String = """
-    Enter Output File Content
     """
     @Published var input_file3 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file3 : String = """
-    Enter Output File Content
     """
     
     @Published var input_file4 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file4 : String = """
-    Enter Output File Content
     """
     @Published var input_file5 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file5 : String = """
-    Enter Output File Content
     """
     
     @Published var input_file6 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file6 : String = """
-    Enter Output File Content
     """
     @Published var input_file7 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file7 : String = """
-    Enter Output File Content
     """
     
     @Published var input_file8 : String = """
-    Enter Input File Content
     """
     
     @Published var output_file8 : String = """
-    Enter Output File Content
     """
     
 }
@@ -82,6 +66,9 @@ extension CreateViewModel{
     
     // /api/problems
     func createProblem(token : String , testCaseNum : Int) {
+        
+      
+        
         let input_file_content1 = self.input_file1
         let input_file_url1 = self.getDocumentDirectory().appendingPathComponent("1.in")
         do {

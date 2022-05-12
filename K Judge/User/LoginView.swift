@@ -19,7 +19,7 @@ struct LoginView: View {
     @State var showIDAlert: Bool = false
     @State var showPWDAlert: Bool = false
     @State var showAlert: Bool = false
-    
+    @State var prevSavedID :String = ""
     @State var shouldNavigate = false
     @AppStorage("isLoggedIn") var isLoggendIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
     @AppStorage("idSaveToggle") var idSaveToggle: Bool = UserDefaults.standard.bool(forKey: "idSaveToggle")
@@ -30,11 +30,15 @@ struct LoginView: View {
     var body: some View {
         NavigationView{
             VStack{
-                KJudgeLogo
-                if idSaveToggle == false {
-                    idTextField
-                } else{
-                    savedIdTextField
+                KJudgeLogo.onAppear(){
+                    prevSavedID = id
+                }
+                Group{
+                    if idSaveToggle == false {
+                        idTextField
+                    } else{
+                        savedIdTextField
+                    }
                 }
                 pwdTextField
                 HStack{
@@ -89,6 +93,7 @@ extension LoginView {
     var idSaveRadioBox : some View {
         Toggle("아이디 저장", isOn: $idSaveToggle)
             .toggleStyle(.switch)
+        
             
       
     }
@@ -132,7 +137,8 @@ extension LoginView {
                         }
                     })
                 } else{
-                    print("self id", id)
+                    
+                   
                     let postUser = PostUser(username: self.id, password:loginViewModel.login.user.password)
 
                     AF.request("\(baseURL):8080/api/users/login",
@@ -147,15 +153,23 @@ extension LoginView {
                             let json = JSON(value)
                             self.token = json["data"]["token"].stringValue
                             self.password = loginViewModel.login.user.password
-                            //self.id = loginViewModel.login.user.password
+                           
                             if json["error"]["status"].intValue == 401 && json["error"]["message"].stringValue == "해당 username의 사용자는 존재하지 않습니다."{
                                 shouldNavigate = false
                                 showIDAlert = true
+                                self.id = prevSavedID
                                 return
                             }
                             if json["error"]["status"].intValue == 401{
                                 shouldNavigate = false
                                 showPWDAlert = true
+                                self.id = prevSavedID
+                                return
+                            }
+                            if json["error"]["status"].intValue == 400{
+                                shouldNavigate = false
+                                showAlert = true
+                                self.id = prevSavedID
                                 return
                             }
                             else {

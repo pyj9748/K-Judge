@@ -337,7 +337,7 @@ extension CreateView {
     // input_file 1
     var input_file1TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 1").font(.headline)
+            Text("테스트 케이스 입력 1").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file1.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file1Height)
@@ -363,7 +363,7 @@ extension CreateView {
     // output_file 1
     var output_file1TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 1").font(.headline)
+            Text("테스트 케이스 출력 1").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file1.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file1Height)
@@ -387,7 +387,7 @@ extension CreateView {
     // input_file 2
     var input_file2TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 2").font(.headline)
+            Text("테스트 케이스 입력 2").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file2.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file2Height)
@@ -411,7 +411,7 @@ extension CreateView {
     // output_file 2
     var output_file2TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 2").font(.headline)
+            Text("테스트 케이스 출력 2").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file2.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file2Height)
@@ -433,7 +433,7 @@ extension CreateView {
     // input_file 3
     var input_file3TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 3").font(.headline)
+            Text("테스트 케이스 입력 3").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file3.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file3Height)
@@ -456,7 +456,7 @@ extension CreateView {
     // output_file 3
     var output_file3TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 3").font(.headline)
+            Text("테스트 케이스 출력 3").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file3.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file3Height)
@@ -479,7 +479,7 @@ extension CreateView {
     // input_file 4
     var input_file4TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 4").font(.headline)
+            Text("테스트 케이스 입력 4").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file4.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file4Height)
@@ -502,7 +502,7 @@ extension CreateView {
     // output_file 4
     var output_file4TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 4").font(.headline)
+            Text("테스트 케이스 출력 4").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file4.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file4Height)
@@ -524,7 +524,7 @@ extension CreateView {
     // input_file 5
     var input_file5TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 5").font(.headline)
+            Text("테스트 케이스 입력 5").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file5.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file5Height)
@@ -547,7 +547,7 @@ extension CreateView {
     // output_file 5
     var output_file5TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 5").font(.headline)
+            Text("테스트 케이스 출력 5").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file5.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file5Height)
@@ -570,7 +570,7 @@ extension CreateView {
     // input_file 6
     var input_file6TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 6").font(.headline)
+            Text("테스트 케이스 입력 6").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file6.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file6Height)
@@ -593,7 +593,7 @@ extension CreateView {
     // output_file 6
     var output_file6TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 6").font(.headline)
+            Text("테스트 케이스 출력 6").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file6.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file6Height)
@@ -616,7 +616,7 @@ extension CreateView {
     // input_file 7
     var input_file7TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 7").font(.headline)
+            Text("테스트 케이스 입력 7").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file7.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file6Height)
@@ -638,7 +638,7 @@ extension CreateView {
     // output_file 7
     var output_file7TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 7").font(.headline)
+            Text("테스트 케이스 출력 7").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file7.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file7Height)
@@ -660,7 +660,7 @@ extension CreateView {
     // input_file 8
     var input_file8TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 입력 8").font(.headline)
+            Text("테스트 케이스 입력 8").font(.headline)
             ZStack {
                 if self.$createViewModel.input_file8.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $input_file8Height)
@@ -683,7 +683,7 @@ extension CreateView {
     // output_file 8
     var output_file8TextEditor : some View{
         VStack(alignment:.leading){
-            Text("테케 출력 8").font(.headline)
+            Text("테스트 케이스 출력 8").font(.headline)
             ZStack {
                 if self.$createViewModel.output_file8.wrappedValue.isEmpty {
                     UITextViewRepresentable(text: self.$placeholder, isFocused: .constant(true), inputHeight: $output_file8Height)

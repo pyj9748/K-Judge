@@ -24,14 +24,15 @@ extension ContestListViewModel {
     func getContestList() -> [Challenge]{
         var list :[Challenge] = []
         let parameters : [String: Any] = [
-                       "page": 0,
-                       "size": 300  // 여기는 한번에 가져올 문제 개수 값
+                       "page":  2,
+                       //"size": 300  // 여기는 한번에 가져올 문제 개수 값
         ]
         // api call - 대회 목록조회
         let url = "\(baseURL):8080/api/challenges"
                AF.request(url,
                           method: .get,
                           parameters:parameters,
+                      
                           encoding: URLEncoding.default,
                           headers: ["Content-Type":"application/json", "Accept":"application/json"])
                    .validate(statusCode: 200..<300)
@@ -52,7 +53,9 @@ extension ContestListViewModel {
                                
                                list.append(challenge)
                            }
+                           
                            self.challengeList = list
+                           print(self.challengeList)
                        case.failure(let error) :
                            print(error.localizedDescription)
                        }

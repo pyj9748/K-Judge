@@ -117,7 +117,7 @@ extension ContestCreateView {
             let start = contestCreateViewModel.getStartDate()
             let end = contestCreateViewModel.getEndDate()
             
-           
+           // print("create challnege : ",token)
             
             //contestCreateViewModel.createContest(parameters: parameters)
             // Header
@@ -131,7 +131,7 @@ extension ContestCreateView {
                        method: .post,
                        parameters: postContest,
                        encoder: JSONParameterEncoder.default,headers: headers).response { response in
-                //debugPrint(response)
+                debugPrint(response)
                 showSuccess = true
             }
             

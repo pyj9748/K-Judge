@@ -32,6 +32,7 @@ struct LoginView: View {
             VStack{
                 KJudgeLogo.onAppear(){
                     prevSavedID = id
+                  
                 }
                 Group{
                     if idSaveToggle == false {
@@ -43,6 +44,7 @@ struct LoginView: View {
                 pwdTextField
                 HStack{
                     idSaveRadioBox
+                    
                     loginBtn
                 }
                 signUpBtn
@@ -77,7 +79,7 @@ extension LoginView {
     // saved id text Field
     var savedIdTextField : some View{
       
-        TextField(self.id, text:self.$id)
+        TextField(self.id != "" ? self.id : "아이디룰 입력하세요.", text:self.$id)
             .textFieldStyle(.roundedBorder)
             .autocapitalization(.none)
     }
@@ -93,6 +95,10 @@ extension LoginView {
     var idSaveRadioBox : some View {
         Toggle("아이디 저장", isOn: $idSaveToggle)
             .toggleStyle(.switch)
+            .onChange(of: idSaveToggle) { value in
+                loginViewModel.login.user.id = ""
+            }
+            
         
             
       
@@ -107,9 +113,16 @@ extension LoginView {
                     showAlert = true
                     return
                 }
+               
+                
                 var prevToken = token
                 
                 if idSaveToggle == false {
+                    
+                    if loginViewModel.login.user.id == "" {
+                        showAlert = true
+                        return
+                    }
                     let postUser = PostUser(username: loginViewModel.login.user.id, password: loginViewModel.login.user.password)
 
                     AF.request("\(baseURL):8080/api/users/login",

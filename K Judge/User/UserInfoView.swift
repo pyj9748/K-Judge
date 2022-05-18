@@ -19,20 +19,58 @@ struct UserInfo :Codable,Identifiable{
 }
 
 struct UserInfoView: View {
-    
+    //@State private var isActive : Bool = false
+   
     @AppStorage("token") var token: String = (UserDefaults.standard.string(forKey: "token") ?? "")
     @StateObject var userInfoViewModel = UserInfoViewModel()
+   
+    
     
     var body: some View {
-        VStack{
-            Text("").onAppear(){
-                userInfoViewModel.userInfo = userInfoViewModel.getUserInfo(token: token)
+        NavigationView{
+            VStack{
+                Text("").onAppear(){
+                    userInfoViewModel.userInfo = userInfoViewModel.getUserInfo(token: token)
+                }
+                userInfoSection
+                //logoutBtn
             }
-            userInfoSection
         }
+        
     }
 }
 extension UserInfoView {
+    
+//    var logoutBtn : some View {
+//        NavigationLink(destination:ContentView(), isActive: $isActive ,label: {
+//
+//
+//            Button(action: {
+//                self.token = ""
+//
+//                print("LogOut")
+//
+//
+//                isActive = true
+//
+//
+//
+//            }, label: {
+//
+//                Text("로그아웃")
+//                .frame(width: 180, height: 20, alignment: .center)
+//
+//                .font(.body)
+//                .padding(10)
+//                .foregroundColor(.white)
+//                .background(Color("KWColor1"))
+//                .cornerRadius(40)
+//            })
+//        })
+//
+//
+//    }
+    
     var userInfoSection : some View {
         
         VStack(){
@@ -160,4 +198,24 @@ struct UserInfoView_Previews: PreviewProvider {
     static var previews: some View {
         UserInfoView()
     }
+}
+
+
+struct RootPresentationModeKey: EnvironmentKey {
+  static let defaultValue: Binding<RootPresentationMode> = .constant(RootPresentationMode())
+}
+
+extension EnvironmentValues {
+  var rootPresentationMode: Binding<RootPresentationMode> {
+    get { return self[RootPresentationModeKey.self] }
+    set { self[RootPresentationModeKey.self] = newValue }
+  }
+}
+
+typealias RootPresentationMode = Bool
+
+public extension RootPresentationMode {
+  mutating func dismiss() {
+    self.toggle()
+  }
 }
